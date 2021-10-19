@@ -1,0 +1,27 @@
+## Server Properties
+server:
+  port: 8080
+  ssl:
+    key-store-type: PKCS12
+    key-store: classpath:localhost.p12
+    key-store-password: password
+
+
+## SQL Properties
+spring:
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: dbc:mysql://url/dbname?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    username: username
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+## JWT
+JWT:
+  SIGNKEY: ""
+  SUBJECTKEY: ""
