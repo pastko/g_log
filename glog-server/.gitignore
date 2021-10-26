@@ -38,4 +38,8 @@ out/
 
 
 ### propreties ####
-configproperties.yaml
+config.yaml
+
+
+### log ###
+/log/*
