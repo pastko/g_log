@@ -6,11 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserInfoDTO {
-    private int userIdx;
-    private String userToken;
+    private int usr_Idx;
     private String userId;
-    private String userName;
-    private String userEmail;
+    private String userPwd;
+    private String nikName;
     private String glogTitle;
-    private String imgPath;
+    private String imgName;
 }

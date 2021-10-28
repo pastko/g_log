@@ -22,5 +22,5 @@ public class Users {
 
 
     @Column(name = "pwd", nullable = false)
-    private String userToken;
+    private String userPwd;
 }
