@@ -13,9 +13,9 @@ import java.util.Map;
 @Service
 public class JWTTokenUtils {
 
-    @Value("${JWT.SIGNKEY}")
+    @Value("${auth.tokenSecret}")
     private String SIGN_KEY;
-    @Value("${JWT.SUBJECTKEY}")
+    @Value("${auth.subject}")
     private String SUBJECT_KEY;
     private static final long JWT_TOKEN_EXPIRED_TIME = 10 * 60 * 60  * 1000;
     private final ObjectMapper objectMapper = new ObjectMapper();
