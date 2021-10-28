@@ -1,9 +1,15 @@
 html,
 body {
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  box-sizing: border-box;
+  width: 1280px;
+  min-width: 480px;
+  height: 100%;
+  background: #f8f9fa;
+
 }
 
 a {
@@ -12,5 +18,5 @@ a {
 }
 
 * {
-  box-sizing: border-box;
+  box-sizing: inherit;
 }
