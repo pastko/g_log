@@ -1,3 +1,7 @@
+# 배포 링크
+* [client 링크](http://glog-s3-bucket.s3-website.ap-northeast-2.amazonaws.com/)
+* [server 링크](ec2-13-124-46-130.ap-northeast-2.compute.amazonaws.com)
+
 # 커밋 메시지 규칙
 1. function별 기능구현이 완료 되었을 때만 commit 가능
 2. 한 줄로 메세지 작성해주세요.
