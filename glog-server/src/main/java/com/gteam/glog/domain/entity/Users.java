@@ -10,16 +10,17 @@ import javax.persistence.*;
 @Setter
 @Entity
 @NoArgsConstructor
+@Table(name = "usr")
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usr_idx")
     private int idx;
 
-    @Column(name = "usr_id", nullable = false)
+    @Column(name = "mail", nullable = false)
     private String userId;
 
 
-    @Column(name = "usr_tokn", nullable = false)
+    @Column(name = "pwd", nullable = false)
     private String userToken;
 }

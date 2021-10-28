@@ -13,7 +13,6 @@ import static org.assertj.core.api.Assertions.*;
 
 
 @SpringBootTest
-@ActiveProfiles("test")
 class JWTTokenUtilsTest {
     private final JWTTokenUtils jwtTokenUtils;
 //    JWTTokenUtils jwtTokenUtils;
