@@ -16,35 +16,32 @@ public class LoginRepository {
     }
 
     /**
-     * Get User Info by Userid
+     * Get User MyPage Info by Userid
      *
      * @param id
      * @return UserInfoDTO
      */
     public Optional<UserInfoDTO> getUserInfoByUserId(String id){
+        // 유저 MyPage 정보 조회
         List<UserInfoDTO> userInfoDTO = entityManager
-                .createQuery("select usr from UserInfos as usr where usr.usr_idx.userId = ?1", UserInfoDTO.class)
+                .createQuery("select usr from Mypage as usr where usr.usr_idx.userId = ?1", UserInfoDTO.class)
                 .setParameter(1,id)
                 .getResultList();
         return Optional.of(userInfoDTO.get(0));
     }
 
     /**
-     * Get Users by Userid
+     * Get Users auth info by Userid
      *
      * @param id
      * @return Users
      */
     public Optional<Users> getUsersByUserId(String id){
-        System.out.println("id;:::::::"+id);
+        // 유저 인증 정보 조회
         List<Users> users = entityManager
-                .createQuery("select usr from Users as usr where usr.userId = \""+id+"\"", Users.class)
-//                .setParameter(1,id)
+                .createQuery("select usr from Users as usr where usr.userId = ?1", Users.class)
+                .setParameter(1,id)
                 .getResultList();
-        users.stream().map(e->{
-            System.out.println("repo: "+ e);
-            return null;
-        });
 
         return Optional.of(users.get(0));
     }

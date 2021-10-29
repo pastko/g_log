@@ -29,7 +29,7 @@ class JWTTokenUtilsTest {
     @Test
     void tokenTest() {
         Users users = new Users();
-        users.setUserToken("testpassword");
+        users.setUserPwd("testpassword");
         users.setUserId("testid");
 
         String tesToken = jwtTokenUtils.generateObjectToken(users);
@@ -41,7 +41,7 @@ class JWTTokenUtilsTest {
         System.out.printf("Test user id : "+claims.get("userId"));
         System.out.printf("\n\n");
 
-        assertThat(jwtTokenUtils.validateToken(tesToken)).isTrue();
+        assertThat(jwtTokenUtils.validateToken(tesToken)).isEqualTo(users);
         assertThat(jwtTokenUtils.getAllClaimsFromToken(tesToken).get("userId")).isEqualTo(users.getUserId());
     }
 
