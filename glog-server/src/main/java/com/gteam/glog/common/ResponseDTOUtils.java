@@ -1,12 +1,7 @@
 package com.gteam.glog.common;
 
-<<<<<<< HEAD
-import com.gteam.glog.domain.dto.BadResponseDTO;
+
 import com.gteam.glog.domain.dto.UserResponseDTO;
-import com.gteam.glog.domain.entity.Users;
-=======
-import com.gteam.glog.domain.dto.UserResponseDTO;
->>>>>>> feature/login
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
