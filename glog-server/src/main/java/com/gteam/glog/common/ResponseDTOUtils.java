@@ -1,8 +1,12 @@
 package com.gteam.glog.common;
 
+<<<<<<< HEAD
 import com.gteam.glog.domain.dto.BadResponseDTO;
 import com.gteam.glog.domain.dto.UserResponseDTO;
 import com.gteam.glog.domain.entity.Users;
+=======
+import com.gteam.glog.domain.dto.UserResponseDTO;
+>>>>>>> feature/login
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +16,17 @@ public class ResponseDTOUtils {
     /**
      * Generater ResponseDTO
      *
-     * @param users - users 정보
+     * @param data  - Response Data
+     * @param code  - Status Code
      * @param _msg  - 응답 메시지
      * @return - ResponseEntity
      */
-    public ResponseEntity<?> doGenerateResponseDTO(Users users,int code, String _msg){
+    public ResponseEntity<?> doGenerateResponseDTO(Object data,int code, String _msg){
         return ResponseEntity
                 .status(code)
                 .body(
                     UserResponseDTO.builder()
-                    .useridx(users.getIdx())
-                    .data(users.getUserId())
+                    .data(data)
                     .msg(_msg)
                     .build()
                 );
@@ -32,6 +36,7 @@ public class ResponseDTOUtils {
      * Generater Bad ResponseDTO
      *
      * @param _msg  - 응답 메시지
+     * @param code  - Status Code
      * @return - ResponseEntity
      */
     public ResponseEntity<?> doGenerateBadResponseDTO(int code,String _msg){

@@ -1,13 +1,10 @@
 package com.gteam.glog.login.service;
 
 import com.gteam.glog.common.JWTTokenUtils;
-import com.gteam.glog.domain.dto.BadResponseDTO;
 import com.gteam.glog.domain.dto.UserAuthDTO;
 import com.gteam.glog.domain.dto.UserInfoDTO;
-import com.gteam.glog.domain.dto.UserResponseDTO;
 import com.gteam.glog.domain.entity.Users;
 import com.gteam.glog.login.repository.LoginRepository;
-import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -112,33 +109,4 @@ public class LoginService {
             return null;
         }
     }
-
-
-    /**
-     * Generater ResponseDTO
-     *
-     * @param users - users 정보
-     * @param _msg  - 응답 메시지
-     * @return - UserResponseDTO
-     */
-    public UserResponseDTO doGenerateResponseDTO(Users users, String _msg){
-        return UserResponseDTO.builder()
-                .useridx(users.getIdx())
-                .userId(users.getUserId())
-                .msg(_msg)
-                .build();
-    }
-
-    /**
-     * Generater Bad ResponseDTO
-     *
-     * @param _msg  - 응답 메시지
-     * @return - UserResponseDTO
-     */
-    public BadResponseDTO doGenerateBadResponseDTO(String _msg){
-        return BadResponseDTO.builder()
-                .ecode(203)
-                .msg(_msg).build();
-    }
-
 }
