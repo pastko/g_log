@@ -1,6 +1,7 @@
 package com.gteam.glog.login.controller;
 
 import com.gteam.glog.common.JWTTokenUtils;
+import com.gteam.glog.common.ResponseDTOUtils;
 import com.gteam.glog.domain.dto.UserAuthDTO;
 import com.gteam.glog.domain.dto.UserInfoDTO;
 import com.gteam.glog.domain.entity.Users;
@@ -18,10 +19,12 @@ import java.util.Map;
 public class LoginController {
     private final LoginService loginService;
     private final JWTTokenUtils jwtTokenUtils;
+    private final ResponseDTOUtils responseDTOUtils;
     @Autowired
-    public LoginController(LoginService loginService, JWTTokenUtils jwtTokenUtils) {
+    public LoginController(LoginService loginService, JWTTokenUtils jwtTokenUtils, ResponseDTOUtils responseDTOUtils) {
         this.loginService = loginService;
         this.jwtTokenUtils = jwtTokenUtils;
+        this.responseDTOUtils = responseDTOUtils;
     }
 
     @PostMapping("/signin")
@@ -34,10 +37,10 @@ public class LoginController {
             if(user != null) {
                 response.addCookie(jwtTokenUtils.generateCookieToRefreshToken(user));
             }
-            return ResponseEntity.ok().body(loginService.doGenerateResponseDTO(user,"Login success"));
+            return responseDTOUtils.doGenerateResponseDTO(user,200,"ok");
         }catch (IllegalArgumentException e){
             log.error(e.getMessage());
-            return ResponseEntity.badRequest().body(loginService.doGenerateBadResponseDTO("Login Failed"));
+            return responseDTOUtils.doGenerateBadResponseDTO(401,"Failed");
         }
     }
 
@@ -47,10 +50,10 @@ public class LoginController {
         try {
             Users users = loginService.validateUserAuthInfo(requestHeader.get("authorization"));
             UserInfoDTO userInfoDTO = loginService.findUserInfoByUserId(users.getUserId());
-            return ResponseEntity.ok().body(loginService.doGenerateResponseDTO(users, "MyPage Load Success"));
+            return responseDTOUtils.doGenerateResponseDTO(userInfoDTO, 200, "ok");
         } catch (IllegalArgumentException e) {
             log.error(e.getMessage());
-            return ResponseEntity.badRequest().body(loginService.doGenerateBadResponseDTO("MyPage Load Failed"));
+            return responseDTOUtils.doGenerateBadResponseDTO(401,"Failed");
         }
     }
 }
