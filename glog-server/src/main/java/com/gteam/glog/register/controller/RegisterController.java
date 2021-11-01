@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class RegisterController {
 
     private final RegisterService registerService;
-    private JWTTokenUtils jwtTokenUtils = new JWTTokenUtils();
+    private final JWTTokenUtils jwtTokenUtils = new JWTTokenUtils();
 
     @Autowired
     public RegisterController(RegisterService registerService) {
@@ -31,8 +31,8 @@ public class RegisterController {
         Claims claims = jwtTokenUtils.getAllClaimsFromToken(token.getToken());
 
         userInfoDTO.setUserId((String) claims.get("email"));
-        userInfoDTO.setUserToken((String) claims.get("password"));
-        userInfoDTO.setUserName((String) claims.get("nickname"));
+        userInfoDTO.setUserPwd((String) claims.get("password"));
+        userInfoDTO.setNikName((String) claims.get("nickname"));
 
         return registerService.createUserInfo(userInfoDTO);
     }
