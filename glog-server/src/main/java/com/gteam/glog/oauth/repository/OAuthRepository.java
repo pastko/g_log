@@ -1,7 +1,6 @@
 package com.gteam.glog.oauth.repository;
 
-import com.gteam.glog.domain.dto.OAuthCodeDTO;
-import com.gteam.glog.domain.dto.OAuthResponseDTO;
+import com.gteam.glog.domain.enums.SocialLoginType;
 import com.gteam.glog.domain.entity.OAuthInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,7 +19,7 @@ public class OAuthRepository {
     }
 
     @Transactional
-    public Optional<OAuthInfo> FindUserOAuthCode(){
-        return Optional.of(entityManager.find(OAuthInfo.class, 0L));
+    public Optional<OAuthInfo> FindUserOAuthCode(SocialLoginType socialLoginType){
+        return Optional.of(entityManager.find(OAuthInfo.class, socialLoginType.get()));
     }
 }

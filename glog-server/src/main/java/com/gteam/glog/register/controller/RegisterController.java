@@ -2,7 +2,7 @@ package com.gteam.glog.register.controller;
 
 import com.gteam.glog.domain.dto.UserInfoDTO;
 import com.gteam.glog.domain.dto.UserRequestDTO;
-import com.gteam.glog.common.JWTTokenUtils;
+import com.gteam.glog.common.utils.JWTTokenUtils;
 import com.gteam.glog.register.service.RegisterService;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;

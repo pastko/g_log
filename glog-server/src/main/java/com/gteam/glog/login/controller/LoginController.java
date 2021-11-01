@@ -1,7 +1,7 @@
 package com.gteam.glog.login.controller;
 
-import com.gteam.glog.common.JWTTokenUtils;
-import com.gteam.glog.common.ResponseDTOUtils;
+import com.gteam.glog.common.utils.JWTTokenUtils;
+import com.gteam.glog.common.utils.ResponseDTOUtils;
 import com.gteam.glog.domain.dto.UserAuthDTO;
 import com.gteam.glog.domain.dto.UserInfoDTO;
 import com.gteam.glog.domain.entity.Users;

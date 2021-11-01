@@ -1,4 +1,4 @@
-package com.gteam.glog.common;
+package com.gteam.glog.common.utils;
 
 
 import com.gteam.glog.domain.dto.UserResponseDTO;

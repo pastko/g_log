@@ -28,4 +28,15 @@ public class OAuthInfo {
     @Size(max=100)
     @NotNull
     private String ClientSecret;
+
+    @Column(name="oauth_url")
+    @Size(max=100)
+    @NotNull
+    private String url;
+
+    @Column(name="profile_url")
+    @Size(max=100)
+    @NotNull
+    private String profileRrl;
+
 }

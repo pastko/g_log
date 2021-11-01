@@ -1,11 +1,12 @@
 package com.gteam.glog.login.service;
 
-import com.gteam.glog.common.JWTTokenUtils;
+import com.gteam.glog.common.utils.JWTTokenUtils;
 import com.gteam.glog.domain.dto.UserAuthDTO;
 import com.gteam.glog.domain.dto.UserInfoDTO;
 import com.gteam.glog.domain.entity.Users;
 import com.gteam.glog.login.repository.LoginRepository;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ public class LoginService {
     private final LoginRepository loginRepository;
     private final JWTTokenUtils jwtTokenUtils;
     PasswordEncoder passwordEncoder;
+    @Autowired
     public LoginService(LoginRepository loginRepository, JWTTokenUtils jwtTokenUtils) {
         this.loginRepository = loginRepository;
         this.jwtTokenUtils = jwtTokenUtils;
