@@ -26,7 +26,7 @@ public class RegisterService {
 
         registerRepository.createUserInfo(setUserData);
 
-        if(!registerRepository.duplicateCheck(userInfoDTO.getUserId())) {
+        if(!registerRepository.duplicateCheck(userInfoDTO.getUserId()) || userInfoDTO.getUserId() != null) {
             return "success";
         }
 

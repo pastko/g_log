@@ -26,14 +26,14 @@ public class RegisterController {
 
     @PostMapping(value = "/signup")
     @ApiOperation(value = "회원가입 API", notes = "로컬 사용자 회원가입 API")
-    public String createUserinfo(@RequestBody(required = true) UserRequestDTO token, HttpServletResponse response) {
+    public String createUserinfo(@RequestBody(required = true) UserRequestDTO request, HttpServletResponse response) {
         UserInfoDTO userInfoDTO = new UserInfoDTO();
-        Claims claims = jwtTokenUtils.getAllClaimsFromToken(token.getToken());
 
-        userInfoDTO.setUserId((String) claims.get("email"));
-        userInfoDTO.setUserPwd((String) claims.get("password"));
-        userInfoDTO.setNikName((String) claims.get("nickname"));
-
+        if(request.getMail() != null) {
+            userInfoDTO.setUserId(request.getMail());
+            userInfoDTO.setUserPwd(request.getPwd());
+            userInfoDTO.setNikName(request.getNikNm());
+        }
         return registerService.createUserInfo(userInfoDTO);
     }
 }
