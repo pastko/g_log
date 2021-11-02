@@ -1,10 +1,10 @@
 import styled, {css} from 'styled-components';
 
-function AuthButton({ isLink, btnDefault, fullWidth, ...rest }) {
+function AuthButton({ isLink, defaultType, fullWidth, ...rest }) {
     if(isLink) {
-        return <LinkStyled {...rest} />;
+        return <LinkStyled defaultType={defaultType} {...rest} />;
     }else {
-        return <ButtonStyled btnDefault={btnDefault} fullWidth={fullWidth} {...rest}/>;
+        return <ButtonStyled fullWidth={fullWidth} {...rest}/>;
     }
 }
 
@@ -30,18 +30,16 @@ const LinkStyled = styled.a`
     text-decoration: none;
     font-size: 16px;
     padding: 5px 10px;
-`;
-
-const ButtonStyled = styled.button`
-    
-    ${commonStyled}
-    ${(props) => props.btnDefault && css`
+    ${(props) => props.defaultType && css`
         background: #797979;
         &:hover {
             background: #424242;  
         }
     `}
-    
+`;
+
+const ButtonStyled = styled.button`
+    ${commonStyled}
 `;
 
 export default AuthButton;

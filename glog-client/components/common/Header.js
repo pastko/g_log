@@ -4,19 +4,28 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import logo from '../../public/logo.png';
 import AuthButton from '../auth/AuthButton';
+import { useState } from 'react';
+import SignIn from '../../pages/auth/SignIn';
+import Register from '../../pages/auth/Register';
 
 const Header = () => {
+    const [isSignInOpen, setIsSignInOpen] = useState(false);
+    const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+
     return (
-        <StyledHeader>
-            <div className="logo">
-                <Image src={logo} alt="logo" width={48} height={48} />
-            </div>
-            <div className="right">
-                <Link href="/auth/SignIn">
-                    <AuthButton isLink>로그인</AuthButton>
-                </Link>
-            </div>
-        </StyledHeader>
+        <>
+            <StyledHeader>
+                <div className="logo">
+                    <Image src={logo} alt="logo" width={48} height={48} />
+                </div>
+                <div className="right">
+                    <AuthButton isLink onClick={() => setIsSignInOpen(true)}>로그인</AuthButton>
+                    <AuthButton isLink defaultType onClick={() => setIsRegisterOpen(true)}>회원가입</AuthButton>
+                </div>
+            </StyledHeader>
+            {isSignInOpen && <SignIn setIsOpen={setIsSignInOpen} />}
+            {isRegisterOpen && <Register setIsOpen={setIsRegisterOpen} />}
+        </>
     );
 };
 
@@ -31,6 +40,9 @@ const StyledHeader = styled.header`
     .logo {
         font-size: 24px;
         font-weight: bold;
+    }
+    .right a {
+        margin-left: 5px;
     }
 `;
 

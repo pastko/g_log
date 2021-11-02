@@ -17,9 +17,9 @@ const goRegister = (form) => {
     });
 }
 
-const Register = () => {
+const Register = ({setIsOpen}) => {
     return (
-        <AuthTemplate>
+        <AuthTemplate setIsOpen={setIsOpen}>
             <AuthForm isRegister func={goRegister} />
         </AuthTemplate>
     );

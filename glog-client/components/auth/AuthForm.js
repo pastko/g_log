@@ -74,13 +74,6 @@ function AuthForm({ isRegister, func }) {
                 </div>
             )}
             <span className="or">or</span>
-            {!isRegister && (
-                <Link href="/auth/Register">
-                    <StyledButton btnDefault fullWidth>
-                        가입하기
-                    </StyledButton>
-                </Link>
-            )}
             <StyledSocialBtn>
                 <SocialButton btnType="Google" />
                 <SocialButton btnType="Github" />

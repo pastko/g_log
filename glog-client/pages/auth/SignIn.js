@@ -1,6 +1,7 @@
 import React from 'react';
 import AuthTemplate from '../../components/auth/AuthTemplate';
 import AuthForm from '../../components/auth/AuthForm';
+import styled from 'styled-components';
 
 const goSignIn = (form) => {
     const {mail, pwd, confirmPwd, nikNm} = form;
@@ -15,9 +16,9 @@ const goSignIn = (form) => {
     });
 }
 
-const SignIn = () => {
+const SignIn = ({setIsOpen}) => {
     return (
-        <AuthTemplate>
+        <AuthTemplate setIsOpen={setIsOpen}>
             <AuthForm func={goSignIn}/>
         </AuthTemplate>
     );

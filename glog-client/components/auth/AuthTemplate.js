@@ -4,10 +4,11 @@ import Image from 'next/image';
 import logo from '../../public/logo.png';
 import styled from 'styled-components';
 
-function AuthTemplate({children }) {
+function AuthTemplate({setIsOpen, children }) {
     return (
         <AuthStyled>
             <div className="auth-wrapper">
+                <div className="closed" onClick={() => setIsOpen(false)}>X</div>
                 <div className="intro">
                     <Link href="/">
                         <Image src={logo} alt="logo" width={40} height={40} />
@@ -21,12 +22,27 @@ function AuthTemplate({children }) {
 }
 
 const AuthStyled = styled.div`
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    overflow: auto;
+    outline: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     background: #8383835a;
-    width: 100%;
-    height: 100%;
+    .closed {
+        font-weight: 600;
+        text-align: right;
+        margin-right: 18px;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
     .auth-wrapper {
         width: 380px;
         min-width: 240px;
