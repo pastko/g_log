@@ -40,7 +40,7 @@ class JWTTokenUtilsTest {
         System.out.printf("Test user id : "+claims.get("userId"));
         System.out.printf("\n\n");
 
-        assertThat(jwtTokenUtils.validateToken(tesToken)).isEqualTo(users);
+        assertThat(jwtTokenUtils.validateToken(tesToken)).isEqualTo(true);
         assertThat(jwtTokenUtils.getAllClaimsFromToken(tesToken).get("userId")).isEqualTo(users.getUserId());
     }
 
