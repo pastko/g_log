@@ -2,7 +2,7 @@ package com.gteam.glog.login.controller;
 
 import com.gteam.glog.common.utils.JWTTokenUtils;
 import com.gteam.glog.common.utils.ResponseDTOUtils;
-import com.gteam.glog.domain.dto.UserAuthDTO;
+import com.gteam.glog.domain.dto.LoginRequestDTO;
 import com.gteam.glog.domain.dto.UserInfoDTO;
 import com.gteam.glog.domain.entity.Users;
 import com.gteam.glog.login.service.LoginService;
@@ -29,7 +29,7 @@ public class LoginController {
 
     @PostMapping("/signin")
     @ApiOperation(value = "로그인 API", notes = "로컬 사용자 로그인 API")
-    public ResponseEntity<?> signin(@RequestBody() UserAuthDTO userAuthDTO, HttpServletResponse response){
+    public ResponseEntity<?> signin(@RequestBody() LoginRequestDTO userAuthDTO, HttpServletResponse response){
         try{
             log.trace("Sign In :",userAuthDTO.getUserId());
             // 사용자 로그인 검증
@@ -37,7 +37,7 @@ public class LoginController {
             if(user != null) {
                 response.addCookie(jwtTokenUtils.generateCookieToRefreshToken(user));
             }
-            return responseDTOUtils.doGenerateResponseDTO(user,200,"ok");
+            return responseDTOUtils.doGenerateResponse(user,200,"ok");
         }catch (IllegalArgumentException e){
             log.error(e.getMessage());
             return responseDTOUtils.doGenerateBadResponseDTO(401,"Failed");
@@ -50,7 +50,7 @@ public class LoginController {
         try {
             Users users = loginService.validateUserAuthInfo(requestHeader.get("authorization"));
             UserInfoDTO userInfoDTO = loginService.findUserInfoByUserId(users.getUserId());
-            return responseDTOUtils.doGenerateResponseDTO(userInfoDTO, 200, "ok");
+            return responseDTOUtils.doGenerateResponse(userInfoDTO, 200, "ok");
         } catch (IllegalArgumentException e) {
             log.error(e.getMessage());
             return responseDTOUtils.doGenerateBadResponseDTO(401,"Failed");

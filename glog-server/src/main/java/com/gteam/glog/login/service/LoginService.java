@@ -1,7 +1,7 @@
 package com.gteam.glog.login.service;
 
 import com.gteam.glog.common.utils.JWTTokenUtils;
-import com.gteam.glog.domain.dto.UserAuthDTO;
+import com.gteam.glog.domain.dto.LoginRequestDTO;
 import com.gteam.glog.domain.dto.UserInfoDTO;
 import com.gteam.glog.domain.entity.Users;
 import com.gteam.glog.login.repository.LoginRepository;
@@ -69,7 +69,7 @@ public class LoginService {
      *       >  all correct    : UserIdx, userId
      *       >  is not correct : null
      */
-    public Users validateUserLogin(UserAuthDTO authDTO){
+    public Users validateUserLogin(LoginRequestDTO authDTO){
             try{
                 Users users = findUserByUserId(authDTO.getUserId());
                 // Bcrypt password validate
