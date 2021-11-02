@@ -1,4 +1,4 @@
-package com.gteam.glog.common;
+package com.gteam.glog.common.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gteam.glog.domain.entity.Users;
@@ -69,7 +69,7 @@ public class JWTTokenUtils {
         return Jwts.builder()
                 .setHeader(new HashMap<>(){{
                     put("typ","JWT");
-                    put("alg","HS256");
+                    put("alg","HS512");
                 }})
                 .setClaims(claims)
                 .setSubject(SUBJECT_KEY)

@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Builder
 public class UserResponseDTO {
-    private int useridx;
-    private String userId;
+    private Object data;
     private String msg;
 }

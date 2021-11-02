@@ -5,6 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -18,9 +21,12 @@ public class Users {
     private int idx;
 
     @Column(name = "mail", nullable = false)
+    @Email
+    @NotNull
     private String userId;
 
 
     @Column(name = "pwd", nullable = false)
+    @NotNull
     private String userPwd;
 }
