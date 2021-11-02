@@ -21,12 +21,12 @@ public class RegisterService {
         UserInfoDTO setUserData = new UserInfoDTO();
 
         setUserData.setUserId(userInfoDTO.getUserId());
-        setUserData.setUserName(userInfoDTO.getUserName());
-        setUserData.setUserToken(passwordEncoder.encode(userInfoDTO.getUserToken()));
+        setUserData.setNikName(userInfoDTO.getNikName());
+        setUserData.setUserPwd(passwordEncoder.encode(userInfoDTO.getUserPwd()));
 
         registerRepository.createUserInfo(setUserData);
 
-        if(!registerRepository.duplicateCheck(userInfoDTO.getUserId())) {
+        if(!registerRepository.duplicateCheck(userInfoDTO.getUserId()) || userInfoDTO.getUserId() != null) {
             return "success";
         }
 

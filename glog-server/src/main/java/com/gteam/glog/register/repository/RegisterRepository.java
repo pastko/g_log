@@ -1,7 +1,7 @@
 package com.gteam.glog.register.repository;
 
 import com.gteam.glog.domain.dto.UserInfoDTO;
-import com.gteam.glog.domain.entity.UserInfos;
+import com.gteam.glog.domain.entity.Mypage;
 import com.gteam.glog.domain.entity.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,19 +27,18 @@ public class RegisterRepository {
     }
     public void createUserInfo(UserInfoDTO userInfoDTO) {
         if(duplicateCheck(userInfoDTO.getUserId())) {
-            Date now = new Date();
             Users users = new Users();
-            UserInfos userInfos = new UserInfos();
+            Mypage mypage = new Mypage();
 
             users.setUserId(userInfoDTO.getUserId());
-            users.setUserToken(userInfoDTO.getUserToken());
+            users.setUserPwd(userInfoDTO.getUserPwd());
+            users.setIdx(userInfoDTO.getUsrIdx());
 
-            userInfos.setUseremail(userInfoDTO.getUserId());
-            userInfos.setUsername(userInfoDTO.getUserName());
-            userInfos.setUserCreateTime(now);
+            mypage.setUsr_idx(users);
+            mypage.setNikName(userInfoDTO.getNikName());
 
             entityManager.persist(users);
-            entityManager.persist(userInfos);
+            entityManager.persist(mypage);
 
             entityManager.flush();
             entityManager.close();
