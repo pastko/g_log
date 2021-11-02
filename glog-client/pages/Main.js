@@ -32,15 +32,14 @@ const Main = () => {
         return data;
     };
     const fetchData = async () => {
-       const commentsFormServer = await fetchComments();
-       setItems([...items, ...commentsFormServer]);
+    const commentsFormServer = await fetchComments();
+    setItems([...items, ...commentsFormServer]);
 
     if(commentsFormServer.length === 0 || commentsFormServer.length < 20){
     setnoMore(false);
     }
-   
 
-       setpage(page + 1);
+    setpage(page + 1);
     console.log('hello');
 
     };
@@ -49,18 +48,18 @@ const Main = () => {
     
         <InfiniteScroll
   dataLength={items.length} //This is important field to render the next data
-  next={fetchData}
-  hasMore={noMore}
-  loader={<h4>Loading...</h4>}
-  endMessage={
+    next={fetchData}
+    hasMore={noMore}
+    loader={<h4>Loading...</h4>}
+    endMessage={
     <p style={{ textAlign: 'center' }}>
-      <b></b>
+    <b></b>
     </p>
-  }
+}
 >
-  {items.map((item)=>{
-      return <Comment key={item.id} item={item} />
-  })}
+    {items.map((item)=>{
+    return <Comment key={item.id} item={item} />
+    })}
 </InfiniteScroll>
     );
 }
