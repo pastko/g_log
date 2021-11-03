@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import logo from '../../public/logo.png';
 import AuthButton from '../auth/AuthButton';
 import { useState } from 'react';
-import SignIn from '../../pages/auth/SignIn';
-import Register from '../../pages/auth/Register';
+import SignIn from '../modal/SignIn';
+import Register from '../modal/Register';
 
 const Header = () => {
     const [isSignInOpen, setIsSignInOpen] = useState(false);

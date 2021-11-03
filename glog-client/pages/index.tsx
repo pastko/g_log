@@ -12,13 +12,12 @@ const Home: NextPage = () => {
         <meta name="description" content="post management" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header/>
+      <Header />
       <main className={styles.main}>
-        <Main/>
+        <Main />
       </main>
-      
     </>
-  )
-}
+  );
+};
 
 export default Home;

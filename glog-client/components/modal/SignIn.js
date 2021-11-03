@@ -1,6 +1,6 @@
 import React from 'react';
-import AuthTemplate from '../../components/auth/AuthTemplate';
-import AuthForm from '../../components/auth/AuthForm';
+import AuthTemplate from '../auth/AuthTemplate';
+import AuthForm from '../auth/AuthForm';
 import styled from 'styled-components';
 
 const goSignIn = (form) => {
