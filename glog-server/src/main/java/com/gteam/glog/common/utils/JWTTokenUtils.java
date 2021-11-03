@@ -1,10 +1,13 @@
-package com.gteam.glog.common;
+package com.gteam.glog.common.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gteam.glog.domain.entity.Users;
 import io.jsonwebtoken.*;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,11 +16,12 @@ import java.util.Map;
 @Service
 public class JWTTokenUtils {
 
-    @Value("${JWT.SIGNKEY}")
+    @Value("${auth.tokenSecret}")
     private String SIGN_KEY;
-    @Value("${JWT.SUBJECTKEY}")
+    @Value("${auth.subject}")
     private String SUBJECT_KEY;
-    private static final long JWT_TOKEN_EXPIRED_TIME = 10 * 60 * 60  * 1000;
+    private static final long JWT_TOKEN_EXPIRED_TIME = 5 * 60  * 1000;
+    private static final long COOKIES_EXPIRED_TIME = 20 * 60  * 1000;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
 
@@ -61,16 +65,16 @@ public class JWTTokenUtils {
      * @param claims -
      * @return generater token string
      */
-    private String doGenerateToken(Map<String, Object> claims) {
+    private String doGenerateToken(Map<String, Object> claims,long expireTime) {
         return Jwts.builder()
                 .setHeader(new HashMap<>(){{
                     put("typ","JWT");
-                    put("alg","HS256");
+                    put("alg","HS512");
                 }})
                 .setClaims(claims)
                 .setSubject(SUBJECT_KEY)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_EXPIRED_TIME))
+                .setExpiration(new Date(System.currentTimeMillis() + expireTime))
                 .signWith(SignatureAlgorithm.HS512, SIGN_KEY)
                 .compact();
     }
@@ -80,13 +84,23 @@ public class JWTTokenUtils {
      * 전달된 OBJECT로 토큰생성
      *
      * @param data -
-     * @return
+     * @return Token String
      */
     public String generateObjectToken(Object data) {
         Map<String, Object> claims = objectMapper.convertValue(data, Map.class);
-        return doGenerateToken(claims);
+        return doGenerateToken(claims,JWT_TOKEN_EXPIRED_TIME);
     }
 
+    /**
+     * JWT 리프레쉬 토큰을 전달하는 쿠키 생성
+     *
+     * @param data
+     * @return Cookie String
+     */
+    public Cookie generateCookieToRefreshToken(Object data){
+        Map<String, Object> claims = objectMapper.convertValue(data, Map.class);
+        return new Cookie("reFreshToken", doGenerateToken(claims,COOKIES_EXPIRED_TIME));
+    }
 
     /**
      * jwt 토큰에서 유효성 검사를 위한 subject 조회
@@ -105,8 +119,8 @@ public class JWTTokenUtils {
      * @return
      */
     public Boolean validateToken(String token) {
-        final String userId = getSubjectFromToken(token);
-        return (userId.equals(SUBJECT_KEY) && !isTokenExpired(token));
+        final String subject = getSubjectFromToken(token);
+        return (subject.equals(SUBJECT_KEY) && !isTokenExpired(token));
     }
 
     /**
@@ -114,12 +128,12 @@ public class JWTTokenUtils {
      *
      * @param header -
      */
-    private void validationAuthorizationHeader(String header) {
+    public void validationAuthorizationHeader(String header) {
         if (header == null || !header.startsWith("Bearer ")) {
             throw new IllegalArgumentException();
         }
     }
-    private String extractToken(String authorizationHeader) {
+    public String extractToken(String authorizationHeader) {
         return authorizationHeader.substring("Bearer ".length());
     }
 }

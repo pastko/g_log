@@ -1,3 +1,7 @@
+# 배포 링크
+* [client 배포 링크](http://glog-s3-bucket.s3-website.ap-northeast-2.amazonaws.com/)
+* [server  링크](http://ec2-3-34-177-235.ap-northeast-2.compute.amazonaws.com:8080/login?from=%2F)
+
 # 커밋 메시지 규칙
 1. function별 기능구현이 완료 되었을 때만 commit 가능
 2. 한 줄로 메세지 작성해주세요.
@@ -49,7 +53,6 @@ feature/login add function validation
 ## PR 본문
 ```
 ### PR 타입(하나 이상의 PR 타입을 선택해주세요)
--[] UI 추가
 -[] 기능 추가
 -[] 기능 삭제
 -[] 버그 수정
@@ -65,11 +68,16 @@ ex) 베이스 브랜치에 포함되기 위한 코드는 모두 정상적으로 
 # Issue 형식
 ## Issue 제목
 ```
-[title] / body
+[client/server] / 제목
 ```
 ## Issue 형식
 ```
 ### Issue 타입(하나 이상의 Issue 타입을 선택해주세요)
+-[] 프로젝트 세팅
+-[] UI 추가
+-[] UI 수정
+-[] UI 삭제
+-[] 기능 추가
 -[] 기능 추가
 -[] 기능 삭제
 -[] 버그 수정
@@ -85,10 +93,11 @@ ex) Github 소셜 로그인 기능이 필요합니다.
 -[] `2h`
 -[] `2.5h`
 -[] `3h`
+
 ### 라벨
-- 예상 소요 시간: `E: 1h`
 - 그룹: `client`, `server`
 - 긴급도: `High`, `Middle`, `Low`
+
 ```
 
 # 명명규칙

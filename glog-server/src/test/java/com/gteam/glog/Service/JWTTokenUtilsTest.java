@@ -1,19 +1,17 @@
 package com.gteam.glog.Service;
 
-import com.gteam.glog.common.JWTTokenUtils;
+import com.gteam.glog.common.utils.JWTTokenUtils;
 import com.gteam.glog.domain.entity.Users;
 import io.jsonwebtoken.Claims;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.*;
 
 
 @SpringBootTest
-@ActiveProfiles("test")
 class JWTTokenUtilsTest {
     private final JWTTokenUtils jwtTokenUtils;
 //    JWTTokenUtils jwtTokenUtils;
@@ -30,7 +28,7 @@ class JWTTokenUtilsTest {
     @Test
     void tokenTest() {
         Users users = new Users();
-        users.setUserToken("testpassword");
+        users.setUserPwd("testpassword");
         users.setUserId("testid");
 
         String tesToken = jwtTokenUtils.generateObjectToken(users);
@@ -42,7 +40,7 @@ class JWTTokenUtilsTest {
         System.out.printf("Test user id : "+claims.get("userId"));
         System.out.printf("\n\n");
 
-        assertThat(jwtTokenUtils.validateToken(tesToken)).isTrue();
+        assertThat(jwtTokenUtils.validateToken(tesToken)).isEqualTo(true);
         assertThat(jwtTokenUtils.getAllClaimsFromToken(tesToken).get("userId")).isEqualTo(users.getUserId());
     }
 
