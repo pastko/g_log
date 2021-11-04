@@ -27,15 +27,9 @@ public class RegisterRepository {
     }
     public void createUserInfo(UserInfoDTO userInfoDTO) {
         if(duplicateCheck(userInfoDTO.getUserId())) {
-            Users users = new Users();
-            Mypage mypage = new Mypage();
 
-            users.setUserId(userInfoDTO.getUserId());
-            users.setUserPwd(userInfoDTO.getUserPwd());
-            users.setIdx(userInfoDTO.getUsrIdx());
-
-            mypage.setUsr_idx(users);
-            mypage.setNikName(userInfoDTO.getNikName());
+            Users users = Users.builder().userId(userInfoDTO.getUserId()).userPwd(userInfoDTO.getUserPwd()).build();
+            Mypage mypage = Mypage.builder().usr_idx(users).nikName(userInfoDTO.getNikName()).build();
 
             entityManager.persist(users);
             entityManager.persist(mypage);
@@ -43,5 +37,9 @@ public class RegisterRepository {
             entityManager.flush();
             entityManager.close();
         }
+    }
+
+    public void unRegistUser(String email) {
+        
     }
 }

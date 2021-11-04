@@ -1,5 +1,6 @@
 package com.gteam.glog.domain.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +13,8 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
+@Builder
+//@NoArgsConstructor
 @Table(name = "usr")
 public class Users {
     @Id

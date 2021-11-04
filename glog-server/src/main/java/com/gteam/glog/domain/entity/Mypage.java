@@ -1,17 +1,19 @@
 package com.gteam.glog.domain.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.sql.Date;
 
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
+@Builder
+//@NoArgsConstructor
 @Table(name = "mypg")
 public class Mypage {
     @Id
@@ -33,4 +35,8 @@ public class Mypage {
     @Column(name = "glog_titl")
     @Size(max=10)
     private String glogTitle;
+
+    private Date UnregistDate;
+
+    private Boolean isUnregist;
 }
