@@ -6,12 +6,14 @@ import com.gteam.glog.domain.dto.oauth.GitOAuthResponseDTO;
 import com.gteam.glog.domain.entity.OAuthInfo;
 import com.gteam.glog.oauth.repository.OAuthRepository;
 import lombok.extern.log4j.Log4j2;
+import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.client.RestTemplate;
 
 
 @Service
@@ -19,11 +21,16 @@ import org.springframework.web.client.HttpStatusCodeException;
 public class GitSocialOAuth implements SocialOAuth {
     @Value("oauth.redirectionRootUrl")
     private String redirectionRootUrl;
+
+    private OkHttpClient okHttpClient;
+    private RestTemplate restTemplate;
     private  final OAuthRepository oAuthRepository;
 
     @Autowired
     public GitSocialOAuth(OAuthRepository oAuthRepository) {
         this.oAuthRepository = oAuthRepository;
+        this.okHttpClient = new OkHttpClient();
+        this.restTemplate = new RestTemplate();
     }
 
     /**
@@ -58,7 +65,7 @@ public class GitSocialOAuth implements SocialOAuth {
                     redirectionRootUrl+"/git/callback"
             );
 
-
+            // TODO: restTemplate => okHttp2 로 변경 해보기
             // send data id, secret key , access code , redirect url
             GitOAuthResponseDTO token = restTemplate.postForObject(
                     oAuthInfo.getUrl(),
@@ -72,8 +79,22 @@ public class GitSocialOAuth implements SocialOAuth {
         } catch (IllegalArgumentException e){
             log.error("Null Exception : "+ e.getMessage());
             return null;
-        } catch ( HttpStatusCodeException e){
+        } catch (HttpStatusCodeException e){
             log.error("Http Status Exception : " + e.getMessage());
+            return null;
+        }
+    }
+
+
+
+    @Override
+    public String requestUserProfile(String accesstoken) {
+        try{
+            // TODO : 사용자 프로필 가저오기 (git)
+            return null;
+        }catch (IllegalArgumentException e) {
+            return null;
+        }catch (HttpStatusCodeException e){
             return null;
         }
     }
