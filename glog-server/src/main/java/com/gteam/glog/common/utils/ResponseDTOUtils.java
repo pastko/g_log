@@ -16,7 +16,7 @@ public class ResponseDTOUtils {
      * @param _msg  - 응답 메시지
      * @return - ResponseEntity
      */
-    public ResponseEntity<?> doGenerateResponseDTO(Object data,int code, String _msg){
+    public ResponseEntity<?> doGenerateSuccessResponseDTO(Object data,int code, String _msg){
         return ResponseEntity
                 .status(code)
                 .body(
@@ -34,7 +34,7 @@ public class ResponseDTOUtils {
      * @param code  - Status Code
      * @return - ResponseEntity
      */
-    public ResponseEntity<?> doGenerateBadResponseDTO(int code,String _msg){
+    public ResponseEntity<?> doGenerateFailedResponseDTO(int code,String _msg){
         return ResponseEntity
                 .status(code)
                 .body(

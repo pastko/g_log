@@ -29,18 +29,18 @@ public class LoginController {
 
     @PostMapping("/signin")
     @ApiOperation(value = "로그인 API", notes = "로컬 사용자 로그인 API")
-    public ResponseEntity<?> signin(@RequestBody() LoginRequestDTO userAuthDTO, HttpServletResponse response){
+    public ResponseEntity<?> signin(@RequestBody() LoginRequestDTO loginReqeustDTO, HttpServletResponse response){
         try{
-            log.trace("Sign In :",userAuthDTO.getUserId());
+            log.trace("Sign In :", loginReqeustDTO.getUserId());
             // 사용자 로그인 검증
-            Users user = loginService.validateUserLogin(userAuthDTO);
+            Users user = loginService.validateUserLogin(loginReqeustDTO);
             if(user != null) {
                 response.addCookie(jwtTokenUtils.generateCookieToRefreshToken(user));
             }
-            return responseDTOUtils.doGenerateResponse(user,200,"ok");
+            return responseDTOUtils.doGenerateSuccessResponseDTO(user,200,"ok");
         }catch (IllegalArgumentException e){
             log.error(e.getMessage());
-            return responseDTOUtils.doGenerateBadResponseDTO(401,"Failed");
+            return responseDTOUtils.doGenerateFailedResponseDTO(401,"Failed");
         }
     }
 
@@ -50,10 +50,10 @@ public class LoginController {
         try {
             Users users = loginService.validateUserAuthInfo(requestHeader.get("authorization"));
             UserInfoDTO userInfoDTO = loginService.findUserInfoByUserId(users.getUserId());
-            return responseDTOUtils.doGenerateResponse(userInfoDTO, 200, "ok");
+            return responseDTOUtils.doGenerateSuccessResponseDTO(userInfoDTO, 200, "ok");
         } catch (IllegalArgumentException e) {
             log.error(e.getMessage());
-            return responseDTOUtils.doGenerateBadResponseDTO(401,"Failed");
+            return responseDTOUtils.doGenerateFailedResponseDTO(401,"Failed");
         }
     }
 }
