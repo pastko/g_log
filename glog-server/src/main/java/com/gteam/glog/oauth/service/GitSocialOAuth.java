@@ -58,7 +58,7 @@ public class GitSocialOAuth implements SocialOAuth {
     public String requestAccessToken(String code) {
         try {
             OAuthInfo oAuthInfo = oAuthRepository.FindUserOAuthCode(SocialLoginType.GIT).get();
-            GitOAuthRequestDTO gItOAuthRequestDTO = new GitOAuthRequestDTO(
+            GitOAuthRequestDTO.AccessToken gItOAuthRequestDTO = new GitOAuthRequestDTO.AccessToken(
                     oAuthInfo.getClientId(),
                     oAuthInfo.getClientSecret(),
                     code,
@@ -67,13 +67,14 @@ public class GitSocialOAuth implements SocialOAuth {
 
             // TODO: restTemplate => okHttp2 로 변경 해보기
             // send data id, secret key , access code , redirect url
-            GitOAuthResponseDTO token = restTemplate.postForObject(
-                    oAuthInfo.getUrl(),
+            GitOAuthResponseDTO.AccessToken token = restTemplate.postForObject(
+                    oAuthInfo.getTokenUrl(),
                     gItOAuthRequestDTO,
-                    GitOAuthResponseDTO.class);
+                    GitOAuthResponseDTO.AccessToken.class);
             if (token != null) {
                 return token.getAccess_token();
             } else {
+                log.info("Token Null : null");
                 return null;
             }
         } catch (IllegalArgumentException e){
@@ -88,7 +89,7 @@ public class GitSocialOAuth implements SocialOAuth {
 
 
     @Override
-    public String requestUserProfile(String accesstoken) {
+    public String requestUserProfile(String accessToken) {
         try{
             // TODO : 사용자 프로필 가저오기 (git)
             return null;

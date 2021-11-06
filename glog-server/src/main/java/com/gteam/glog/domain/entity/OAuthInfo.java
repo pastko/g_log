@@ -11,7 +11,6 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @Table(name="oauth_info")
 public class OAuthInfo {
@@ -29,14 +28,14 @@ public class OAuthInfo {
     @NotNull
     private String ClientSecret;
 
-    @Column(name="oauth_url")
+    @Column(name="token_url")
     @Size(max=100)
     @NotNull
-    private String url;
+    private String tokenUrl;
 
     @Column(name="profile_url")
     @Size(max=100)
     @NotNull
-    private String profileRrl;
+    private String profileUrl;
 
 }

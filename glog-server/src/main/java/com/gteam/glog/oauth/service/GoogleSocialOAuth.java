@@ -61,7 +61,7 @@ public class GoogleSocialOAuth implements SocialOAuth {
     public String requestAccessToken(String code) {
         try {
             OAuthInfo oAuthInfo = oAuthRepository.FindUserOAuthCode(SocialLoginType.GOOGLE).get();
-            GoogleOAuthRequestDTO googleOAuthRequestDTO = new GoogleOAuthRequestDTO(
+            GoogleOAuthRequestDTO.AccessToken googleOAuthRequestDTO = new GoogleOAuthRequestDTO.AccessToken(
                     oAuthInfo.getClientId(),
                     oAuthInfo.getClientSecret(),
                     code,
@@ -72,12 +72,13 @@ public class GoogleSocialOAuth implements SocialOAuth {
             // TODO: restTemplate => okHttp2 로 변경 해보기
             // send data id, secret key , access code , grant type, redirect url
             GoogleOAuthResponseDTO token = restTemplate.postForObject(
-                    oAuthInfo.getUrl(),
+                    oAuthInfo.getTokenUrl(),
                     googleOAuthRequestDTO,
                     GoogleOAuthResponseDTO.class);
             if (token != null) {
                 return token.getAccess_token();
             } else {
+                log.info("Token Null : null");
                 return null;
             }
         } catch (IllegalArgumentException e){
