@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@toast-ui/react-editor": "^3.1.1",
     "axios": "^0.24.0",
     "dotenv": "^10.0.0",
     "eslint-config-airbnb": "^18.2.1",
