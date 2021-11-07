@@ -32,9 +32,12 @@ public class OAuthController {
 
     @GetMapping("/{socialLoginType}/callback")
     @ApiOperation(value = "소셜 로그인 API callback", notes = "소셜 로그인 리디렉션 URI")
-    public ResponseEntity<?> OAuthCallback(@PathVariable("socialLoginType") SocialLoginType socialLoginType){
+    public ResponseEntity<?> OAuthCallback(@PathVariable("socialLoginType") SocialLoginType socialLoginType,
+                                           @RequestParam(value = "code") String code){
         try{
             // TODO : OAtuhServie 연결 필요
+            System.out.println(code);
+            System.out.println(socialLoginType.get());
             return ResponseEntity.ok().body("");
         }catch (Exception error){
             return ResponseEntity.badRequest().body("Not found!");

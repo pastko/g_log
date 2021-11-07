@@ -21,7 +21,7 @@ public class Mypage {
 
     @OneToOne
     @JoinColumn(name = "usr_idx")
-    private Users usr_idx;
+    private Users usridx;
 
     @Column(name = "nik_nm")
     @Size(max=13)
