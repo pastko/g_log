@@ -49,7 +49,7 @@ public interface SocialOAuth {
             HttpEntity httpEntity = createHeaders(accessToken);
 
             return this.restTemplate.exchange(
-                    oAuthInfo.getUrl(),
+                    oAuthInfo.getProfileUrl(),
                     HttpMethod.GET,
                     httpEntity,
                     String.class);

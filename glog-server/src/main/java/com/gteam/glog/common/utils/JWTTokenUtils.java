@@ -1,11 +1,15 @@
 package com.gteam.glog.common.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gteam.glog.domain.dto.login.LoginRequestDTO;
 import com.gteam.glog.domain.entity.Users;
+import com.gteam.glog.login.repository.LoginRepository;
 import io.jsonwebtoken.*;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 
 import javax.servlet.http.Cookie;
 import java.util.Date;
@@ -14,16 +18,23 @@ import java.util.Map;
 
 
 @Service
+@Log4j2
 public class JWTTokenUtils {
 
     @Value("${auth.tokenSecret}")
     private String SIGN_KEY;
     @Value("${auth.subject}")
     private String SUBJECT_KEY;
-    private static final long JWT_TOKEN_EXPIRED_TIME = 5 * 60  * 1000;
-    private static final long COOKIES_EXPIRED_TIME = 20 * 60  * 1000;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private static final long ACCESS_TOKEN_EXPIRED_TIME = 60  * 1000;       // 1분
+    private static final long REFRESH_TOKEN_EXPIRED_TIME = 30 * 24 * 60 * 60 * 1000; // 1개월
+    private final ObjectMapper objectMapper;
+    private final LoginRepository loginRepository;
 
+    @Autowired
+    public JWTTokenUtils(LoginRepository loginRepository) {
+        this.loginRepository = loginRepository;
+        this.objectMapper = new ObjectMapper();
+    }
 
     /**
      * jwt 토큰에서 만효되는 날짜 조회
@@ -31,7 +42,7 @@ public class JWTTokenUtils {
      * @param token -
      * @return
      */
-    public Date getExpirationDateFromToken(String token) {
+    private Date getExpirationDateFromToken(String token) {
         return getAllClaimsFromToken(token).getExpiration();
     }
 
@@ -41,7 +52,7 @@ public class JWTTokenUtils {
      * @param token -
      * @return
      */
-    public Claims getAllClaimsFromToken(String token) {
+    private Claims getAllClaimsFromToken(String token) {
         return Jwts.parser().setSigningKey(SIGN_KEY).parseClaimsJws(token).getBody();
     }
 
@@ -51,7 +62,7 @@ public class JWTTokenUtils {
      * @param token -
      * @return
      */
-    public Boolean isTokenExpired(String token) {
+    private Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
@@ -79,48 +90,56 @@ public class JWTTokenUtils {
                 .compact();
     }
 
-
     /**
-     * 전달된 OBJECT로 토큰생성
+     * 전달된 OBJECT로 Access Token 생성
      *
-     * @param data -
+     * @param users -
      * @return Token String
      */
-    public String generateObjectToken(Object data) {
-        Map<String, Object> claims = objectMapper.convertValue(data, Map.class);
-        return doGenerateToken(claims,JWT_TOKEN_EXPIRED_TIME);
+    public String issuanceAccessToken(Users users) {
+        Map<String, Object> claims = objectMapper.convertValue(LoginRequestDTO.builder()
+                .mail(users.getMail())
+                .pwd("")
+                .build(), Map.class);
+        log.info("Access Token : ISSUANCE");
+        return doGenerateToken(claims,ACCESS_TOKEN_EXPIRED_TIME);
     }
 
     /**
-     * JWT 리프레쉬 토큰을 전달하는 쿠키 생성
+     * 전달된 OBJECT로 Refresh Token 생성
      *
-     * @param data
+     * @param users
      * @return Cookie String
      */
-    public Cookie generateCookieToRefreshToken(Object data){
-        Map<String, Object> claims = objectMapper.convertValue(data, Map.class);
-        return new Cookie("reFreshToken", doGenerateToken(claims,COOKIES_EXPIRED_TIME));
+    public String issuanceRefreshToken(Users users){
+        Map<String, Object> claims = objectMapper.convertValue(LoginRequestDTO.builder()
+                .mail(users.getMail())
+                .pwd("")
+                .build(), Map.class);
+        log.info("Refresh Token : ISSUANCE");
+        return doGenerateToken(claims,REFRESH_TOKEN_EXPIRED_TIME);
     }
 
     /**
      * jwt 토큰에서 유효성 검사를 위한 subject 조회
      *
      * @param token -
-     * @return
+     * @return Token Subject values
      */
     private String getSubjectFromToken(String token) {
         return getAllClaimsFromToken(token).getSubject();
     }
 
     /**
-     * 토큰 유효성 검증
-     * 만료 기간 및 Subject 검증
-     * @param token -
+     * Refresh Token 재발급 후 DB update
+     *
+     * @param users
      * @return
      */
-    public Boolean validateToken(String token) {
-        final String subject = getSubjectFromToken(token);
-        return (subject.equals(SUBJECT_KEY) && !isTokenExpired(token));
+    private void updateIssuanceRefreshToken(Users users){
+        String key = this.issuanceRefreshToken(users);
+        log.info("Refresh Token : REFRESH "+users.getMail());
+        loginRepository.updateUserKey(users.getMail(),key);
     }
 
     /**
@@ -128,12 +147,104 @@ public class JWTTokenUtils {
      *
      * @param header -
      */
-    public void validationAuthorizationHeader(String header) {
+    private void validationAuthorizationHeader(String header) {
         if (header == null || !header.startsWith("Bearer ")) {
             throw new IllegalArgumentException();
         }
     }
-    public String extractToken(String authorizationHeader) {
+    private String extractToken(String authorizationHeader) {
         return authorizationHeader.substring("Bearer ".length());
+    }
+
+    /**
+     * 토큰 유효성 검증
+     * 만료 기간 및 Subject 검증
+     * @param token
+     * @return boolean
+     */
+    public Boolean validateToken(String token) {
+        final String subject = getSubjectFromToken(token);
+        return (subject.equals(SUBJECT_KEY) && !isTokenExpired(token));
+    }
+
+    /**
+     * 리프레쉬 토큰을 사용하여 Access 토큰 재발 급
+     *
+     * @param refreshKey
+     * @return AccessToken
+     */
+    public String reissuanceAccessToken(String refreshKey){
+        Users users = (Users) this.getAllClaimsFromToken(refreshKey);
+
+        log.info("Access Token : REFRESH");
+        return this.issuanceAccessToken(loginRepository.getUsersByUserId(users.getMail()).orElse(null));
+    }
+    /**
+     * 리프레쉬 토큰을 재발 급
+     * 1. 재발급 시기
+     *    - 첫 로그인 시  ( DB상 key( Refresh Token) 이 존재 하지 않을때 )
+     *    - Refresh Token 만료 되었을 때
+     * @param mail
+     * @return AccessToken
+     */
+    public void reissuanceRefreshToken(String mail){
+        this.updateIssuanceRefreshToken(loginRepository.getUsersByUserId(mail).orElse(null));
+    }
+
+    /**
+     * 사용자 Access Token 검증
+     * 1. 토큰 내 Bearer 문자열 검사 ( Bearer 제거 )
+     * 2. 인증서 유효성 검사 ( 만료 & Subject 검사 )
+     *
+     * @param key
+     * @return
+     *        >  인증서가 유효함 : true
+     *        >  인증서가 유효하지 않음 : false
+     */
+    public Boolean validateAccessInfoByToken(String key, String mail){
+        try {
+            // Bearer 제거
+            this.validationAuthorizationHeader(key);
+            key = this.extractToken(key);
+
+            return (this.validateToken(key) &&
+                    this.getAllClaimsFromToken(key).getId().equals(mail));
+        }catch (IllegalArgumentException e){
+            log.info("토큰이 유효하지 않습니다.");
+            return false;
+        }
+    }
+
+
+
+    /**
+     * Refresh Token을 재발급하여 반환
+     * 1. 저장되어 있는 Refresh Token 조회
+     * 2. 조회한 token과 key값 비교
+     *
+     * @param key - Cookie에 저장된 Refresh Token
+     * @param mail - 사용자 Id
+     * @return
+     *       > Refresh Token 검증 성공 : ture
+     *       > 검증 실패 (만료 & key not equals) : false
+     */
+    public Boolean validateRefreshToken(String key, String mail){
+        String token = this.getRefreshToken(mail);
+        if(token != null) {
+            return (this.validateToken(token) && token.equals(key));
+        }else{
+            return false;
+        }
+    }
+
+
+    /**
+     * 저장되어 있는 사용자 Refresh Token 조회
+     *
+     * @param mail
+     * @return
+     */
+    public String getRefreshToken(String mail){
+        return loginRepository.getUsersByUserId(mail).orElse(null).getKey();
     }
 }

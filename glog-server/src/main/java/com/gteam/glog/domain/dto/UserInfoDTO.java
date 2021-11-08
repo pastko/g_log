@@ -7,9 +7,9 @@ import lombok.Setter;
 @Setter
 public class UserInfoDTO {
     private int usrIdx;
-    private String userId;
-    private String userPwd;
-    private String nikName;
+    private String mail;
+    private String pwd;
+    private String nikNm;
+    private String imgNm;
     private String glogTitle;
-    private String imgName;
 }

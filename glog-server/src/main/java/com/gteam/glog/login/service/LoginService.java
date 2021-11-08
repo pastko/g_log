@@ -1,16 +1,17 @@
 package com.gteam.glog.login.service;
 
 import com.gteam.glog.common.utils.JWTTokenUtils;
-import com.gteam.glog.domain.dto.LoginRequestDTO;
+import com.gteam.glog.domain.dto.login.LoginRequestDTO;
 import com.gteam.glog.domain.dto.UserInfoDTO;
 import com.gteam.glog.domain.entity.Users;
+import com.gteam.glog.domain.enums.UserStatusCode;
 import com.gteam.glog.login.repository.LoginRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
+import javax.servlet.http.Cookie;
 
 @Service
 @Log4j2
@@ -34,30 +35,9 @@ public class LoginService {
      *          > userId is not exist   - return null
      */
     public Users findUserByUserId(String id){
-        try{
-            return loginRepository.getUsersByUserId(id).get();
-        }catch (NoSuchElementException e){
-            log.error(e.getMessage());
-            return null;
-        }
+        return loginRepository.getUsersByUserId(id).orElse(null);
     }
 
-    /**
-     *  유저 개인 정보 조회 Id
-     *  User Nik-Name, user Img-name, user glog Title-name
-     * @param id - userinfo id
-     * @return :
-     *          >  userId is exist       - return user info
-     *          >  userId is not exist   - return null
-     */
-    public UserInfoDTO findUserInfoByUserId(String id){
-        try{
-            return loginRepository.getUserInfoByUserId(id).get();
-        }catch (IllegalArgumentException e){
-            log.error(e.getMessage());
-            return null;
-        }
-    }
 
     /**
      * 로그인 검증
@@ -70,15 +50,20 @@ public class LoginService {
      *       >  is not correct : null
      */
     public Users validateUserLogin(LoginRequestDTO authDTO){
-            try{
-                Users users = findUserByUserId(authDTO.getUserId());
-                // Bcrypt password validate
-                if(!passwordEncoder.matches(authDTO.getPassWd(),users.getUserPwd())){
-                    log.trace("비밀번호 오류.");
+            try {
+                Users users = findUserByUserId(authDTO.getMail());
+                if (users != null) {
+                    // Bcrypt password validate
+                    if (!passwordEncoder.matches(authDTO.getPwd(), users.getPwd())) {
+                        log.info("비밀번호 오류.");
+                        return null;
+                    }
+                    log.info("비밀번호 정상.");
+                    return users;
+                } else{
+                    log.info("사용자가 존재하지 않습니다.");
                     return null;
                 }
-                log.trace("비밀번호 정상.");
-                return users;
             }catch (IllegalArgumentException e){
                 log.error(e.getMessage());
                 return null;
@@ -86,29 +71,66 @@ public class LoginService {
     }
 
     /**
-     * 토큰 검증
-     * 1. 토큰 내 Bearer 문자열 검사 ( Bearer 제거 )
-     * 2. 인증서 유효성 검사 ( 만료 & Subject 검사 )
+     * 사용자 로그인
      *
-     * @param key
+     * @param loginRequestDTO
      * @return
-     *        >  인증서 유효함         : Token 저장되어있는 데이터
-     *        >  인증서가 유효하지 않음 : null
+     *       > 사용자 검증 성공 : Access Token
+     *       > 사용자 검증 실패 : null
      */
-    public Users validateUserAuthInfo(String key){
-        try {
-            jwtTokenUtils.validationAuthorizationHeader(key);
-            key = jwtTokenUtils.extractToken(key);
+    public String doLogin(LoginRequestDTO loginRequestDTO){
+        Users users = validateUserLogin(loginRequestDTO);
+        if(users != null){
+            loginRepository.updateLoginStatus(users.getMail(),UserStatusCode.LOGIN);
 
-            if (jwtTokenUtils.validateToken(key)) {
-                return (Users) jwtTokenUtils.getAllClaimsFromToken(key);
-            } else {
-                log.trace("토큰이 유효하지 않습니다.");
-                return null;
+            String accessToken = jwtTokenUtils.issuanceAccessToken(users);
+            if (!jwtTokenUtils.validateRefreshToken(users.getKey(), loginRequestDTO.getMail())) {
+                jwtTokenUtils.reissuanceRefreshToken(users.getMail());
             }
-        }catch (IllegalArgumentException e){
-            log.trace("토큰이 유효하지 않습니다.");
+            return accessToken;
+        }else{
             return null;
         }
+    }
+
+
+    /**
+     * 사용자 로그아웃
+     * 1. Access Token / 사용자 검증
+     * 2. Access Token 만료시 Refresh Token을 사용한 검증
+     * 3. 로그아웃
+     *
+     * @param key - Access Token
+     * @param mail - User Id
+     * @param cookie - Refresh Token
+     * @return
+     *       > 사용자 검증 성공 : ture
+     *       > 사용자 검증 실패 : false
+     */
+    public Boolean doLogOut(String key, String mail, Cookie cookie){
+        if(jwtTokenUtils.validateAccessInfoByToken(key,mail)){
+            loginRepository.updateLoginStatus(mail, UserStatusCode.LOGOUT);
+            return true;
+        }else{
+            if(jwtTokenUtils.validateRefreshToken(cookie.getValue(),mail)){
+                loginRepository.updateLoginStatus(mail, UserStatusCode.LOGOUT);
+                return true;
+            }else {
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Refresh Token을 Cookie로 만들어 반환
+     * 1. 사용자 인증 정보의 Key로 저장되어 있는 Refresh Token 조회
+     * 2. Token 만료시 & Null 시 Refresh Token 재발급 하여 DB 저장
+     * 3. Refresh Token를 Cookie로 만들어 반환
+     *
+     * @param mail
+     * @return Cookie
+     */
+    public Cookie getRefreshTokenToCookie(String mail){
+       return new Cookie("refresh", jwtTokenUtils.getRefreshToken(mail));
     }
 }

@@ -2,10 +2,11 @@ package com.gteam.glog.login.repository;
 
 import com.gteam.glog.domain.dto.UserInfoDTO;
 import com.gteam.glog.domain.entity.Users;
+import com.gteam.glog.domain.enums.UserStatusCode;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import java.util.List;
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Repository
@@ -15,34 +16,57 @@ public class LoginRepository {
         this.entityManager = entityManager;
     }
 
+
     /**
-     * Get User MyPage Info by Userid
+     * 사용자 정보 조회 <Users/>: 이메일
      *
-     * @param id
-     * @return UserInfoDTO
+     * @param mail
+     * @return Users
      */
-    public Optional<UserInfoDTO> getUserInfoByUserId(String id){
-        // 유저 MyPage 정보 조회
-        List<UserInfoDTO> userInfoDTO = entityManager
-                .createQuery("select usr from Mypage as usr where usr.usr_idx.userId = ?1", UserInfoDTO.class)
-                .setParameter(1,id)
-                .getResultList();
-        return Optional.of(userInfoDTO.get(0));
+    public Optional<Users> getUsersByUserId(String mail){
+        // 유저 인증 정보 조회
+        return entityManager
+                .createQuery("select usr from Users as usr where usr.mail = ?1", Users.class)
+                .setParameter(1, mail)
+                .getResultList().stream().findFirst();
     }
 
     /**
-     * Get Users auth info by Userid
+     * 사용자 Refresh Token 값 수정
      *
-     * @param id
-     * @return Users
+     * @param key - Refresh Token
+     * @param mail - User Mail
+     *
      */
-    public Optional<Users> getUsersByUserId(String id){
-        // 유저 인증 정보 조회
-        List<Users> users = entityManager
-                .createQuery("select usr from Users as usr where usr.userId = ?1", Users.class)
-                .setParameter(1,id)
-                .getResultList();
+    @Transactional
+    public void updateUserKey(String mail,String key){
+        // 유저 MyPage 정보 조회
+        Users users = entityManager
+                .createQuery("select user from Users as user where user.mail = ?1", Users.class)
+                .setParameter(1,mail)
+                .getResultList().stream().findFirst().get();
+        users.setKey(key);
+        entityManager.merge(users);
+        entityManager.flush();
+    }
 
-        return Optional.of(users.get(0));
+
+    /**
+     * 사용자 Login 상태 수정
+     *
+     * @param mail - User Mail
+     * @param status - User status
+     *
+     */
+    @Transactional
+    public void updateLoginStatus(String mail, UserStatusCode status){
+        // 유저 MyPage 정보 조회
+        Users users = entityManager
+                .createQuery("select user from Users as user where user.mail = ?1", Users.class)
+                .setParameter(1,mail)
+                .getResultList().stream().findFirst().get();
+        users.setStatus(status);
+        entityManager.merge(users);
+        entityManager.flush();
     }
 }
