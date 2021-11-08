@@ -19,6 +19,7 @@ public class LoginService {
 
     private final LoginRepository loginRepository;
     private final JWTTokenUtils jwtTokenUtils;
+    @Autowired
     PasswordEncoder passwordEncoder;
     @Autowired
     public LoginService(LoginRepository loginRepository, JWTTokenUtils jwtTokenUtils) {
@@ -82,7 +83,7 @@ public class LoginService {
         Users users = validateUserLogin(loginRequestDTO);
         if(users != null){
             loginRepository.updateLoginStatus(users.getMail(),UserStatusCode.LOGIN);
-
+            log.info("----- find :  {}, {}",users.getMail(),users.getStatus());
             String accessToken = jwtTokenUtils.issuanceAccessToken(users);
             if (!jwtTokenUtils.validateRefreshToken(users.getKey(), loginRequestDTO.getMail())) {
                 jwtTokenUtils.reissuanceRefreshToken(users.getMail());

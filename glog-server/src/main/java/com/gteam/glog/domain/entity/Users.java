@@ -19,24 +19,23 @@ import javax.validation.constraints.Size;
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "usr_idx")
+    @Column(name = "`usr_idx`")
     private int idx;
 
-    @Column(name = "mail", nullable = false)
+    @Column(name = "`mail`")
     @Email
     @NotNull
     private String mail;
 
-    @Column(name = "pwd", nullable = false)
+    @Column(name = "`pwd`")
     @NotNull
     private String pwd;
 
-    @Column(name = "key", nullable = false)
-    @NotNull
+    @Column(name = "`key`", nullable = true)
     private String key;
 
     @NotNull
-    @Column(name = "status")
+    @Column(name = "`status`")
     @Enumerated(EnumType.STRING)
     private UserStatusCode status;          // enum('LOGIN', 'LOGOUT', 'UNREGISTER') NOT NULL,
 }

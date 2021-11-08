@@ -28,20 +28,20 @@ class JWTTokenUtilsTest {
     @Test
     void tokenTest() {
         Users users = new Users();
-        users.setUserPwd("testpassword");
-        users.setUserId("testid");
+        users.setPwd("$2a$12$BQUaoQT9bBjbCxsZcWPUGeTWAbnwSniT5ZiNY.Uz3q/EjcTS0.dQG");
+        users.setMail("glog@gmail.com");
 
-        String tesToken = jwtTokenUtils.generateObjectToken(users);
-        Claims claims = jwtTokenUtils.getAllClaimsFromToken(tesToken);
+        String tesToken = jwtTokenUtils.issuanceAccessToken(users);
+
 
         System.out.printf("\n\n");
         System.out.printf("Test Token : "+tesToken);
         System.out.printf("\n\n");
-        System.out.printf("Test user id : "+claims.get("userId"));
+//        System.out.printf("Test user id : "+claims.get("userId"));
         System.out.printf("\n\n");
 
-        assertThat(jwtTokenUtils.validateToken(tesToken)).isEqualTo(true);
-        assertThat(jwtTokenUtils.getAllClaimsFromToken(tesToken).get("userId")).isEqualTo(users.getUserId());
+        assertThat(jwtTokenUtils.validateAccessInfoByToken(tesToken,users.getMail())).isEqualTo(true);
+//        assertThat(jwtTokenUtils.getAllClaimsFromToken(tesToken).get("userId")).isEqualTo(users.getUserId());
     }
 
     private class ServerConfig {

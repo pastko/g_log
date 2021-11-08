@@ -31,10 +31,10 @@ public class LoginController {
 
     @PostMapping("/signin")
     @ApiOperation(value = "로그인 API", notes = "로컬 사용자 로그인 API")
-    public ResponseEntity<?> signIn(@RequestBody() LoginRequestDTO loginRequestDTO,
+    public ResponseEntity<?> signIn(@RequestBody LoginRequestDTO loginRequestDTO,
                                     HttpServletResponse response){
 
-        log.trace("Sign In :", loginRequestDTO.getMail());
+        log.info("Sign In : {}", loginRequestDTO.getMail());
         // 사용자 로그인 검증
         String accessToken = loginService.doLogin(loginRequestDTO);
         if(accessToken != null){
@@ -52,7 +52,7 @@ public class LoginController {
                                      @RequestHeader(value = "X-USER-ID") String mail,
                                      @CookieValue(value = "refresh")Cookie reqCookie,
                                      HttpServletResponse response){
-        log.trace("Sign Out :", mail);
+        log.info("Sign Out :", mail);
         if(loginService.doLogOut(authorization,mail,reqCookie)){
             // 쿠키 삭제
             Cookie cookie = new Cookie("refresh","");

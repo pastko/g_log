@@ -46,7 +46,7 @@ public class LoginRepository {
                 .setParameter(1,mail)
                 .getResultList().stream().findFirst().get();
         users.setKey(key);
-        entityManager.merge(users);
+        //entityManager.merge(users);
         entityManager.flush();
     }
 
@@ -66,7 +66,7 @@ public class LoginRepository {
                 .setParameter(1,mail)
                 .getResultList().stream().findFirst().get();
         users.setStatus(status);
-        entityManager.merge(users);
+//        entityManager.merge(users);
         entityManager.flush();
     }
 }

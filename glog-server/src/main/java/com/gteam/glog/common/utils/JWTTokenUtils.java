@@ -6,6 +6,7 @@ import com.gteam.glog.domain.entity.Users;
 import com.gteam.glog.login.repository.LoginRepository;
 import io.jsonwebtoken.*;
 import lombok.extern.log4j.Log4j2;
+import org.hibernate.graph.InvalidGraphException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class JWTTokenUtils {
     @Value("${auth.subject}")
     private String SUBJECT_KEY;
     private static final long ACCESS_TOKEN_EXPIRED_TIME = 60  * 1000;       // 1분
-    private static final long REFRESH_TOKEN_EXPIRED_TIME = 30 * 24 * 60 * 60 * 1000; // 1개월
+    private static final long REFRESH_TOKEN_EXPIRED_TIME = 1 * 24 * 60 * 60 * 1000; // 1개월 => 1일로 변경
     private final ObjectMapper objectMapper;
     private final LoginRepository loginRepository;
 
@@ -162,7 +163,7 @@ public class JWTTokenUtils {
      * @param token
      * @return boolean
      */
-    public Boolean validateToken(String token) {
+    private Boolean validateToken(String token) {
         final String subject = getSubjectFromToken(token);
         return (subject.equals(SUBJECT_KEY) && !isTokenExpired(token));
     }
@@ -212,6 +213,9 @@ public class JWTTokenUtils {
         }catch (IllegalArgumentException e){
             log.info("토큰이 유효하지 않습니다.");
             return false;
+        }catch (ExpiredJwtException e){
+            log.info("토큰이 만로 되었습니다.");
+            return  false;
         }
     }
 
