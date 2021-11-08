@@ -1,18 +1,18 @@
 package com.gteam.glog.mypage.repository;
 
+import com.gteam.glog.common.utils.JWTTokenUtils;
 import com.gteam.glog.domain.dto.UserInfoDTO;
-import com.gteam.glog.domain.dto.login.LoginRequestDTO;
-import com.gteam.glog.domain.entity.Users;
 import com.gteam.glog.mypage.service.MyPageRepository;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MyPageService {
     private final MyPageRepository myPageRepository;
+    private final JWTTokenUtils jwtTokenUtils;
 
-    public MyPageService(MyPageRepository myPageRepository) {
+    public MyPageService(MyPageRepository myPageRepository, JWTTokenUtils jwtTokenUtils) {
         this.myPageRepository = myPageRepository;
+        this.jwtTokenUtils = jwtTokenUtils;
     }
 
     /**
@@ -48,10 +48,10 @@ public class MyPageService {
      *          >  userId is not exist   - return null
      */
     public UserInfoDTO saveUserInfo(String key, String mail, UserInfoDTO userInfoDTO){
-
-        myPageRepository.updateUserInfo(userInfoDTO);
-
-
-        return findUserInfoByUserId(userInfoDTO.getMail());
+        if(myPageRepository.updateUserInfo(userInfoDTO)){
+            return findUserInfoByUserId(userInfoDTO.getMail());
+        }else{
+            return null;
+        }
     }
 }

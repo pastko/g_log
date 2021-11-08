@@ -39,7 +39,7 @@ public class MyPageController {
     public ResponseEntity<?> getMyPage(@RequestHeader(value = "authorization")String authorization,
                                        @RequestHeader(value = "X-USER-ID") String mail,
                                        @CookieValue(value = "refresh")Cookie reqCookie) {
-        return null;
+        return responseDTOUtils.doGenerateResponseDTO(myPageService.findUserInfoByUserId(mail));
     }
 
 
