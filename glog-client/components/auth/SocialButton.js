@@ -1,51 +1,59 @@
-import { FaGoogle, FaGithub } from 'react-icons/fa';
 import styled from 'styled-components';
-import axios from 'axios';
-import Router from 'next/router';
+import Img from 'next/image';
+import googleIcon from '../../public/google.svg';
+import githubIcon from '../../public/github.svg';
 
 function SocialButton({ btnType }) {
-  const goGithub = () => {};
-//   const goGoogle = () => {
-//     const gooleURL = 'https://accounts.google.com/o/oauth2/v2/auth?'
-//     + `client_id=${process.env.NEXT_PUBLIC_CLIENT_ID}`
-//     + `&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}`
-//     + `&response_type=code&scope=profile`;
-//     window.location.assign('https://www.naver.com');
-//   };
-const goGoogle =()=>{
-    Router.push("https://accounts.google.com/o/oauth2/v2/auth/identifier?client_id=831514969986-67u6g2eqe7a61o4b41br1n0clkh89ktg.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Flocalhost%3A3000%2F&response_type=code&scope=profile&flowName=GeneralOAuthFlow")
-}
+  const googleURI =
+    'https://accounts.google.com/o/oauth2/v2/auth?' +
+    `client_id=${process.env.googleClientId}.apps.googleusercontent.com` +
+    `&redirect_uri=${process.env.googleRedirectURI}` +
+    '&response_type=code' +
+    '&scope=profile';
 
+  const githubURI =
+    'https://github.com/login/oauth/authorize?' +
+    `client_id=${process.env.githubClientId}` +
+    `&redirect_uri=${process.env.githubRedirectURI}`;
 
   return (
-    <StyledSocial onClick={btnType === 'Google' ? goGoogle : goGithub}>
-      {btnType === 'Google' ? <FaGoogle /> : <FaGithub />}
+    <StyledLink href={btnType === 'Google' ? googleURI : githubURI} 
+    target="_blank">
+      <Img
+        src={btnType === 'Google' ? googleIcon : githubIcon}
+        width={22}
+        height={22}
+        alt={btnType}
+      />
       <span>
         {btnType}
         계정으로 계속하기
       </span>
-    </StyledSocial>
+    </StyledLink>
   );
 }
-const StyledSocial = styled.button`
+
+const StyledLink = styled.a`
   width: 100%;
-  height: 40px;
+  height: 48px;
   margin-top: 10px;
-  line-height: 18px;
-  font-size: 16px;
+  background: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(0, 0, 0, 0.54);
   border: 2px solid #ddd;
   border-radius: 1.5rem;
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
   cursor: pointer;
-  background: #fff;
-  color: #797979;
+  &:hover {
+    opacity: 0.6;
+  }
   span {
-    display: inline-block;
     margin-left: 10px;
   }
-  &:hover {
-    border: 1px solid #a680d2;
-    background-color: #a680d267;
-    color: #fff;
-  }
 `;
+
 export default SocialButton;
