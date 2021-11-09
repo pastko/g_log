@@ -21,8 +21,8 @@ public class RegisterRepository {
         this.entityManager = entityManager;
     }
 
-    public boolean duplicateCheck(String id) {
-        UserInfoDTO userInfoDTO = entityManager.find(UserInfoDTO.class, id);
+    public boolean duplicateCheck(String email) {
+        UserInfoDTO userInfoDTO = entityManager.find(UserInfoDTO.class, email);
         return userInfoDTO == null;
     }
     public void createUserInfo(UserInfoDTO userInfoDTO) {
@@ -40,6 +40,9 @@ public class RegisterRepository {
     }
 
     public void unRegistUser(String email) {
-        
+        /*select * from mypage where id = {email}
+        * -> isUnregist = true;
+        *
+        * entitymanager.persist() close*/
     }
 }

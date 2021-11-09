@@ -37,6 +37,4 @@ public class Mypage {
     private String glogTitle;
 
     private Date UnregistDate;
-
-    private Boolean isUnregist;
 }

@@ -31,4 +31,8 @@ public class Users {
     @Column(name = "pwd", nullable = false)
     @NotNull
     private String userPwd;
+
+    @NotNull
+    private Boolean isUnregist;
+
 }
