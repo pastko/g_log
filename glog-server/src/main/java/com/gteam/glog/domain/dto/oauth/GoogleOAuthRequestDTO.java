@@ -25,7 +25,7 @@ public class GoogleOAuthRequestDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class RefreshToken {
-
+        private String id;
     }
 
 }

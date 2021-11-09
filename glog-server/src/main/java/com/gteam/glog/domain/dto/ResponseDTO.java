@@ -7,7 +7,8 @@ import lombok.Setter;
 @Setter
 @Getter
 @Builder
-public class UserResponseDTO {
+public class ResponseDTO {
+    private boolean success;
     private Object data;
     private String msg;
 }

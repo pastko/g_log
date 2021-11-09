@@ -21,14 +21,14 @@ public class Mypage {
 
     @OneToOne
     @JoinColumn(name = "usr_idx")
-    private Users usridx;
+    private Users usrIdx;
 
     @Column(name = "nik_nm")
     @Size(max=13)
-    private String nikName;
+    private String nikNm;
 
     @Column(name = "img_nm")
-    private String imgName;
+    private String imgNm;
 
     @Column(name = "glog_titl")
     @Size(max=10)
