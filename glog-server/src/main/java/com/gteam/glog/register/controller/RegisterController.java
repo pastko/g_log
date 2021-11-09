@@ -2,7 +2,7 @@ package com.gteam.glog.register.controller;
 
 import com.gteam.glog.domain.dto.UserInfoDTO;
 import com.gteam.glog.domain.dto.UserRequestDTO;
-import com.gteam.glog.common.JWTTokenUtils;
+import com.gteam.glog.common.utils.JWTTokenUtils;
 import com.gteam.glog.register.service.RegisterService;
 import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class RegisterController {
 
     private final RegisterService registerService;
-    private JWTTokenUtils jwtTokenUtils = new JWTTokenUtils();
+    private final JWTTokenUtils jwtTokenUtils = new JWTTokenUtils();
 
     @Autowired
     public RegisterController(RegisterService registerService) {
@@ -26,14 +26,14 @@ public class RegisterController {
 
     @PostMapping(value = "/signup")
     @ApiOperation(value = "회원가입 API", notes = "로컬 사용자 회원가입 API")
-    public String createUserinfo(@RequestBody(required = true) UserRequestDTO token, HttpServletResponse response) {
+    public String createUserinfo(@RequestBody(required = true) UserRequestDTO request, HttpServletResponse response) {
         UserInfoDTO userInfoDTO = new UserInfoDTO();
-        Claims claims = jwtTokenUtils.getAllClaimsFromToken(token.getToken());
 
-        userInfoDTO.setUserId((String) claims.get("email"));
-        userInfoDTO.setUserToken((String) claims.get("password"));
-        userInfoDTO.setUserName((String) claims.get("nickname"));
-
+        if(request.getMail() != null) {
+            userInfoDTO.setUserId(request.getMail());
+            userInfoDTO.setUserPwd(request.getPwd());
+            userInfoDTO.setNikName(request.getNikNm());
+        }
         return registerService.createUserInfo(userInfoDTO);
     }
 }
