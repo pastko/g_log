@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Post from '../components/Post';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const Main = () => {
     const [items, setItems] = useState([]);
@@ -12,42 +13,29 @@ const Main = () => {
 
     useEffect(() => {
         const getComments = async () => {
-            const res = await fetch(
-                `http://localhost:3004/comments?_page=1&_limit=20`
-            );
-            const data = await res.json();
-            setItems(data);
-            // try {
-            //     return await axios.get(
-            //         `http://localhost:3004/comments?_page=1&_limit=20`
-            //     );
-            // } catch (error) {
-            //     console.error(error);
-            // }
+            // const res = await fetch(
+            //     `http://localhost:3004/comments?_page=1&_limit=20`
+            // );
             // const data = await res.json();
             // setItems(data);
+            const res = await axios.get(
+                `http://localhost:3004/comments?_page=1&_limit=20` //서버에서 api 받아올 예정
+            );
+            setItems(res.data);
         };
-
         getComments();
     }, []);
 
-    console.log(items);
-
     const fetchComments = async () => {
-        const res = await fetch(
-            `http://localhost:3004/comments?_page=${page}&_limit=20`
-        );
-        const data = await res.json();
-        return data;
-        // try {
-        //     return await axios.get(
-        //         `http://localhost:3004/comments?_page=${page}&_limit=20`
-        //     );
-        // } catch (error) {
-        //     console.log(error);
-        // }
+        // const res = await fetch(
+        //     `http://localhost:3004/comments?_page=${page}&_limit=20`
+        // );
         // const data = await res.json();
         // return data;
+        const res = await axios.get(
+            `http://localhost:3004/comments?_page=${page}&_limit=20` //서버에서 api 받아올 예정
+        );
+        return res.data;
     };
     const fetchData = async () => {
         const commentsFormServer = await fetchComments();
@@ -56,50 +44,63 @@ const Main = () => {
         if (commentsFormServer.length === 0 || commentsFormServer.length < 20) {
             setnoMore(false);
         }
-
         setpage(page + 1);
-        console.log('hello');
     };
 
     return (
         <>
-            <Recent>최신</Recent>
-            <InfiniteScroll
-                dataLength={items.length} //This is important field to render the next data
-                next={fetchData}
-                hasMore={noMore}
-                loader={<h4>Loading...</h4>}
-                endMessage={
-                    <p style={{ textAlign: 'center' }}>
-                        <b></b>
-                    </p>
-                }
-            >
-                {items.map((item) => {
-                    return (
-                        <PostList>
-                            <Post key={item.id} item={item} />
-                        </PostList>
-                    );
-                })}
-            </InfiniteScroll>
+            <Recent>
+                <TrandTab>
+                    <text>트렌딩</text>
+                </TrandTab>
+                <NewTab>
+                    <text>최신</text>
+                </NewTab>
+            </Recent>
+            <StyleInfiniteScroll>
+                <InfiniteScroll
+                    dataLength={items.length} //This is important field to render the next data
+                    next={fetchData}
+                    hasMore={noMore}
+                >
+                    {items.map((item) => {
+                        return <Post key={item.id} item={item} />;
+                    })}
+                </InfiniteScroll>
+            </StyleInfiniteScroll>
         </>
     );
 };
 export default Main;
 
 const Recent = styled.div`
-    max-width: 1024px;
+    max-width: 1280px;
     font-size: 18px;
     color: rgb(134, 142, 150);
-    margin: 20px auto;
+    margin-right: 40%;
+    margin-bottom: -20px;
 `;
 
-const PostList = styled.div`
-    float: left;
-    display: flex;
-    flex-wrap: wrap;
-    gap: auto;
-    max-width: 1024px;
-    margin: 0 auto;
+const TrandTab = styled.div`
+    display: inline-block;
+    height: 0px;
+    width: 53px;
+    margin-left: -30%;
+    margin-bottom: -15%;
+`;
+
+const NewTab = styled.div`
+    display: inline-block;
+    width: 35px;
+    height: 0px;
+    margin: 5px;
+    margin-top: -1%;
+`;
+
+//게시글 중앙 정렬
+const StyleInfiniteScroll = styled.div`
+    max-width: 1280px;
+    margin: 20px auto;
+    position: flex;
+    transform: translate(9.5%);
 `;

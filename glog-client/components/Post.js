@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 //출력될 코멘트
 
-const Post = ({ item: { id, body, email } }) => {
+const Post = ({ item: { id, body, email, like } }) => {
     return (
         <Wrap>
             <ImageBtn>이미지</ImageBtn>
@@ -16,15 +16,24 @@ const Post = ({ item: { id, body, email } }) => {
                 <Comment>댓글</Comment>
             </Description>
             <UserName>
-                by <span>Email : {email}</span>
+                by <span>{email}</span>
             </UserName>
+            <LikeCount>
+                <span>Like :{like}</span>
+            </LikeCount>
         </Wrap>
     );
 };
 
 export default Post;
 
+//각 게시물 스타일 변경
 const Wrap = styled.div`
+    float: left;
+    display: flex;
+    flex-wrap: wrap;
+    gap: auto;
+    max-width: 1024px;
     position: relative;
     box-sizing: border-box;
     width: 320px;
@@ -38,6 +47,8 @@ const Wrap = styled.div`
     //     box-shadow: 0 5px 10px #dbdbdb;
     // }
 `;
+
+//이미지 부분 (버튼화)
 const ImageBtn = styled.button`
     display: block;
     width: 100%;
@@ -86,7 +97,18 @@ const UserName = styled.div`
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
+    width: 80%;
+    border-top: 1px solid #e6e6e6;
+    box-sizing: border-box;
+    font-size: 14px;
+    padding: 12px 16px;
+`;
+
+const LikeCount = styled.div`
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 30%;
     border-top: 1px solid #e6e6e6;
     box-sizing: border-box;
     font-size: 14px;
