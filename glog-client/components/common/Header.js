@@ -8,7 +8,7 @@ import { useState } from 'react';
 import SignIn from '../modal/SignIn';
 import Register from '../modal/Register';
 
-const Header = () => {
+const Header = ({ acessToken }) => {
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
@@ -16,23 +16,23 @@ const Header = () => {
     <>
       <StyledHeader>
         <div className="logo">
-          <Image src={logo} alt="logo" width={48} height={48} />
-        </div>
+          <Image src={logo} alt="logo" width={48} height={48} />{' '}
+        </div>{' '}
         <div className="right">
           <AuthButton isLink onClick={() => setIsSignInOpen(true)}>
-            로그인
-          </AuthButton>
+            로그인{' '}
+          </AuthButton>{' '}
           <AuthButton
             isLink
             defaultType
             onClick={() => setIsRegisterOpen(true)}
           >
-            회원가입
-          </AuthButton>
-        </div>
-      </StyledHeader>
-      {isSignInOpen && <SignIn setIsOpen={setIsSignInOpen} />}
-      {isRegisterOpen && <Register setIsOpen={setIsRegisterOpen} />}
+            회원가입{' '}
+          </AuthButton>{' '}
+        </div>{' '}
+      </StyledHeader>{' '}
+      {isSignInOpen && <SignIn setIsOpen={setIsSignInOpen} />}{' '}
+      {isRegisterOpen && <Register setIsOpen={setIsRegisterOpen} />}{' '}
     </>
   );
 };
