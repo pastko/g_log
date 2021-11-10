@@ -22,11 +22,7 @@ public class RegisterService {
     }
 
     public String createUserInfo(UserInfoDTO userInfoDTO) {
-        UserInfoDTO setUserData = new UserInfoDTO();
-
-        setUserData.setMail(userInfoDTO.getMail());
-        setUserData.setNikNm(userInfoDTO.getNikNm());
-        setUserData.setPwd(passwordEncoder.encode(userInfoDTO.getPwd()));
+        UserInfoDTO setUserData = UserInfoDTO.builder().mail(userInfoDTO.getMail()).nikNm(userInfoDTO.getNikNm()).pwd(passwordEncoder.encode(userInfoDTO.getPwd())).build();
 
         registerRepository.createUserInfo(setUserData);
 

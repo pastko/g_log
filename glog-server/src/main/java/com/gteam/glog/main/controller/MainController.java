@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
@@ -25,10 +26,10 @@ public class MainController {
 
     @GetMapping(value = "/board")
     @ApiOperation(value = "메인 화면 API", notes = "메인 화면 게시물 조회 API")
-    public ResponseEntity<?> setMainPage(@RequestHeader("pageNum") int pageNum, HttpServletResponse response) {
+    public ResponseEntity<?> setMainPage(@RequestHeader("pageNum") int pageNum, @RequestParam("sortRule") int sortRule, HttpServletResponse response) {
 
 
-        return responseDTOUtils.doGenerateBadResponseDTO(400, "bad");
+        return responseDTOUtils.doGenerateResponseDTO(null);
     }
 
 }
