@@ -26,7 +26,7 @@ public class JWTTokenUtils {
     private String SIGN_KEY;
     @Value("${auth.subject}")
     private String SUBJECT_KEY;
-    private static final long ACCESS_TOKEN_EXPIRED_TIME = 60  * 1000;       // 1분
+    private static final long ACCESS_TOKEN_EXPIRED_TIME = 3 * 60  * 1000;       // 1분 => 3
     private static final long REFRESH_TOKEN_EXPIRED_TIME = 1 * 24 * 60 * 60 * 1000; // 1개월 => 1일로 변경
     private final ObjectMapper objectMapper;
     private final LoginRepository loginRepository;
@@ -53,7 +53,7 @@ public class JWTTokenUtils {
      * @param token -
      * @return
      */
-    private Claims getAllClaimsFromToken(String token) {
+    public Claims getAllClaimsFromToken(String token) {
         return Jwts.parser().setSigningKey(SIGN_KEY).parseClaimsJws(token).getBody();
     }
 
@@ -98,12 +98,20 @@ public class JWTTokenUtils {
      * @return Token String
      */
     public String issuanceAccessToken(Users users) {
-        Map<String, Object> claims = objectMapper.convertValue(LoginRequestDTO.builder()
-                .mail(users.getMail())
-                .pwd("")
-                .build(), Map.class);
-        log.info("Access Token : ISSUANCE");
-        return doGenerateToken(claims,ACCESS_TOKEN_EXPIRED_TIME);
+        if(users != null) {
+            try {
+                Map<String, Object> claims = objectMapper.convertValue(LoginRequestDTO.builder()
+                        .mail(users.getMail())
+                        .pwd("")
+                        .build(), Map.class);
+                return doGenerateToken(claims, ACCESS_TOKEN_EXPIRED_TIME);
+            }catch (Exception e){
+                log.info("issuanceAccessToken Error : {}",e.getCause());
+                return null;
+            }
+        }else{
+            return null;
+        }
     }
 
     /**
@@ -113,12 +121,20 @@ public class JWTTokenUtils {
      * @return Cookie String
      */
     public String issuanceRefreshToken(Users users){
-        Map<String, Object> claims = objectMapper.convertValue(LoginRequestDTO.builder()
-                .mail(users.getMail())
-                .pwd("")
-                .build(), Map.class);
-        log.info("Refresh Token : ISSUANCE");
-        return doGenerateToken(claims,REFRESH_TOKEN_EXPIRED_TIME);
+        if(users != null) {
+            try {
+                Map<String, Object> claims = objectMapper.convertValue(LoginRequestDTO.builder()
+                        .mail(users.getMail())
+                        .pwd("")
+                        .build(), Map.class);
+                return doGenerateToken(claims, REFRESH_TOKEN_EXPIRED_TIME);
+            }catch (Exception e){
+                log.info("issuanceRefreshToken Error : {}",e.getCause());
+                return null;
+            }
+        }else{
+            return null;
+        }
     }
 
     /**
@@ -138,9 +154,12 @@ public class JWTTokenUtils {
      * @return
      */
     private void updateIssuanceRefreshToken(Users users){
-        String key = this.issuanceRefreshToken(users);
-        log.info("Refresh Token : REFRESH "+users.getMail());
-        loginRepository.updateUserKey(users.getMail(),key);
+        if(users != null) {
+            String key = this.issuanceRefreshToken(users);
+            loginRepository.updateUserKey(users.getMail(), key);
+        }else{
+            log.info("updateIssuanceRefreshToken: false - {}",users.getMail());
+        }
     }
 
     /**
@@ -148,10 +167,11 @@ public class JWTTokenUtils {
      *
      * @param header -
      */
-    private void validationAuthorizationHeader(String header) {
+    private Boolean validationAuthorizationHeader(String header) {
         if (header == null || !header.startsWith("Bearer ")) {
-            throw new IllegalArgumentException();
+            return false;
         }
+        return true;
     }
     private String extractToken(String authorizationHeader) {
         return authorizationHeader.substring("Bearer ".length());
@@ -164,8 +184,13 @@ public class JWTTokenUtils {
      * @return boolean
      */
     private Boolean validateToken(String token) {
-        final String subject = getSubjectFromToken(token);
-        return (subject.equals(SUBJECT_KEY) && !isTokenExpired(token));
+        if(token != null) {
+            final String subject = getSubjectFromToken(token);
+            return (subject.equals(SUBJECT_KEY) && !isTokenExpired(token));
+        }else{
+            log.info("validateToken inner else : {}",token);
+            return false;
+        }
     }
 
     /**
@@ -175,10 +200,13 @@ public class JWTTokenUtils {
      * @return AccessToken
      */
     public String reissuanceAccessToken(String refreshKey){
-        Users users = (Users) this.getAllClaimsFromToken(refreshKey);
-
-        log.info("Access Token : REFRESH");
-        return this.issuanceAccessToken(loginRepository.getUsersByUserId(users.getMail()).orElse(null));
+        if(refreshKey != null){
+            Users users = (Users) this.getAllClaimsFromToken(refreshKey);
+            return this.issuanceAccessToken(loginRepository.getUsersByUserId(users.getMail()).orElse(null));
+        }else{
+            log.info("Access Token reissuance : False - {}",refreshKey);
+            return null;
+        }
     }
     /**
      * 리프레쉬 토큰을 재발 급
@@ -189,7 +217,11 @@ public class JWTTokenUtils {
      * @return AccessToken
      */
     public void reissuanceRefreshToken(String mail){
-        this.updateIssuanceRefreshToken(loginRepository.getUsersByUserId(mail).orElse(null));
+        if(mail != null) {
+            this.updateIssuanceRefreshToken(loginRepository.getUsersByUserId(mail).orElse(null));
+        }else{
+            log.info("Refresh Token reissuance : False - {}",mail);
+        }
     }
 
     /**
@@ -204,18 +236,21 @@ public class JWTTokenUtils {
      */
     public Boolean validateAccessInfoByToken(String key, String mail){
         try {
+            log.info("--->> validateAccessInfoByToken : 1  {} - {}",key,mail);
             // Bearer 제거
-            this.validationAuthorizationHeader(key);
+            if(!this.validationAuthorizationHeader(key)){
+                log.info("토큰이 존재 하지 않습니다.");
+                return false;
+            }
             key = this.extractToken(key);
-
-            return (this.validateToken(key) &&
-                    this.getAllClaimsFromToken(key).getId().equals(mail));
+            Claims claims = this.getAllClaimsFromToken(key);
+            return (this.validateToken(key) && claims.get("mail").equals(mail));
         }catch (IllegalArgumentException e){
             log.info("토큰이 유효하지 않습니다.");
             return false;
         }catch (ExpiredJwtException e){
             log.info("토큰이 만로 되었습니다.");
-            return  false;
+            return false;
         }
     }
 
@@ -234,9 +269,10 @@ public class JWTTokenUtils {
      */
     public Boolean validateRefreshToken(String key, String mail){
         String token = this.getRefreshToken(mail);
-        if(token != null) {
+        if(token != null || key != null) {
             return (this.validateToken(token) && token.equals(key));
         }else{
+            log.info("validateRefreshToken : false - {},{}",key,mail);
             return false;
         }
     }
@@ -249,6 +285,11 @@ public class JWTTokenUtils {
      * @return
      */
     public String getRefreshToken(String mail){
-        return loginRepository.getUsersByUserId(mail).orElse(null).getKey();
+        if(mail != null) {
+            return loginRepository.getUsersByUserId(mail).orElse(null).getKey();
+        }else{
+            log.info("getRefreshToken : false {}",mail);
+            return null;
+        }
     }
 }

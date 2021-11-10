@@ -9,6 +9,7 @@ import org.hibernate.annotations.ColumnDefault;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -31,7 +32,7 @@ public class Users {
     @NotNull
     private String pwd;
 
-    @Column(name = "`key`", nullable = true)
+    @Column(name = "`key`")
     private String key;
 
     @NotNull

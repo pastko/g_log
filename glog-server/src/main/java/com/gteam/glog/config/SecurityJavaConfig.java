@@ -1,6 +1,9 @@
 package com.gteam.glog.config;
 
 import com.gteam.glog.common.utils.JWTTokenUtils;
+import com.gteam.glog.config.jwtfilter.JWTAuthenticationEntryPoint;
+import com.gteam.glog.config.jwtfilter.JWTAuthenticationFilter;
+import com.gteam.glog.config.jwtfilter.JWTExceptionHandlerFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,8 +45,8 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/signin").permitAll()
                 .antMatchers("/oauth/**").permitAll()
                 .anyRequest().authenticated().and()
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-                //.addFilterBefore(jwtExceptionHandlerFilter,JWTAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtExceptionHandlerFilter,JWTAuthenticationFilter.class);
 
     }
 

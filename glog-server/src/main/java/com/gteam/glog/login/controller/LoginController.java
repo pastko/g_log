@@ -3,11 +3,8 @@ package com.gteam.glog.login.controller;
 import com.gteam.glog.common.utils.JWTTokenUtils;
 import com.gteam.glog.common.utils.ResponseDTOUtils;
 import com.gteam.glog.domain.dto.login.LoginRequestDTO;
-import com.gteam.glog.domain.dto.UserInfoDTO;
-import com.gteam.glog.domain.entity.Users;
 import com.gteam.glog.login.service.LoginService;
 import io.swagger.annotations.ApiOperation;
-import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,8 +34,11 @@ public class LoginController {
         log.info("Sign In : {}", loginRequestDTO.getMail());
         // 사용자 로그인 검증
         String accessToken = loginService.doLogin(loginRequestDTO);
+
+        log.info("Sign In finished: {}");
         if(accessToken != null){
             response.addCookie(loginService.getRefreshTokenToCookie(loginRequestDTO.getMail()));
+            log.info("Sign In make cookies: {}");
             return responseDTOUtils.doGenerateResponseDTO(accessToken);
         }else {
             return responseDTOUtils.doGenerateResponseDTO(null);

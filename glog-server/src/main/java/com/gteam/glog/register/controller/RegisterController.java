@@ -4,7 +4,6 @@ import com.gteam.glog.domain.dto.UserInfoDTO;
 import com.gteam.glog.domain.dto.UserRequestDTO;
 import com.gteam.glog.common.utils.JWTTokenUtils;
 import com.gteam.glog.register.service.RegisterService;
-import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,11 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 public class RegisterController {
 
     private final RegisterService registerService;
-    private final JWTTokenUtils jwtTokenUtils = new JWTTokenUtils();
+    private final JWTTokenUtils jwtTokenUtils;
 
     @Autowired
-    public RegisterController(RegisterService registerService) {
+    public RegisterController(RegisterService registerService, JWTTokenUtils jwtTokenUtils) {
         this.registerService = registerService;
+        this.jwtTokenUtils = jwtTokenUtils;
     }
 
     @PostMapping(value = "/signup")
@@ -30,9 +30,9 @@ public class RegisterController {
         UserInfoDTO userInfoDTO = new UserInfoDTO();
 
         if(request.getMail() != null) {
-            userInfoDTO.setUserId(request.getMail());
-            userInfoDTO.setUserPwd(request.getPwd());
-            userInfoDTO.setNikName(request.getNikNm());
+            userInfoDTO.setMail(request.getMail());
+            userInfoDTO.setPwd(request.getPwd());
+            userInfoDTO.setNikNm(request.getNikNm());
         }
         return registerService.createUserInfo(userInfoDTO);
     }

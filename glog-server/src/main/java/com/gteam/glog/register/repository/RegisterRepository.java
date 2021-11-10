@@ -26,16 +26,16 @@ public class RegisterRepository {
         return userInfoDTO == null;
     }
     public void createUserInfo(UserInfoDTO userInfoDTO) {
-        if(duplicateCheck(userInfoDTO.getUserId())) {
+        if(duplicateCheck(userInfoDTO.getMail())) {
             Users users = new Users();
             Mypage mypage = new Mypage();
 
-            users.setUserId(userInfoDTO.getUserId());
-            users.setUserPwd(userInfoDTO.getUserPwd());
+            users.setMail(userInfoDTO.getMail());
+            users.setPwd(userInfoDTO.getPwd());
             users.setIdx(userInfoDTO.getUsrIdx());
 
-            mypage.setUsr_idx(users);
-            mypage.setNikName(userInfoDTO.getNikName());
+            mypage.setUsrIdx(users);
+            mypage.setNikNm(userInfoDTO.getNikNm());
 
             entityManager.persist(users);
             entityManager.persist(mypage);

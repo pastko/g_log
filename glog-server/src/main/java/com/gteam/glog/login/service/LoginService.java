@@ -2,7 +2,6 @@ package com.gteam.glog.login.service;
 
 import com.gteam.glog.common.utils.JWTTokenUtils;
 import com.gteam.glog.domain.dto.login.LoginRequestDTO;
-import com.gteam.glog.domain.dto.UserInfoDTO;
 import com.gteam.glog.domain.entity.Users;
 import com.gteam.glog.domain.enums.UserStatusCode;
 import com.gteam.glog.login.repository.LoginRepository;
@@ -66,6 +65,7 @@ public class LoginService {
                     return null;
                 }
             }catch (IllegalArgumentException e){
+                log.info("validateUserLogin : False - {}",authDTO.getMail());
                 log.error(e.getMessage());
                 return null;
             }
@@ -83,13 +83,13 @@ public class LoginService {
         Users users = validateUserLogin(loginRequestDTO);
         if(users != null){
             loginRepository.updateLoginStatus(users.getMail(),UserStatusCode.LOGIN);
-            log.info("----- find :  {}, {}",users.getMail(),users.getStatus());
             String accessToken = jwtTokenUtils.issuanceAccessToken(users);
             if (!jwtTokenUtils.validateRefreshToken(users.getKey(), loginRequestDTO.getMail())) {
                 jwtTokenUtils.reissuanceRefreshToken(users.getMail());
             }
             return accessToken;
         }else{
+            log.info("doLogin finish : false - {}", users.getMail());
             return null;
         }
     }

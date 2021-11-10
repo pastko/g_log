@@ -1,4 +1,4 @@
-package com.gteam.glog.config;
+package com.gteam.glog.config.jwtfilter;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.AuthenticationException;
@@ -15,6 +15,7 @@ import java.io.IOException;
 public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
+        log.info("JWTAuthenticationEntryPoint : start ");
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "UnAuthorized Error");
     }
 }

@@ -1,13 +1,15 @@
-package com.gteam.glog.mypage.service;
+package com.gteam.glog.mypage.repository;
 
 import com.gteam.glog.domain.dto.UserInfoDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.gteam.glog.domain.entity.Mypage;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
+@Log4j2
 @Repository
 public class MyPageRepository {
     private final EntityManager entityManager;
@@ -22,12 +24,18 @@ public class MyPageRepository {
      * @param mail
      * @return UserInfoDTO
      */
-    public Optional<UserInfoDTO> getUserInfoByUserId(String mail){
+    public Optional<Mypage> getUserInfoByUserId(String mail){
         // 유저 MyPage 정보 조회
-        return entityManager
-                .createQuery("select mypage from Mypage as mypage where mypage.usrIdx.mail = ?1", UserInfoDTO.class)
-                .setParameter(1, mail)
-                .getResultList().stream().findFirst();
+        try {
+            return entityManager
+                    .createQuery("select mypage from Mypage as mypage where mypage.usrIdx.mail = ?1", Mypage.class)
+                    .setParameter(1, mail)
+                    .getResultList().stream().findFirst();
+        }catch (Exception e){
+            log.info("getUserInfoByUserId : false - {}",e.getCause());
+            log.info("getUserInfoByUserId : {}",e.getMessage());
+            return Optional.empty();
+        }
     }
 
 
@@ -40,17 +48,16 @@ public class MyPageRepository {
     @Transactional
     public Boolean updateUserInfo(UserInfoDTO userInfo){
         // 유저 MyPage 정보 조회
-        UserInfoDTO currentUserInfo = entityManager
-                .createQuery("select mypage from Mypage as mypage where mypage.usrIdx.mail = ?1", UserInfoDTO.class)
+        Mypage mypage = entityManager
+                .createQuery("select mypage from Mypage as mypage where mypage.usrIdx.mail = ?1", Mypage.class)
                 .setParameter(1, userInfo.getMail())
                 .getResultList().stream().findFirst().orElse(null);
 
-        if( currentUserInfo != null)
+        if( mypage != null)
         {
-            currentUserInfo.setNikNm(userInfo.getNikNm());
-            currentUserInfo.setGlogTitle(userInfo.getGlogTitle());
-            currentUserInfo.setImgNm(userInfo.getImgNm());
-            entityManager.merge(currentUserInfo);
+            mypage.setNikNm(userInfo.getNikNm());
+            mypage.setGlogTitle(userInfo.getGlogTitle());
+            mypage.setImgNm(userInfo.getImgNm());
             entityManager.flush();
 
             return true;

@@ -19,7 +19,7 @@ public class Mypage {
     @Column(name = "mypg_idx")
     private Long idx;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "usr_idx")
     private Users usrIdx;
 

@@ -3,12 +3,14 @@ package com.gteam.glog.login.repository;
 import com.gteam.glog.domain.dto.UserInfoDTO;
 import com.gteam.glog.domain.entity.Users;
 import com.gteam.glog.domain.enums.UserStatusCode;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
+@Log4j2
 @Repository
 public class LoginRepository {
     private final EntityManager entityManager;
@@ -25,6 +27,7 @@ public class LoginRepository {
      */
     public Optional<Users> getUsersByUserId(String mail){
         // 유저 인증 정보 조회
+        log.info("getUsersByUserId -- : {}",mail);
         return entityManager
                 .createQuery("select usr from Users as usr where usr.mail = ?1", Users.class)
                 .setParameter(1, mail)

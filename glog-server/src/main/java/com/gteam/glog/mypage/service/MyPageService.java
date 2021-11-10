@@ -1,10 +1,13 @@
-package com.gteam.glog.mypage.repository;
+package com.gteam.glog.mypage.service;
 
 import com.gteam.glog.common.utils.JWTTokenUtils;
 import com.gteam.glog.domain.dto.UserInfoDTO;
-import com.gteam.glog.mypage.service.MyPageRepository;
+import com.gteam.glog.domain.entity.Mypage;
+import com.gteam.glog.mypage.repository.MyPageRepository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+@Log4j2
 @Service
 public class MyPageService {
     private final MyPageRepository myPageRepository;
@@ -28,7 +31,20 @@ public class MyPageService {
      *          >  userId is not exist   - return null
      */
     public UserInfoDTO findUserInfoByUserId(String mail){
-        return myPageRepository.getUserInfoByUserId(mail).orElse(null);
+        Mypage mypage = myPageRepository.getUserInfoByUserId(mail).orElse(null);
+        if( mypage != null) {
+            return UserInfoDTO.builder()
+                    .mail(mypage.getUsrIdx().getMail())
+                    .pwd("")
+                    .imgNm(mypage.getImgNm())
+                    .glogTitle(mypage.getGlogTitle())
+                    .imgNm(mypage.getImgNm())
+                    .build();
+        }
+        else{
+            log.info("findUserInfoByUserId : false - null");
+            return null;
+        }
     }
 
 
@@ -47,10 +63,11 @@ public class MyPageService {
      *          >  userId is exist       - return user info
      *          >  userId is not exist   - return null
      */
-    public UserInfoDTO saveUserInfo(String key, String mail, UserInfoDTO userInfoDTO){
+    public UserInfoDTO saveUserInfo(String mail, UserInfoDTO userInfoDTO){
         if(myPageRepository.updateUserInfo(userInfoDTO)){
-            return findUserInfoByUserId(userInfoDTO.getMail());
+            return this.findUserInfoByUserId(userInfoDTO.getMail());
         }else{
+            log.info("saveUserInfo : false - {} : {}",userInfoDTO.getMail(),mail);
             return null;
         }
     }
