@@ -21,21 +21,15 @@ public class RegisterRepository {
         this.entityManager = entityManager;
     }
 
-    public boolean duplicateCheck(String id) {
-        UserInfoDTO userInfoDTO = entityManager.find(UserInfoDTO.class, id);
+    public boolean duplicateCheck(String email) {
+        UserInfoDTO userInfoDTO = entityManager.find(UserInfoDTO.class, email);
         return userInfoDTO == null;
     }
     public void createUserInfo(UserInfoDTO userInfoDTO) {
-        if(duplicateCheck(userInfoDTO.getMail())) {
-            Users users = new Users();
-            Mypage mypage = new Mypage();
 
-            users.setMail(userInfoDTO.getMail());
-            users.setPwd(userInfoDTO.getPwd());
-            users.setIdx(userInfoDTO.getUsrIdx());
-
-            mypage.setUsrIdx(users);
-            mypage.setNikNm(userInfoDTO.getNikNm());
+        if(duplicateCheck(userInfoDTO.getUserId())) {
+            Users users = Users.builder().userId(userInfoDTO.getUserId()).userPwd(userInfoDTO.getUserPwd()).build();
+            Mypage mypage = Mypage.builder().usr_idx(users).nikName(userInfoDTO.getNikName()).build();
 
             entityManager.persist(users);
             entityManager.persist(mypage);
@@ -43,5 +37,12 @@ public class RegisterRepository {
             entityManager.flush();
             entityManager.close();
         }
+    }
+
+    public void unRegistUser(String email) {
+        /*select * from mypage where id = {email}
+        * -> isUnregist = true;
+        *
+        * entitymanager.persist() close*/
     }
 }

@@ -1,14 +1,14 @@
 package com.gteam.glog.register.controller;
 
+import com.gteam.glog.common.utils.ResponseDTOUtils;
 import com.gteam.glog.domain.dto.UserInfoDTO;
-import com.gteam.glog.domain.dto.UserRequestDTO;
+import com.gteam.glog.domain.dto.RegisterRequestDTO;
 import com.gteam.glog.common.utils.JWTTokenUtils;
 import com.gteam.glog.register.service.RegisterService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,17 +16,17 @@ import javax.servlet.http.HttpServletResponse;
 public class RegisterController {
 
     private final RegisterService registerService;
-    private final JWTTokenUtils jwtTokenUtils;
+    private final ResponseDTOUtils responseDTOUtils;
 
     @Autowired
-    public RegisterController(RegisterService registerService, JWTTokenUtils jwtTokenUtils) {
+    public RegisterController(RegisterService registerService, ResponseDTOUtils responseDTOUtils) {
         this.registerService = registerService;
-        this.jwtTokenUtils = jwtTokenUtils;
+        this.responseDTOUtils = responseDTOUtils;
     }
 
     @PostMapping(value = "/signup")
     @ApiOperation(value = "회원가입 API", notes = "로컬 사용자 회원가입 API")
-    public String createUserinfo(@RequestBody(required = true) UserRequestDTO request, HttpServletResponse response) {
+    public ResponseEntity<?> createUserinfo(@RequestBody(required = true) RegisterRequestDTO request, HttpServletResponse response) {
         UserInfoDTO userInfoDTO = new UserInfoDTO();
 
         if(request.getMail() != null) {
@@ -34,6 +34,18 @@ public class RegisterController {
             userInfoDTO.setPwd(request.getPwd());
             userInfoDTO.setNikNm(request.getNikNm());
         }
-        return registerService.createUserInfo(userInfoDTO);
+        if(registerService.createUserInfo(userInfoDTO).equals("ok")) {
+            return responseDTOUtils.doGenerateBadResponseDTO(200, "ok");
+        }
+
+        return responseDTOUtils.doGenerateBadResponseDTO(401, "fail");
+    }
+    @GetMapping(value = "/unregister")
+    @ApiOperation(value = "회원탈퇴 API", notes = "로컬 사용자 회원탈퇴 API")
+    public ResponseEntity<?> unRegistUser(@RequestHeader("AccessToken") String token, HttpServletResponse response) {
+        if(registerService.unRegistUser(token).equals("ok")) {
+            return responseDTOUtils.doGenerateBadResponseDTO(200, "ok");
+        }
+        return responseDTOUtils.doGenerateBadResponseDTO(401, "fail");
     }
 }
