@@ -6,6 +6,7 @@ import com.gteam.glog.domain.dto.oauth.GoogleOAuthResponseDTO;
 import com.gteam.glog.domain.entity.OAuthInfo;
 import com.gteam.glog.oauth.repository.OAuthRepository;
 import lombok.extern.log4j.Log4j2;
+import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -22,11 +23,16 @@ import org.springframework.web.client.RestTemplate;
 public class GoogleSocialOAuth implements SocialOAuth {
     @Value("oauth.redirectionRootUrl")
     private String redirectionRootUrl;
-    private  final OAuthRepository oAuthRepository;
-    private  final RestTemplate restTemplate = new RestTemplate();
+
+    private OkHttpClient okHttpClient;
+    private RestTemplate restTemplate;
+    private final OAuthRepository oAuthRepository;
+
     @Autowired
     public GoogleSocialOAuth(OAuthRepository oAuthRepository) {
         this.oAuthRepository = oAuthRepository;
+        this.okHttpClient = new OkHttpClient();
+        this.restTemplate = new RestTemplate();
     }
 
     /**
@@ -55,7 +61,7 @@ public class GoogleSocialOAuth implements SocialOAuth {
     public String requestAccessToken(String code) {
         try {
             OAuthInfo oAuthInfo = oAuthRepository.FindUserOAuthCode(SocialLoginType.GOOGLE).get();
-            GoogleOAuthRequestDTO googleOAuthRequestDTO = new GoogleOAuthRequestDTO(
+            GoogleOAuthRequestDTO.AccessToken googleOAuthRequestDTO = new GoogleOAuthRequestDTO.AccessToken(
                     oAuthInfo.getClientId(),
                     oAuthInfo.getClientSecret(),
                     code,
@@ -63,15 +69,16 @@ public class GoogleSocialOAuth implements SocialOAuth {
                     redirectionRootUrl+"/google/callback"
             );
 
-
+            // TODO: restTemplate => okHttp2 로 변경 해보기
             // send data id, secret key , access code , grant type, redirect url
             GoogleOAuthResponseDTO token = restTemplate.postForObject(
-                    oAuthInfo.getUrl(),
+                    oAuthInfo.getTokenUrl(),
                     googleOAuthRequestDTO,
                     GoogleOAuthResponseDTO.class);
             if (token != null) {
                 return token.getAccess_token();
             } else {
+                log.info("Token Null : null");
                 return null;
             }
         } catch (IllegalArgumentException e){
@@ -79,6 +86,22 @@ public class GoogleSocialOAuth implements SocialOAuth {
             return null;
         } catch ( HttpStatusCodeException e){
             log.error("Http Status Exception : " + e.getMessage());
+            return null;
+        }
+    }
+
+
+
+    @Override
+    public String requestUserProfile(String accesstoken) {
+        try{
+            // TODO : 사용자 프로필 가저오기 (git)
+
+
+            return null;
+        }catch (IllegalArgumentException e) {
+            return null;
+        }catch (HttpStatusCodeException e){
             return null;
         }
     }
