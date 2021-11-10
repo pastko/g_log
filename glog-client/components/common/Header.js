@@ -1,12 +1,10 @@
 /* eslint-disable @next/next/link-passhref */
-import Link from 'next/link';
-import Image from 'next/image';
 import styled from 'styled-components';
-import logo from '../../public/logo.png';
 import AuthButton from '../auth/AuthButton';
 import { useState } from 'react';
 import SignIn from '../modal/SignIn';
 import Register from '../modal/Register';
+import Images from '../layout/Images';
 
 const Header = ({ accessToken }) => {
     const [isSignInOpen, setIsSignInOpen] = useState(false);
@@ -16,7 +14,7 @@ const Header = ({ accessToken }) => {
         <>
             <StyledHeader>
                 <div className="logo">
-                    <Image src={logo} alt="logo" width={48} height={48} />
+                    <Images src='logo.png' size={48} />
                 </div>
                 <div className="right">
                     {accessToken !== 'none' ? (

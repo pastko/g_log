@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import Header from '../components/common/Header';
-import ChangeImage from '../components/Setting/ChangeImage';
-import ChangeName from '../components/Setting/ChangeName';
-import ChangeTitle from '../components/Setting/ChangeTitle';
-import UserDelete from '../components/Setting/UserDelete';
+import ChangeImage from '../components/mypage/ChangeImage';
+import ChangeName from '../components/mypage/ChangeName';
+import ChangeTitle from '../components/mypage/ChangeTitle';
+import UserDelete from '../components/mypage/UserDelete';
 
 const Profile = () => {
     return (

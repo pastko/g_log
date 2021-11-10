@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import Image from 'next/image';
 
 const ChangeImage = () => {
     return (
         <ProfileImage>
-            <Image> 이미지 </Image>
+            <StyledThumbnail> 이미지 </StyledThumbnail>
             <Button>
                 <text> 이미지 업로드 </text>
             </Button>ß
@@ -25,7 +24,7 @@ const ProfileImage = styled.div`
     align-items: center;
 `;
 
-const Image = styled.div`
+const StyledThumbnail = styled.div`
     width: 180px;
     height: 300px;
     display: flex;

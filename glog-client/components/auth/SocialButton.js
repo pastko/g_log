@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-import Img from 'next/image';
-import googleIcon from '../../public/google.svg';
-import githubIcon from '../../public/github.svg';
+import Images from '../layout/Images';
 
 function SocialButton({ btnType }) {
     const googleURI =
@@ -21,11 +19,9 @@ function SocialButton({ btnType }) {
             href={btnType === 'Google' ? googleURI : githubURI}
             target="_blank"
         >
-            <Img
-                src={btnType === 'Google' ? googleIcon : githubIcon}
-                width={22}
-                height={22}
-                alt={btnType}
+            <Images
+                src={btnType === 'Google' ? 'google.svg': 'github.svg'}
+                size={22}
             />
             <span>
                 {btnType}

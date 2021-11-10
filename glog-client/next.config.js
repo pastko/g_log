@@ -10,5 +10,6 @@ module.exports = {
     githubAuthURI: process.env.GITHUB_AUTH_URI,
     mailRegex: process.env.EMAIL_REGEX,
     pwdRegex: process.env.PASSWORD_REGEX,
+    s3URL: process.env.S3_URL,
   }
 }

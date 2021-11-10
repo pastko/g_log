@@ -6,9 +6,7 @@ import axios from 'axios';
 
 const Main = () => {
     const [items, setItems] = useState([]);
-
     const [noMore, setnoMore] = useState(true);
-
     const [page, setpage] = useState(2);
 
     useEffect(() => {
@@ -18,10 +16,10 @@ const Main = () => {
             // );
             // const data = await res.json();
             // setItems(data);
-            const res = await axios.get(
-                `http://localhost:3004/comments?_page=1&_limit=20` //서버에서 api 받아올 예정
-            );
-            setItems(res.data);
+            // const res = await axios.get(
+            //     `http://localhost:3004/comments?_page=1&_limit=20` //서버에서 api 받아올 예정
+            // );
+            //setItems(res.data);
         };
         getComments();
     }, []);
@@ -32,10 +30,10 @@ const Main = () => {
         // );
         // const data = await res.json();
         // return data;
-        const res = await axios.get(
-            `http://localhost:3004/comments?_page=${page}&_limit=20` //서버에서 api 받아올 예정
-        );
-        return res.data;
+        // const res = await axios.get(
+        //     `http://localhost:3004/comments?_page=${page}&_limit=20` //서버에서 api 받아올 예정
+        // );
+        //return res.data;
     };
     const fetchData = async () => {
         const commentsFormServer = await fetchComments();

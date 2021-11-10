@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/link-passhref */
 import Link from 'next/link';
-import Image from 'next/image';
-import logo from '../../public/logo.png';
 import styled from 'styled-components';
+import Images from '../layout/Images';
 
 function AuthTemplate({ setIsOpen, children }) {
     return (
@@ -13,7 +12,7 @@ function AuthTemplate({ setIsOpen, children }) {
                 </div>
                 <div className="intro">
                     <Link href="/">
-                        <Image src={logo} alt="logo" width={40} height={40} />
+                        <Images src="logo.png" size={40} />
                     </Link>
                     <h3 className="intro"> Glog에 오신 것을 환영합니다. </h3>
                 </div>
@@ -48,8 +47,8 @@ const AuthStyled = styled.div`
     .auth-wrapper {
         width: 380px;
         min-width: 240px;
-        min-height: 640px;
-        max-height: 900px;
+        min-height: 475px;
+        max-height: 800px;
         margin-top: 4.5rem;
         padding: 20px 10px 24px;
         border-radius: 32px;
@@ -57,7 +56,7 @@ const AuthStyled = styled.div`
         color: #3a3a3a;
         box-shadow: 0 0 10px #5d5d5d76;
         .intro {
-            margin: 10px 0 20px;
+            margin: 5px 0 20px;
             font-size: 1.4rem;
             font-weight: 600;
         }
