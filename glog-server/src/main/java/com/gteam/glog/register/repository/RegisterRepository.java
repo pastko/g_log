@@ -3,6 +3,7 @@ package com.gteam.glog.register.repository;
 import com.gteam.glog.domain.dto.UserInfoDTO;
 import com.gteam.glog.domain.entity.Mypage;
 import com.gteam.glog.domain.entity.Users;
+import com.gteam.glog.domain.enums.UserStatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,13 +23,17 @@ public class RegisterRepository {
     }
 
     public boolean duplicateCheck(String email) {
-        UserInfoDTO userInfoDTO = entityManager.find(UserInfoDTO.class, email);
-        return userInfoDTO == null;
+        Users users = entityManager.find(Users.class, email);
+        return users == null;
     }
     public void createUserInfo(UserInfoDTO userInfoDTO) {
 
         if(duplicateCheck(userInfoDTO.getMail())) {
-            Users users = Users.builder().mail(userInfoDTO.getMail()).pwd(userInfoDTO.getPwd()).build();
+            Users users = new Users();
+
+            users.setMail(userInfoDTO.getMail());
+            users.setPwd(userInfoDTO.getPwd());
+
             Mypage mypage = Mypage.builder().usrIdx(users).nikNm(userInfoDTO.getNikNm()).build();
 
             entityManager.persist(users);
@@ -40,9 +45,12 @@ public class RegisterRepository {
     }
 
     public void unRegistUser(String email) {
-        /*select * from mypage where id = {email}
-        * -> isUnregist = true;
-        *
-        * entitymanager.persist() close*/
+        Users users = entityManager.find(Users.class, email);
+
+        users.setStatus(UserStatusCode.UNREGISTER);
+
+        entityManager.persist(users);
+
+        entityManager.close();
     }
 }
