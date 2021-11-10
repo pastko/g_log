@@ -11,8 +11,8 @@
 
 ### 명령어
 
--   ./greldew build
+-   
 
 ```
-npm run dev
+./greldew build
 ```
