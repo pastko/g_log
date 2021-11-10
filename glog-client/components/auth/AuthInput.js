@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-function Input({ message, ...rest }) {
+function AuthInput({ message, ...rest }) {
     return (
         <Block>
             <input placeholder={message} {...rest} />
@@ -25,4 +25,4 @@ const Block = styled.div`
     }
 `;
 
-export default Input;
+export default AuthInput;

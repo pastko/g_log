@@ -14,7 +14,11 @@ const Header = ({ accessToken }) => {
         <>
             <StyledHeader>
                 <div className="logo">
-                    <Images src='/common/logo/logo.png' width={48} height={48}/>
+                    <Images
+                        src="/common/logo/logo.png"
+                        width={48}
+                        height={48}
+                    />
                 </div>
                 <div className="right">
                     {accessToken !== 'none' ? (
