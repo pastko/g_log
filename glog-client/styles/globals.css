@@ -18,5 +18,7 @@ a {
 }
 
 * {
-    box-sizing: inherit;
+    box-sizing: content-box;
 }
+
+/* 최대한 건들지 않는 선에서 작업 (건드려야할땐 서로 상의)*/
