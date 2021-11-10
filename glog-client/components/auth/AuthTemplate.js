@@ -12,7 +12,7 @@ function AuthTemplate({ setIsOpen, children }) {
                 </div>
                 <div className="intro">
                     <Link href="/">
-                        <Images src="logo.png" size={40} />
+                        <Images src="/common/logo/logo.png" width={40} height={40} />
                     </Link>
                     <h3 className="intro"> Glog에 오신 것을 환영합니다. </h3>
                 </div>

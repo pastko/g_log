@@ -20,8 +20,13 @@ function SocialButton({ btnType }) {
             target="_blank"
         >
             <Images
-                src={btnType === 'Google' ? 'google.svg': 'github.svg'}
-                size={22}
+                src={
+                    btnType === 'Google'
+                        ? '/common/logo/google.svg'
+                        : '/common/logo/github.svg'
+                }
+                width={22}
+                height={22}
             />
             <span>
                 {btnType}
