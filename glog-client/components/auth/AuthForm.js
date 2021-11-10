@@ -1,13 +1,14 @@
 /* eslint-disable @next/next/link-passhref */
 import { useState } from 'react';
-import Input from './Input';
+import Input from '../layout/Input';
 import styled from 'styled-components';
 import AuthButton from './AuthButton';
 import SocialButton from './SocialButton';
 import Link from 'next/link';
+import ErrorMessage from '../layout/ErrorMessage';
 
 function AuthForm({ isRegister, func }) {
-    const [form, setForm] = useState({
+    const [isForm, setForm] = useState({
         mail: '',
         pwd: '',
         confirmPwd: '',
@@ -22,58 +23,41 @@ function AuthForm({ isRegister, func }) {
         });
     };
 
-    const isValidate = () => {
-        const emailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
-        const pwdRegex =
-            /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,12}$/;
-
-        if (!form.mail || !form.pwd || !form.confirmPwd || !form.nikNm) {
-            //TODO: 가입하기, 로그인 버튼 클릭 노노
-        }
-        if (emailRegex.test(form.mail)) {
-            //TODO: 이메일 형식 아니라고 error message띄우기
-        }
-        if (pwdRegex.test(form.pwd)) {
-            //TODO : 패스워드 형식 error message띄우기
-        }
-        //TODO: 패스워드, 패스워드 확인 둘다 일치하는지 확인
-        if (form.pwd !== form.confirmPwd) {
-
-        }
-        //TODO: nickname 비어있는지 확인
-        if (form.nikNm === '') {
-            let niks = form.nikNm.split('@');
-            let id = niks[0];
-            form.nikNm = id;
-        }
-        if(func) {
-            func(form);
+    const goAuth = () => {
+        if (func) {
+            func(isForm);
         }
     };
 
     return (
         <FormStyled>
             <Input message="이메일" name="mail" onChange={onChange} />
+            {/* <ErrorMessage isForm={isForm} type="mail" /> */}
             <Input message="비밀번호" name="pwd" onChange={onChange} />
+            {/* {isRegister && <ErrorMessage isForm={isForm} type="pwd" />} */}
             {isRegister && (
-                <Input
-                    message="비밀번호 확인"
-                    name="confirmPwd"
-                    onChange={onChange}
-                />
+                <>
+                    <Input
+                        message="비밀번호 확인"
+                        name="confirmPwd"
+                        onChange={onChange}
+                    />
+                    {/* <ErrorMessage isForm={isForm} type="pwdConfirm" /> */}
+                </>
             )}
             {isRegister && (
                 <Input message="닉네임" name="nikNm" onChange={onChange} />
             )}
-            <StyledButton fullWidth onClick={isValidate}>
+            {/* <StyledButton fullWidth isForm={isForm} func={func}> */}
+            <StyledButton fullWidth goAuth>
                 {isRegister ? '가입하기' : '로그인'}
             </StyledButton>
             {!isRegister && (
                 <div className="findRegister">
-                    <Link href="">비밀번호 찾기</Link>
+                    <Link href=""> 비밀번호 찾기 </Link>
                 </div>
             )}
-            <span className="or">or</span>
+            <span className="or"> or </span>
             <StyledSocialBtn>
                 <SocialButton btnType="Google" />
                 <SocialButton btnType="Github" />
@@ -81,7 +65,6 @@ function AuthForm({ isRegister, func }) {
         </FormStyled>
     );
 }
-
 const FormStyled = styled.form`
     width: 280px;
     margin: 0 auto;
