@@ -27,7 +27,8 @@ public class RegisterController {
     @PostMapping(value = "/signup")
     @ApiOperation(value = "회원가입 API", notes = "로컬 사용자 회원가입 API")
     public ResponseEntity<?> createUserinfo(@RequestBody(required = true) RegisterRequestDTO request, HttpServletResponse response) {
-        UserInfoDTO userInfoDTO = new UserInfoDTO();
+        UserInfoDTO userInfoDTO = UserInfoDTO.builder().mail(request.getMail()).nikNm(request.getNikNm()).pwd(request.getPwd()).build();
+
 
         if(request.getMail() != null) {
             userInfoDTO.setMail(request.getMail());
@@ -35,17 +36,17 @@ public class RegisterController {
             userInfoDTO.setNikNm(request.getNikNm());
         }
         if(registerService.createUserInfo(userInfoDTO).equals("ok")) {
-            return responseDTOUtils.doGenerateBadResponseDTO(200, "ok");
+            return responseDTOUtils.doGenerateResponseDTO("ok");
         }
 
-        return responseDTOUtils.doGenerateBadResponseDTO(401, "fail");
+        return responseDTOUtils.doGenerateResponseDTO(null);
     }
     @GetMapping(value = "/unregister")
     @ApiOperation(value = "회원탈퇴 API", notes = "로컬 사용자 회원탈퇴 API")
     public ResponseEntity<?> unRegistUser(@RequestHeader("AccessToken") String token, HttpServletResponse response) {
         if(registerService.unRegistUser(token).equals("ok")) {
-            return responseDTOUtils.doGenerateBadResponseDTO(200, "ok");
+            return responseDTOUtils.doGenerateResponseDTO("ok");
         }
-        return responseDTOUtils.doGenerateBadResponseDTO(401, "fail");
+        return responseDTOUtils.doGenerateResponseDTO(null);
     }
 }

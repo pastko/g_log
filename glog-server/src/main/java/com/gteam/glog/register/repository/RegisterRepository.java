@@ -27,9 +27,9 @@ public class RegisterRepository {
     }
     public void createUserInfo(UserInfoDTO userInfoDTO) {
 
-        if(duplicateCheck(userInfoDTO.getUserId())) {
-            Users users = Users.builder().userId(userInfoDTO.getUserId()).userPwd(userInfoDTO.getUserPwd()).build();
-            Mypage mypage = Mypage.builder().usr_idx(users).nikName(userInfoDTO.getNikName()).build();
+        if(duplicateCheck(userInfoDTO.getMail())) {
+            Users users = Users.builder().mail(userInfoDTO.getMail()).pwd(userInfoDTO.getPwd()).build();
+            Mypage mypage = Mypage.builder().usrIdx(users).nikNm(userInfoDTO.getNikNm()).build();
 
             entityManager.persist(users);
             entityManager.persist(mypage);
