@@ -21,16 +21,16 @@ public class Mypage {
     @Column(name = "mypg_idx")
     private Long idx;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "usr_idx")
-    private Users usr_idx;
+    private Users usrIdx;
 
     @Column(name = "nik_nm")
     @Size(max=13)
-    private String nikName;
+    private String nikNm;
 
     @Column(name = "img_nm")
-    private String imgName;
+    private String imgNm;
 
     @Column(name = "glog_titl")
     @Size(max=10)

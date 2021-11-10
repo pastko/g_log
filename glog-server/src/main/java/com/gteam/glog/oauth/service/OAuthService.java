@@ -48,12 +48,17 @@ public class OAuthService {
                 }
             }
 
-        // TODO: 사용자 로그인 검즈 로직 추가
+        // TODO: 사용자 로그인 검증 로직 추가
 
 
         } catch (IllegalArgumentException e) {
             log.error("Null Exception : "+ e.getMessage());
         }
+    }
+
+    public String doRequestAccessTokenSwicherSocialType(){
+
+        return null;
     }
 
 

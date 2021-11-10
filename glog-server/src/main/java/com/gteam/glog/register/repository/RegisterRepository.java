@@ -26,8 +26,8 @@ public class RegisterRepository {
         return userInfoDTO == null;
     }
     public void createUserInfo(UserInfoDTO userInfoDTO) {
-        if(duplicateCheck(userInfoDTO.getUserId())) {
 
+        if(duplicateCheck(userInfoDTO.getUserId())) {
             Users users = Users.builder().userId(userInfoDTO.getUserId()).userPwd(userInfoDTO.getUserPwd()).build();
             Mypage mypage = Mypage.builder().usr_idx(users).nikName(userInfoDTO.getNikName()).build();
 

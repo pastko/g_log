@@ -24,13 +24,13 @@ public class RegisterService {
     public String createUserInfo(UserInfoDTO userInfoDTO) {
         UserInfoDTO setUserData = new UserInfoDTO();
 
-        setUserData.setUserId(userInfoDTO.getUserId());
-        setUserData.setNikName(userInfoDTO.getNikName());
-        setUserData.setUserPwd(passwordEncoder.encode(userInfoDTO.getUserPwd()));
+        setUserData.setMail(userInfoDTO.getMail());
+        setUserData.setNikNm(userInfoDTO.getNikNm());
+        setUserData.setPwd(passwordEncoder.encode(userInfoDTO.getPwd()));
 
         registerRepository.createUserInfo(setUserData);
 
-        if(!registerRepository.duplicateCheck(userInfoDTO.getUserId()) || userInfoDTO.getUserId() != null) {
+        if(!registerRepository.duplicateCheck(userInfoDTO.getMail()) || userInfoDTO.getMail() != null) {
             return "success";
         }
 

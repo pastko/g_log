@@ -30,9 +30,9 @@ public class RegisterController {
         UserInfoDTO userInfoDTO = new UserInfoDTO();
 
         if(request.getMail() != null) {
-            userInfoDTO.setUserId(request.getMail());
-            userInfoDTO.setUserPwd(request.getPwd());
-            userInfoDTO.setNikName(request.getNikNm());
+            userInfoDTO.setMail(request.getMail());
+            userInfoDTO.setPwd(request.getPwd());
+            userInfoDTO.setNikNm(request.getNikNm());
         }
         if(registerService.createUserInfo(userInfoDTO).equals("ok")) {
             return responseDTOUtils.doGenerateBadResponseDTO(200, "ok");

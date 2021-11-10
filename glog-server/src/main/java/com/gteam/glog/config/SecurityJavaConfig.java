@@ -1,5 +1,9 @@
 package com.gteam.glog.config;
 
+import com.gteam.glog.common.utils.JWTTokenUtils;
+import com.gteam.glog.config.jwtfilter.JWTAuthenticationEntryPoint;
+import com.gteam.glog.config.jwtfilter.JWTAuthenticationFilter;
+import com.gteam.glog.config.jwtfilter.JWTExceptionHandlerFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,20 +12,42 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@EnableWebSecurity
 @Configuration
+@EnableWebSecurity
 public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
 
     private AuthenticationManagerBuilder builder;
+    private final JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JWTAuthenticationFilter jwtAuthenticationFilter;
+    private final JWTExceptionHandlerFilter jwtExceptionHandlerFilter;
+
+
+    public SecurityJavaConfig(JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint, JWTAuthenticationFilter jwtAuthenticationFilter, JWTTokenUtils jwtTokenUtils, JWTExceptionHandlerFilter jwtExceptionHandlerFilter) {
+        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.jwtExceptionHandlerFilter = jwtExceptionHandlerFilter;
+    }
+
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf().disable()
-                .formLogin().disable();
+                .formLogin().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
+                .authorizeRequests()
+                .antMatchers("/signin").permitAll()
+                .antMatchers("/oauth/**").permitAll()
+                .anyRequest().authenticated().and()
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtExceptionHandlerFilter,JWTAuthenticationFilter.class);
+
     }
 
     @Bean
@@ -31,9 +57,9 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder builder) throws Exception {
-        this.builder = builder;
         final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(passwordEncoder());
+        this.builder = builder;
         this.builder
                 .authenticationProvider(authenticationProvider);
     }

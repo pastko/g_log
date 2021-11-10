@@ -20,12 +20,21 @@ public interface SocialOAuth {
 
 
     /**
-     * Client에서  받은 code를 활용하여 사용자 Access_token
+     * Client에서 받은 code를 활용하여 사용자 Access_token
+     *
      * @param code
-     * @return
+     * @return access_token : string
      */
     String requestAccessToken(String code);
 
+
+    /**
+     * Access token을 사용하여 사용자 profile을 요청 합니다.
+     *
+     * @param accesstoken
+     * @return
+     */
+    String requestUserProfile(String accesstoken);
 
 
     /**
@@ -39,8 +48,8 @@ public interface SocialOAuth {
         try {
             HttpEntity httpEntity = createHeaders(accessToken);
 
-            return restTemplate.exchange(
-                    oAuthInfo.getUrl(),
+            return this.restTemplate.exchange(
+                    oAuthInfo.getProfileUrl(),
                     HttpMethod.GET,
                     httpEntity,
                     String.class);
