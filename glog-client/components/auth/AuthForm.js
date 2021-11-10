@@ -23,12 +23,18 @@ function AuthForm({ isRegister, func }) {
         });
     };
 
+    const goAuth = () => {
+        if (func) {
+            func(isForm);
+        }
+    };
+
     return (
         <FormStyled>
             <Input message="이메일" name="mail" onChange={onChange} />
-            <ErrorMessage isForm={isForm} type="mail" />
+            {/* <ErrorMessage isForm={isForm} type="mail" /> */}
             <Input message="비밀번호" name="pwd" onChange={onChange} />
-            {isRegister && <ErrorMessage isForm={isForm} type="pwd" />}
+            {/* {isRegister && <ErrorMessage isForm={isForm} type="pwd" />} */}
             {isRegister && (
                 <>
                     <Input
@@ -36,13 +42,14 @@ function AuthForm({ isRegister, func }) {
                         name="confirmPwd"
                         onChange={onChange}
                     />
-                    <ErrorMessage isForm={isForm} type="pwdConfirm" />
+                    {/* <ErrorMessage isForm={isForm} type="pwdConfirm" /> */}
                 </>
             )}
             {isRegister && (
                 <Input message="닉네임" name="nikNm" onChange={onChange} />
             )}
-            <StyledButton fullWidth isForm={isForm} func={func}>
+            {/* <StyledButton fullWidth isForm={isForm} func={func}> */}
+            <StyledButton fullWidth goAuth>
                 {isRegister ? '가입하기' : '로그인'}
             </StyledButton>
             {!isRegister && (

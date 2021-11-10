@@ -1,75 +1,42 @@
-import {
-    useState
-} from 'react';
-import styled, {
-    css
-} from 'styled-components';
+import { useState } from 'react';
+import styled, { css } from 'styled-components';
 import ErrorMessage from '../layout/ErrorMessage';
 
-function AuthButton({
-    isLink,
-    defaultType,
-    fullWidth,
-    isForm,
-    func,
-    ...rest
-}) {
-    const {
-        isDisabled,
-        setIsDisabled
-    } = useState(false);
+function AuthButton({ isLink, defaultType, fullWidth, goAuth, ...rest }) {
+    const { isDisabled, setIsDisabled } = useState(false);
 
-    const validate = () => {
-        if (!isForm.mail || !isForm.pwd || !isForm.confirmPwd) {
-            setIsDisabled(false);
-        } else {
-            if (isForm.nikNm === '') {
-                let tmpStr = userInfo.email.split('@');
-                let id = tmpStr[0];
-                userInfo.nickname = id;
-            }
-            setIsDisabled(true);
-        }
-    };
-
-    const goAuth = () => {
-        if (func) {
-            func(isForm);
-        }
-    }
+    // const validate = () => {
+    //     if (!isForm.mail || !isForm.pwd || !isForm.confirmPwd) {
+    //         setIsDisabled(false);
+    //     } else {
+    //         if (isForm.nikNm === '') {
+    //             let tmpStr = userInfo.email.split('@');
+    //             let id = tmpStr[0];
+    //             userInfo.nickname = id;
+    //         }
+    //         setIsDisabled(true);
+    //     }
+    // };
 
     if (isLink) {
-        return <LinkStyled defaultType = {
-            defaultType
-        } {
-            ...rest
-        }
-        />;
+        return <LinkStyled defaultType={defaultType} {...rest} />;
     }
-    if (validate()) {
-        return ( <
-            ButtonStyled fullWidth = {
-                fullWidth
-            }
-            disabled = {
-                isDisabled
-            }
-            onClick = {
-                goAuth
-            }
+    // if (validate()) {
+    if(goAuth) {
+        return (
+            <ButtonStyled
+                fullWidth={fullWidth}
+                disabled={isDisabled}
+                onClick={goAuth}
+                {...rest}
             />
         );
     } else {
-        return <ButtonStyled fullWidth = {
-            fullWidth
-        } {
-            ...rest
-        }
-        />;
+        return <ButtonStyled fullWidth={fullWidth} {...rest} />;
     }
 }
 
-const commonStyled = css `
+const commonStyled = css`
     ${(props) =>
         props.fullWidth &&
         css`
@@ -88,7 +55,7 @@ const commonStyled = css `
     }
 `;
 
-const LinkStyled = styled.a `
+const LinkStyled = styled.a`
     ${commonStyled}
     text-decoration: none;
     font-size: 16px;
@@ -103,7 +70,7 @@ const LinkStyled = styled.a `
         `}
 `;
 
-const ButtonStyled = styled.button `
+const ButtonStyled = styled.button`
     ${commonStyled}
 `;
 
