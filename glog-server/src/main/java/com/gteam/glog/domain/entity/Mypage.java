@@ -12,8 +12,7 @@ import java.sql.Date;
 @Getter
 @Setter
 @Entity
-@Builder
-//@NoArgsConstructor
+@NoArgsConstructor
 @Table(name = "mypg")
 public class Mypage {
     @Id
