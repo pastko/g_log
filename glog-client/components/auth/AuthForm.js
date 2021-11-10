@@ -60,7 +60,7 @@ function AuthForm({ isRegister, func }) {
             <span className="or"> or </span>
             <StyledSocialBtn>
                 <SocialButton btnType="Google" />
-                <SocialButton btnType="Github" />
+                {/* <SocialButton btnType="Github" /> */}
             </StyledSocialBtn>
         </FormStyled>
     );

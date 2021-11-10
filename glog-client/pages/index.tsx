@@ -1,10 +1,9 @@
 import type { NextPage } from 'next';
-import styles from '../styles/Home.module.css';
 import Head from 'next/head';
 import Header from '../components/common/Header';
-import Main from './Main';
+import Home from './Home';
 
-const Home: NextPage = () => {
+const index: NextPage = () => {
   return (
     <>
       <Head>
@@ -13,11 +12,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header accessToken='none'/>
-      <main className={styles.main}>
-        <Main />
-      </main>
+      <Home />
     </>
   );
 };
 
-export default Home;
+export default index;

@@ -4,12 +4,12 @@ import styled from 'styled-components';
 const ChangeImage = () => {
     return (
         <ProfileImage>
-            <Image>이미지</Image>
+            <StyledThumbnail> 이미지 </StyledThumbnail>
             <Button>
-                <text>이미지 업로드</text>
-            </Button>
+                <text> 이미지 업로드 </text>
+            </Button>ß
             <Button>
-                <text>이미지 제거</text>
+                <text> 이미지 제거 </text>
             </Button>
         </ProfileImage>
     );
@@ -24,7 +24,7 @@ const ProfileImage = styled.div`
     align-items: center;
 `;
 
-const Image = styled.div`
+const StyledThumbnail = styled.div`
     width: 180px;
     height: 300px;
     display: flex;

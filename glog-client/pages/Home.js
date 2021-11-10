@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import Post from '../components/Post';
+import Post from '../components/main/Post';
 import styled from 'styled-components';
 import axios from 'axios';
 
-const Main = () => {
+const Home = () => {
     const [items, setItems] = useState([]);
-
     const [noMore, setnoMore] = useState(true);
-
     const [page, setpage] = useState(2);
 
     useEffect(() => {
@@ -49,14 +47,14 @@ const Main = () => {
 
     return (
         <>
-            <Recent>
+            {/* <Recent>
                 <TrandTab>
-                    <text>트렌딩</text>
+                    <text> 트렌딩 </text>
                 </TrandTab>
                 <NewTab>
-                    <text>최신</text>
+                    <text> 최신 </text>
                 </NewTab>
-            </Recent>
+            </Recent> */}
             <StyleInfiniteScroll>
                 <InfiniteScroll
                     dataLength={items.length} //This is important field to render the next data
@@ -71,7 +69,6 @@ const Main = () => {
         </>
     );
 };
-export default Main;
 
 const Recent = styled.div`
     max-width: 1280px;
@@ -97,10 +94,12 @@ const NewTab = styled.div`
     margin-top: -1%;
 `;
 
-//게시글 중앙 정렬
 const StyleInfiniteScroll = styled.div`
     max-width: 1280px;
     margin: 20px auto;
     position: flex;
     transform: translate(9.5%);
 `;
+
+export default Home;
+

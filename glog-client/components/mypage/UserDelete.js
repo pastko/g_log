@@ -6,9 +6,9 @@ const UserDelete = () => {
         <DeleteUser>
             <DeleteMain>
                 <DeleteWrap>
-                    <UserEdit>회원탈퇴</UserEdit>
+                    <UserEdit> 회원탈퇴 </UserEdit>
                     <Deletebtn>
-                        <Btn>회원탈퇴</Btn>
+                        <Btn> 회원탈퇴 </Btn>
                     </Deletebtn>
                 </DeleteWrap>
             </DeleteMain>
@@ -60,7 +60,7 @@ const Btn = styled.div`
     line-height: 1.5;
     justify-content: flex-start;
     width: 75px;
-    align-itmes: center;
+    align-items: center;
     :hover {
         cursor: pointer;
         opacity: 0.5;
