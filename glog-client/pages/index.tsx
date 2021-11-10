@@ -12,7 +12,7 @@ const Home: NextPage = () => {
         <meta name="description" content="post management" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
+      <Header accessToken='none'/>
       <main className={styles.main}>
         <Main />
       </main>

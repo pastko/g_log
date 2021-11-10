@@ -4,7 +4,7 @@ import AuthForm from '../auth/AuthForm';
 import styled from 'styled-components';
 
 const goSignIn = (form) => {
-    const { mail, pwd, confirmPwd, nikNm } = form;
+    const { mail, pwd } = form;
     axios
         .post('https://localhost:8080/signin', {
             mail: mail,
@@ -22,7 +22,7 @@ const goSignIn = (form) => {
 const SignIn = ({ setIsOpen }) => {
     return (
         <AuthTemplate setIsOpen={setIsOpen}>
-            <AuthForm func={goSignIn} />{' '}
+            <AuthForm func={goSignIn} />
         </AuthTemplate>
     );
 };

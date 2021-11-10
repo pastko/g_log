@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import qs from 'qs';
 import axios from 'axios';
 import Header from '../common/Header';
@@ -39,11 +39,12 @@ function SocialCallback({ authURI, nowURL }) {
 
     return (
         <>
+            {' '}
             {isLogin ? (
                 <Header accessToken={accessToken} />
             ) : (
                 <AuthForm isLoginFailed />
-            )}
+            )}{' '}
         </>
     );
 }

@@ -1,9 +1,13 @@
 import SocialCallback from '../../../components/auth/SocialCallback';
 
 function GithubCallback() {
-    const nowURL = new URL(window.location.href);
-    const authURI = `${process.env.GOOGLE_AUTH_URI}`;
-    return <SocialCallback authURI={authURI} nowURL={nowURL} />;
+    const authURI = `${process.env.googleAuthURI}`;
+    return (
+        <SocialCallback
+            authURI={authURI}
+            nowURL={typeof window !== 'undefined' ? window.location.href : ''}
+        />
+    );
 }
 
 export default GithubCallback;
