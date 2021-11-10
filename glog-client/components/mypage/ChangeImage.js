@@ -1,15 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import Image from 'next/image';
 
 const ChangeImage = () => {
     return (
         <ProfileImage>
-            <Image>이미지</Image>
+            <Image> 이미지 </Image>
             <Button>
-                <text>이미지 업로드</text>
-            </Button>
+                <text> 이미지 업로드 </text>
+            </Button>ß
             <Button>
-                <text>이미지 제거</text>
+                <text> 이미지 제거 </text>
             </Button>
         </ProfileImage>
     );
