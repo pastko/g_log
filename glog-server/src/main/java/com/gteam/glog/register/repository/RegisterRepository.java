@@ -30,11 +30,13 @@ public class RegisterRepository {
 
         if(duplicateCheck(userInfoDTO.getMail())) {
             Users users = new Users();
+            Mypage mypage = new Mypage();
 
             users.setMail(userInfoDTO.getMail());
             users.setPwd(userInfoDTO.getPwd());
 
-            Mypage mypage = Mypage.builder().usrIdx(users).nikNm(userInfoDTO.getNikNm()).build();
+            mypage.setUsrIdx(users);
+            mypage.setNikNm(userInfoDTO.getNikNm());
 
             entityManager.persist(users);
             entityManager.persist(mypage);
@@ -51,6 +53,7 @@ public class RegisterRepository {
 
         entityManager.persist(users);
 
+        entityManager.flush();
         entityManager.close();
     }
 }
