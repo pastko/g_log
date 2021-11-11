@@ -2,7 +2,6 @@ package com.gteam.glog.main.repository;
 
 import com.gteam.glog.domain.dto.post.PostContentsDTO;
 import com.gteam.glog.domain.entity.Contents;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -13,13 +12,14 @@ import java.util.List;
 @Repository
 @Transactional
 public class MainRepository {
-    private final EntityManager entityManager;
+    private EntityManager entityManager;
     private int pageSize;
 
-    @Autowired
-    public MainRepository(EntityManager entityManager1, EntityManager entityManager) {
+    public MainRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
+
+
     /*
     * sortRule: 1. 최신순 2. 과거순
     * */

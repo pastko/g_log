@@ -4,6 +4,7 @@ import com.gteam.glog.common.utils.ResponseDTOUtils;
 import com.gteam.glog.domain.dto.post.PostContentsDTO;
 import com.gteam.glog.main.service.MainService;
 import io.swagger.annotations.ApiOperation;
+import net.bytebuddy.implementation.bind.annotation.Default;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,7 @@ public class MainController {
 
     @GetMapping(value = "/board")
     @ApiOperation(value = "메인 화면 API", notes = "메인 화면 게시물 조회 API")
-    public ResponseEntity<?> setMainPage(@RequestParam("pageNum") int pageNum,
+    public ResponseEntity<?> setMainPage(@RequestParam( value = "pageNum", defaultValue = "0") int pageNum,
                                          @RequestParam("sortRule") int sortRule,
                                          HttpServletResponse response) {
         List<PostContentsDTO> resultList = mainService.setMainPage(pageNum, sortRule);

@@ -36,7 +36,7 @@ public class MyPageService {
             return UserInfoDTO.builder()
                     .mail(mypage.getUsrIdx().getMail())
                     .pwd("")
-                    .imgNm(mypage.getImgNm())
+                    .nikNm(mypage.getNikNm())
                     .glogTitle(mypage.getGlogTitle())
                     .imgNm(mypage.getImgNm())
                     .build();
