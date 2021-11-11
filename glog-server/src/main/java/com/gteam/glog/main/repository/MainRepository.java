@@ -15,6 +15,7 @@ public class MainRepository {
     private EntityManager entityManager;
     private int pageSize;
 
+    @Autowired
     public MainRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
@@ -32,7 +33,7 @@ public class MainRepository {
             PostContentsDTO postContentsDTO = new PostContentsDTO();
 
             postContentsDTO.setIdx(resultList.get(i).getBoard().getIdx());
-            postContentsDTO.setNikNm(resultList.get(i).getBoard().getNikNm());
+            postContentsDTO.setNikNm(resultList.get(i).getBoard().getUsr_idx().getNikNm());
             postContentsDTO.setTitle(resultList.get(i).getTitle());
             postContentsDTO.setContents(resultList.get(i).getContents());
             postContentsDTO.setCreateDt(resultList.get(i).getCreateDt());

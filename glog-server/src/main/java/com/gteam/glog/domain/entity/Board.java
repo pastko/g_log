@@ -19,5 +19,5 @@ public class Board {
     private int idx;
 
     @Column(name = "usr_idx")
-    private String nikNm;
+    private Mypage usr_idx;
 }
