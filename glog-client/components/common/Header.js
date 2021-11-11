@@ -6,7 +6,7 @@ import SignIn from '../modal/SignIn';
 import Register from '../modal/Register';
 import Images from '../layout/Images';
 
-const Header = ({ accessToken }) => {
+const Header = ({doLoginStatus , setDeLoginStatus}) => {
     const [isSignInOpen, setIsSignInOpen] = useState(false);
     const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
@@ -17,7 +17,7 @@ const Header = ({ accessToken }) => {
                     <Images src='/common/logo/logo.png' width={48} height={48}/>
                 </div>
                 <div className="right">
-                    {accessToken !== 'none' ? (
+                    {doLoginStatus.isLogin ? (
                         '로그인 후 썸네일 처리'
                     ) : (
                         <>

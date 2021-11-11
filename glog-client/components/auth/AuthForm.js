@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/link-passhref */
-import { useState } from 'react';
 import Input from '../layout/Input';
 import styled from 'styled-components';
 import AuthButton from './AuthButton';
@@ -7,52 +6,43 @@ import SocialButton from './SocialButton';
 import Link from 'next/link';
 import ErrorMessage from '../layout/ErrorMessage';
 
-function AuthForm({ isRegister, func }) {
-    const [isForm, setForm] = useState({
-        mail: '',
-        pwd: '',
-        confirmPwd: '',
-        nikNm: '',
-    });
-
-    const onChange = (e) => {
-        const { name, value } = e.target;
-        setForm({
-            ...form,
-            [name]: value,
-        });
-    };
-
+function AuthForm({ goRegister, goSignIn, onChangeHandler }) {
+    
     const goAuth = () => {
-        if (func) {
-            func(isForm);
+        if (goSignIn) {
+            goSignIn();
+        }
+
+        if(goRegister){
+            goRegister()
         }
     };
+    //TODO ::// ==>>
 
     return (
         <FormStyled>
-            <Input message="이메일" name="mail" onChange={onChange} />
+            <Input message="이메일" name="mail" onChange={onChangeHandler} />
             {/* <ErrorMessage isForm={isForm} type="mail" /> */}
-            <Input message="비밀번호" name="pwd" onChange={onChange} />
+            <Input message="비밀번호" name="pwd" onChange={onChangeHandler} />
             {/* {isRegister && <ErrorMessage isForm={isForm} type="pwd" />} */}
-            {isRegister && (
+            {goRegister && (
                 <>
                     <Input
                         message="비밀번호 확인"
                         name="confirmPwd"
-                        onChange={onChange}
+                        onChange={onChangeHandler}
                     />
                     {/* <ErrorMessage isForm={isForm} type="pwdConfirm" /> */}
                 </>
             )}
-            {isRegister && (
-                <Input message="닉네임" name="nikNm" onChange={onChange} />
+            {goRegister && (
+                <Input message="닉네임" name="nikNm" onChange={onChangeHandler} />
             )}
             {/* <StyledButton fullWidth isForm={isForm} func={func}> */}
             <StyledButton fullWidth goAuth>
-                {isRegister ? '가입하기' : '로그인'}
+                {goRegister ? '가입하기' : '로그인'}
             </StyledButton>
-            {!isRegister && (
+            {!goRegister && (
                 <div className="findRegister">
                     <Link href=""> 비밀번호 찾기 </Link>
                 </div>
