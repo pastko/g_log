@@ -16,10 +16,10 @@ const Home = () => {
             // );
             // const data = await res.json();
             // setItems(data);
-            const res = await axios.get(
-                `http://localhost:3004/comments?_page=1&_limit=20` //서버에서 api 받아올 예정
-            );
-            setItems(res.data);
+            // const res = await axios.get(
+            //     `http://localhost:3004/comments?_page=1&_limit=20` //서버에서 api 받아올 예정
+            // );
+            // setItems(res.data);
         };
         getComments();
     }, []);
@@ -30,10 +30,10 @@ const Home = () => {
         // );
         // const data = await res.json();
         // return data;
-        const res = await axios.get(
-            `http://localhost:3004/comments?_page=${page}&_limit=20` //서버에서 api 받아올 예정
-        );
-        return res.data;
+        // const res = await axios.get(
+        //     `http://localhost:3004/comments?_page=${page}&_limit=20` //서버에서 api 받아올 예정
+        // );
+        // return res.data;
     };
     const fetchData = async () => {
         const commentsFormServer = await fetchComments();
@@ -47,14 +47,15 @@ const Home = () => {
 
     return (
         <>
+            
             {/* <Recent>
-                <TrandTab>
-                    <text> 트렌딩 </text>
-                </TrandTab>
-                <NewTab>
-                    <text> 최신 </text>
-                </NewTab>
-            </Recent> */}
+                            <TrandTab>
+                                <text> 트렌딩 </text>
+                            </TrandTab>
+                            <NewTab>
+                                <text> 최신 </text>
+                            </NewTab>
+                        </Recent> */}
             <StyleInfiniteScroll>
                 <InfiniteScroll
                     dataLength={items.length} //This is important field to render the next data
@@ -102,4 +103,3 @@ const StyleInfiniteScroll = styled.div`
 `;
 
 export default Home;
-
