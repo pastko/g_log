@@ -1,4 +1,4 @@
-function BoardTemplate() {
+function BoardButtons() {
     return (
         <div>
             
@@ -6,4 +6,4 @@ function BoardTemplate() {
     );
 }
 
-export default BoardTemplate;
+export default BoardButtons;

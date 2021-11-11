@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/link-passhref */
-import Input from '../layout/Input';
+import { useState } from 'react';
+import Input from './AuthInput';
 import styled from 'styled-components';
 import AuthButton from './AuthButton';
 import SocialButton from './SocialButton';
