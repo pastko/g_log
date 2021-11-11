@@ -1,8 +1,7 @@
 @import './css/reset.css';
 
 .appContainer {
-    width: 960px;
-    min-width: 400px;
+    width: 1280px;
+    min-width: 480px;
     margin: 0 auto;
-    text-align: center;
 }

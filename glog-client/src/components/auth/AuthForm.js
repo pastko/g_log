@@ -1,10 +1,9 @@
-/* eslint-disable @next/next/link-passhref */
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Input from './AuthInput';
 import styled from 'styled-components';
 import AuthButton from './AuthButton';
 import SocialButton from './SocialButton';
-import Link from 'next/link';
 import ErrorMessage from '../layout/ErrorMessage';
 
 function AuthForm( { isRegister , goAction, onChangeHandler }) {
@@ -35,7 +34,7 @@ function AuthForm( { isRegister , goAction, onChangeHandler }) {
             </StyledButton>
             {!isRegister && (
                 <div className="findRegister">
-                    <Link href=""> 비밀번호 찾기 </Link>
+                    <Link to=""> 비밀번호 찾기 </Link>
                 </div>
             )}
             <span className="or"> or </span>

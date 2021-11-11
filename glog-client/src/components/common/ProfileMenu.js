@@ -1,8 +1,7 @@
-/* eslint-disable @next/next/link-passhref */
 import { Avatar, Menu, MenuItem, ListItemIcon, Divider } from '@mui/material';
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 function ProfileMenu({ anchorEl, open, handleClose }) {
     return (
@@ -41,7 +40,7 @@ function ProfileMenu({ anchorEl, open, handleClose }) {
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
             <MenuItem>
-                <Link href="/Profile">
+                <Link to="/profile">
                     <a>
                         <ListItemIcon sx={{verticalAlign: "top"}}>
                             <AccountCircleIcon fontSize="medium" />
@@ -52,7 +51,7 @@ function ProfileMenu({ anchorEl, open, handleClose }) {
             </MenuItem>
             <Divider />
             <MenuItem>
-                <Link href="#내 게시글">
+                <Link to="#내 게시글">
                     <a>
                         <ListItemIcon sx={{verticalAlign: "top"}}>
                             <NoteAltOutlinedIcon fontSize="medium" />

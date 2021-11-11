@@ -1,24 +1,16 @@
-/* eslint-disable @next/next/link-passhref */
 import { useState } from 'react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import AuthButton from '../auth/AuthButton';
 import SignIn from '../modal/SignIn';
 import Register from '../modal/Register';
 import Images from '../layout/Images';
 import ProfileMenu from '../../components/common/ProfileMenu';
-import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, IconButton, Tooltip } from '@mui/material';
-import rootSaga from '../../store/saga';
 
 
 
 const Header = () => {
-    
-    const isLogin = useSelector((state)=> { state.isLogin });
-    console.log(isLogin)
-    const dispatch = useDispatch();
-
     const [isSignInOpen, setIsSignInOpen] = useState(false);
     const [isRegisterOpen, setIsRegisterOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -33,7 +25,7 @@ const Header = () => {
     return (
         <>
             <StyledHeader>
-                <Link href="/">
+                <Link to="/">
                     <a>
                         <Images
                             src="/common/logo/logo.png"
@@ -43,10 +35,10 @@ const Header = () => {
                     </a>
                 </Link>
                 <div className="right">
-                    {isLogin ? (
+                    {false ? (
 
                         <>
-                            <Link href="/board/BoardWrite">
+                            <Link to="/boardWrite">
                                 <AuthButton isLink defaultType>
                                     글쓰기
                                 </AuthButton>

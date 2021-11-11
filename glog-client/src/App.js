@@ -1,9 +1,8 @@
 import React from 'react';
 import { Switch, Route} from 'react-router-dom';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
-import Mypage from './pages/MyPage';
-import Main from './pages/Main';
+import Home from './pages/Home';
+import Profile from './pages/mypage/Profile';
+import BoardWrite from './pages/board/BoardWrite';
 import './App.css'
 
 
@@ -12,16 +11,13 @@ function App() {
     <div className="appContainer">
       <Switch>
         <Route exact path='/'>
-          <Main/>
+          <Home/>
         </Route>
-        <Route path='/signin'>
-          <SignIn/>
+        <Route path='/profile'>
+          <Profile/>
         </Route>
-        <Route path='/signup'>
-          <SignUp/>
-        </Route>
-        <Route path="/mypage">
-          <Mypage/>
+        <Route path='/boardWrite'>
+          <BoardWrite/>
         </Route>
       </Switch>
     </div>
