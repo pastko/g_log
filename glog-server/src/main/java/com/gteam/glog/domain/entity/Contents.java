@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 @Getter
 @Setter
@@ -35,7 +35,7 @@ public class Contents {
     @Column(name = "cret_dt")
     private Date createDt;
 
-    @Column(name = "cret_dt")
+    @Column(name = "upd_dt")
     private Date updateDt;
 
 }

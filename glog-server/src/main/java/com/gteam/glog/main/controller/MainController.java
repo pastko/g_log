@@ -28,7 +28,7 @@ public class MainController {
 
     @GetMapping(value = "/board")
     @ApiOperation(value = "메인 화면 API", notes = "메인 화면 게시물 조회 API")
-    public ResponseEntity<?> setMainPage(@RequestParam("pageNum") int pageNum,
+    public ResponseEntity<?> setMainPage(@RequestParam("pageNum")  int pageNum,
                                          @RequestParam("sortRule") int sortRule,
                                          HttpServletResponse response) {
         List<PostContentsDTO> resultList = mainService.setMainPage(pageNum, sortRule);
