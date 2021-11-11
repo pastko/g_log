@@ -1,9 +1,13 @@
 import type { NextPage } from 'next';
+import React, {useState} from 'react';
 import Head from 'next/head';
 import Header from '../components/common/Header';
 import Home from './Home';
 
-const index: NextPage = () => {
+
+
+const Index: NextPage = () => {
+  
   return (
     <>
       <Head>
@@ -11,10 +15,10 @@ const index: NextPage = () => {
         <meta name="description" content="post management" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header accessToken='none'/>
+      <Header/>
       <Home />
     </>
   );
 };
 
-export default index;
+export default Index;

@@ -7,9 +7,18 @@ import SignIn from '../modal/SignIn';
 import Register from '../modal/Register';
 import Images from '../layout/Images';
 import ProfileMenu from '../../components/common/ProfileMenu';
+import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, IconButton, Tooltip } from '@mui/material';
+import rootSaga from '../../store/saga';
 
-const Header = ({doLoginStatus , setDeLoginStatus}) => {
+
+
+const Header = () => {
+    
+    const isLogin = useSelector((state)=> { state.isLogin });
+    console.log(isLogin)
+    const dispatch = useDispatch();
+
     const [isSignInOpen, setIsSignInOpen] = useState(false);
     const [isRegisterOpen, setIsRegisterOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -34,7 +43,7 @@ const Header = ({doLoginStatus , setDeLoginStatus}) => {
                     </a>
                 </Link>
                 <div className="right">
-                    {doLoginStatus.isLogin ? (
+                    {isLogin ? (
 
                         <>
                             <Link href="/board/BoardWrite">

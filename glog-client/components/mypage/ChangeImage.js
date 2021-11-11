@@ -1,13 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
+import Upload from '../resource/Upload';
 
 const ChangeImage = () => {
+    const upload = ()=>{
+        console.log("upload")
+    }
+
     return (
         <ProfileImage>
             <StyledThumbnail> 이미지 </StyledThumbnail>
-            <Button>
+            <Button onClick={upload}>
                 <text> 이미지 업로드 </text>
             </Button>ß
+            <Upload/>
             <Button>
                 <text> 이미지 제거 </text>
             </Button>
