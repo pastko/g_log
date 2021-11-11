@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import BoardButtons from '../../components/board/BoardButtons';
 import BoardEditor from '../../components/board/BoardEditor';
 import BoardTag from '../../components/board/BoardTag';
 import BoardTitle from '../../components/board/BoardTitle';
@@ -7,27 +6,33 @@ import BoardTitle from '../../components/board/BoardTitle';
 function BoardTemplate() {
     return (
         <>
-            <StyledBoardTemplate>
-                <Block>
+            <StyledWrapper>
+                <StyledHeader>
                     <BoardTitle />
                     <BoardTag />
-                </Block>
-                <BoardEditor />
-                <BoardButtons />
-            </StyledBoardTemplate>
+                </StyledHeader>
+                <StyledBody />
+            </StyledWrapper>
         </>
     );
 }
 
-const StyledBoardTemplate = styled.div`
+const StyledWrapper = styled.div`
+    height: 100%;
     min-height: 0px;
     display: flex;
     flex-direction: column;
 `;
 
-const Block = styled.div`
-    max-height: 450px;
-    padding: 1rem;
+const StyledHeader = styled.div`
+    height: 30%;
+    padding: 0 1rem;
+`;
+
+const StyledBody = styled(BoardEditor)`
+    position: fixed;
+    bottom: 80%;
+    height: auto;
 `;
 
 export default BoardTemplate;
