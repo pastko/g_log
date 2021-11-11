@@ -1,13 +1,13 @@
 /* eslint-disable @next/next/link-passhref */
 import { useState } from 'react';
+import Link from 'next/link';
 import styled from 'styled-components';
 import AuthButton from '../auth/AuthButton';
 import SignIn from '../modal/SignIn';
 import Register from '../modal/Register';
 import Images from '../layout/Images';
-import Link from 'next/link';
 import ProfileMenu from '../../components/common/ProfileMenu';
-import { Box, Avatar, IconButton, Tooltip } from '@mui/material';
+import { Avatar, IconButton, Tooltip } from '@mui/material';
 
 const Header = ({ accessToken }) => {
     const [isSignInOpen, setIsSignInOpen] = useState(false);
@@ -24,21 +24,45 @@ const Header = ({ accessToken }) => {
     return (
         <>
             <StyledHeader>
-                <div className="logo">
-                    <Images src='/common/logo/logo.png' width={48} height={48}/>
-                </div>
+                <Link href="/">
+                    <a>
+                        <Images
+                            src="/common/logo/logo.png"
+                            width={48}
+                            height={48}
+                        />
+                    </a>
+                </Link>
                 <div className="right">
                     {accessToken !== 'none' ? (
                         <>
                             <Link href="/board/BoardWrite">
-                                <AuthButton isLink defaultType>글쓰기</AuthButton>
+                                <AuthButton isLink defaultType>
+                                    글쓰기
+                                </AuthButton>
                             </Link>
-                            <Tooltip sx={{ display: "flex", alignItems: "center", textAlign:"center"}}>
-                                <IconButton onClick={handleClick} size="medium" sx={{ ml: 0.5 }}>
-                                    <Avatar sx={{width: 35, height: 35}}>P</Avatar>
+                            <Tooltip
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    textAlign: 'center',
+                                }}
+                            >
+                                <IconButton
+                                    onClick={handleClick}
+                                    size="medium"
+                                    sx={{ ml: 0.5 }}
+                                >
+                                    <Avatar sx={{ width: 35, height: 35 }}>
+                                        P
+                                    </Avatar>
                                 </IconButton>
                             </Tooltip>
-                            <ProfileMenu anchorEl={anchorEl} open={open} handleClose={handleClose} />
+                            <ProfileMenu
+                                anchorEl={anchorEl}
+                                open={open}
+                                handleClose={handleClose}
+                            />
                         </>
                     ) : (
                         <>
