@@ -8,8 +8,6 @@ import Images from '../layout/Images';
 import ProfileMenu from '../../components/common/ProfileMenu';
 import { Avatar, IconButton, Tooltip } from '@mui/material';
 
-
-
 const Header = () => {
     const [isSignInOpen, setIsSignInOpen] = useState(false);
     const [isRegisterOpen, setIsRegisterOpen] = useState(false);

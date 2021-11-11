@@ -1,13 +1,13 @@
 import React ,{useState} from 'react';
 import AWS from 'aws-sdk'
 
-const S3_BUCKET = process.env.S3_UPLOAD_BUCKET;
-const REGION = process.env.S3_UPLOAD_REGION;
+const S3_BUCKET = process.env.REACT_APP_S3_UPLOAD_BUCKET;
+const REGION = process.env.REACT_APP_S3_UPLOAD_REGION;
 
 
 AWS.config.update({
-    accessKeyId: process.env.S3_UPLOAD_KEY,
-    secretAccessKey: process.env.S3_UPLOAD_SECRET
+    accessKeyId: process.env.REACT_APP_S3_UPLOAD_KEY,
+    secretAccessKey: process.env.REACT_APP_S3_UPLOAD_SECRET
 })
 
 const myBucket = new AWS.S3({

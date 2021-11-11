@@ -4,15 +4,15 @@ import Images from '../layout/Images';
 function SocialButton({ btnType }) {
     const googleURI =
         'https://accounts.google.com/o/oauth2/v2/auth?' +
-        `client_id=${process.env.GOOGLE_CLIENT_ID}.apps.googleusercontent.com` +
-        `&redirect_uri=${process.env.GOOGLE_REDIRECT_URI}` +
+        `client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}.apps.googleusercontent.com` +
+        `&redirect_uri=${process.env.REACT_APP_GOOGLE_REDIRECT_URI}` +
         '&response_type=code' +
         '&scope=profile';
 
     const githubURI =
         'https://github.com/login/oauth/authorize?' +
-        `client_id=${process.env.GITHUB_CLIENT_ID}` +
-        `&redirect_uri=${process.env.GITHUB_REDIRECT_URI}`;
+        `client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}` +
+        `&redirect_uri=${process.env.REACT_APP_GITHUB_REDIRECT_URI}`;
 
     return (
         <StyledLink
