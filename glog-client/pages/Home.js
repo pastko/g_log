@@ -35,6 +35,7 @@ const Home = () => {
     //     );
     //     return res.data;
     // };
+
     const fetchData = async () => {
         const commentsFormServer = await fetchComments();
         setItems([...items, ...commentsFormServer]);
@@ -47,14 +48,15 @@ const Home = () => {
 
     return (
         <>
+            
             {/* <Recent>
-                <TrandTab>
-                    <text> 트렌딩 </text>
-                </TrandTab>
-                <NewTab>
-                    <text> 최신 </text>
-                </NewTab>
-            </Recent> */}
+                            <TrandTab>
+                                <text> 트렌딩 </text>
+                            </TrandTab>
+                            <NewTab>
+                                <text> 최신 </text>
+                            </NewTab>
+                        </Recent> */}
             <StyleInfiniteScroll>
                 <InfiniteScroll
                     dataLength={items.length} //This is important field to render the next data
@@ -102,4 +104,3 @@ const StyleInfiniteScroll = styled.div`
 `;
 
 export default Home;
-

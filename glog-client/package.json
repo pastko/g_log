@@ -13,6 +13,8 @@
     "@mui/icons-material": "^5.1.0",
     "@mui/material": "^5.1.0",
     "@reduxjs/toolkit": "^1.6.2",
+    "@toast-ui/editor-plugin-color-syntax": "^3.0.2",
+    "@toast-ui/editor-plugin-table-merged-cell": "^3.0.1",
     "@toast-ui/react-editor": "^3.1.1",
     "aws-sdk": "^2.1025.0",
     "axios": "^0.24.0",
