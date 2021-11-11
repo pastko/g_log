@@ -1,7 +1,7 @@
 import SocialCallback from '../../../components/auth/SocialCallback';
 
 function GithubCallback() {
-    const authURI = `${process.env.GOOGLE_AUTH_URI}`;
+    const authURI = `${process.env.REACT_APP_GOOGLE_AUTH_URI}`;
     return (
         <SocialCallback
             authURI={authURI}
