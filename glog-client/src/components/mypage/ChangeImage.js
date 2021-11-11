@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import Images from '../layout/Images';
 import Upload from '../resource/Upload';

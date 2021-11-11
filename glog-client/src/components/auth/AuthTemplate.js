@@ -1,5 +1,4 @@
-/* eslint-disable @next/next/link-passhref */
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Images from '../layout/Images';
 
@@ -11,7 +10,7 @@ function AuthTemplate({ setIsOpen, children }) {
                     X
                 </div>
                 <div className="intro">
-                    <Link href="/">
+                    <Link to="/">
                         <Images src="/common/logo/logo.png" width={40} height={40} />
                     </Link>
                     <h3 className="intro"> Glog에 오신 것을 환영합니다. </h3>

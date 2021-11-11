@@ -1,16 +1,10 @@
 import React, { useRef } from 'react';
-import dynamic from 'next/dynamic';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import BoardButton from './BoardButton';
+import {Editor} from '@toast-ui/react-editor';
+import BoardButtons from './BoardButtons';
 import styled from 'styled-components';
 
 function BoardEditor() {
-    const Editor = dynamic(
-        () => import('@toast-ui/react-editor').then((m) => m.Editor),
-        {
-            ssr: false,
-        }
-    );
     const editorRef = useRef();
 
     const handleClick = () => {
@@ -32,9 +26,9 @@ function BoardEditor() {
                 ref={editorRef}
             />
             <StyledButtons>
-                <BoardButton isDefault title="나가기" />
+                <BoardButtons isDefault title="나가기" />
                 <div className="right">
-                    <BoardButton title="출간하기" onClick={handleClick} />
+                    <BoardButtons title="출간하기" onClick={handleClick} />
                 </div>
             </StyledButtons>
         </>

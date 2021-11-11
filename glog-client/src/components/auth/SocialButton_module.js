@@ -11,13 +11,13 @@ function SocialButton({ btnType }) {
     console.log(error);
   }
 
-  const googleClientId = `${process.env.googleClientId}.apps.googleusercontent.com`;
-  const googleRedirectURI = `${process.env.redirectURI}`;
+  const googleClientId = `${process.env.GOOGLE_CLIENT_ID}.apps.googleusercontent.com`;
+  const googleRedirectURI = `${process.env.GOOGLE_REDIRECT_URI}`;
 
   const githubURI =
     'https://github.com/login/oauth/authorize?' +
-    `client_id=${process.env.githubClientId}` +
-    `&redirect_uri=${process.env.githubRedirectURI}`;
+    `client_id=${process.env.GITHUB_CLIENT_ID}` +
+    `&redirect_uri=${process.env.GITHUB_REDIRECT_URI}`;
 
   return (
     <StyledButton>
