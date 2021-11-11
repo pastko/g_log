@@ -7,7 +7,7 @@ const ChangeImage = () => {
             <StyledThumbnail> 이미지 </StyledThumbnail>
             <Button>
                 <text> 이미지 업로드 </text>
-            </Button>ß
+            </Button>
             <Button>
                 <text> 이미지 제거 </text>
             </Button>
