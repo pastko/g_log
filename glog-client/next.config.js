@@ -10,6 +10,16 @@ module.exports = {
     githubAuthURI: process.env.GITHUB_AUTH_URI,
     mailRegex: process.env.EMAIL_REGEX,
     pwdRegex: process.env.PASSWORD_REGEX,
-    s3URL: process.env.S3_URL,
+    s3URL : process.env.S3_URL,
+    S3UPLOADBUCKET : process.env.S3_UPLOAD_BUCKET,
+    S3UPLOADREGION : process.env.S3_UPLOAD_REGION,
+    S3UPLOADKEY : process.env.S3_UPLOAD_KEY,
+    S3UPLOADSECRET: process.env.S3_UPLOAD_SECRET,
+  },
+  images: {
+    domains: [
+      `${process.env.S3_UPLOAD_BUCKET}.s3.amazonaws.com`,
+      `${process.env.S3_UPLOAD_BUCKET}.s3.${process.env.S3_UPLOAD_REGION}.amazonaws.com`,
+    ],
   }
 }

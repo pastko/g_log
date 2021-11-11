@@ -9,32 +9,33 @@ const Home = () => {
     const [noMore, setnoMore] = useState(true);
     const [page, setpage] = useState(2);
 
-    useEffect(() => {
-        const getComments = async () => {
-            // const res = await fetch(
-            //     `http://localhost:3004/comments?_page=1&_limit=20`
-            // );
-            // const data = await res.json();
-            // setItems(data);
-            // const res = await axios.get(
-            //     `http://localhost:3004/comments?_page=1&_limit=20` //서버에서 api 받아올 예정
-            // );
-            // setItems(res.data);
-        };
-        getComments();
-    }, []);
+    // useEffect(() => {
+    //     const getComments = async () => {
+    //         // const res = await fetch(
+    //         //     `http://localhost:3004/comments?_page=1&_limit=20`
+    //         // );
+    //         // const data = await res.json();
+    //         // setItems(data);
+    //         const res = await axios.get(
+    //             `http://localhost:3004/comments?_page=1&_limit=20` //서버에서 api 받아올 예정
+    //         );
+    //         setItems(res.data);
+    //     };
+    //     getComments();
+    // }, []);
 
-    const fetchComments = async () => {
-        // const res = await fetch(
-        //     `http://localhost:3004/comments?_page=${page}&_limit=20`
-        // );
-        // const data = await res.json();
-        // return data;
-        // const res = await axios.get(
-        //     `http://localhost:3004/comments?_page=${page}&_limit=20` //서버에서 api 받아올 예정
-        // );
-        // return res.data;
-    };
+    // const fetchComments = async () => {
+    //     // const res = await fetch(
+    //     //     `http://localhost:3004/comments?_page=${page}&_limit=20`
+    //     // );
+    //     // const data = await res.json();
+    //     // return data;
+    //     const res = await axios.get(
+    //         `http://localhost:3004/comments?_page=${page}&_limit=20` //서버에서 api 받아올 예정
+    //     );
+    //     return res.data;
+    // };
+
     const fetchData = async () => {
         const commentsFormServer = await fetchComments();
         setItems([...items, ...commentsFormServer]);

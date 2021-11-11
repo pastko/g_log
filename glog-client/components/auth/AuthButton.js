@@ -2,7 +2,8 @@ import { useState } from 'react';
 import styled, { css } from 'styled-components';
 import ErrorMessage from '../layout/ErrorMessage';
 
-function AuthButton({ isLink, defaultType, fullWidth, goAuth, ...rest }) {
+function AuthButton({ isLink, defaultType, fullWidth, goAction, ...rest }) {
+    console.log("AuthButton");
     const { isDisabled, setIsDisabled } = useState(false);
 
     // const validate = () => {
@@ -17,20 +18,22 @@ function AuthButton({ isLink, defaultType, fullWidth, goAuth, ...rest }) {
     //         setIsDisabled(true);
     //     }
     // };
-
+//TODO ::// ==>>
     if (isLink) {
         return <LinkStyled defaultType={defaultType} {...rest} />;
     }
+    
     // if (validate()) {
-    if(goAuth) {
+    if(goAction){
         return (
             <ButtonStyled
                 fullWidth={fullWidth}
-                disabled={isDisabled}
-                onClick={goAuth}
+                // disabled={isDisabled}
+                onClick={''}
                 {...rest}
             />
         );
+    
     } else {
         return <ButtonStyled fullWidth={fullWidth} {...rest} />;
     }
