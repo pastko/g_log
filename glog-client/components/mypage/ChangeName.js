@@ -1,10 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const ChangeName = () => {
+    const [name, setName] = useState('');
+
+    useEffect(() => {
+        const getName = async () => {
+            const res = await axios.get(`https://localhost:8080/myinfo`, {
+                headers: {
+                    Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJtYWlsIjoiZ2xvZ0BnbWFpbC5jb20iLCJwd2QiOiIiLCJzdWIiOiIkMmEkMTAkUURSTDc2Mm04bWJQWGV5M2hDZ0xaLk5rbWVYRjFzWGNJcHg3bGdTdHltUnhTbFBad01hcUsiLCJpYXQiOjE2MzY2MzY4ODMsImV4cCI6MTYzNjYzNzA2M30.ZvD-0MHC5Pg6q498hc9q8LqvBUqJKlhT7mJGDrOMHuMzQC9ZzDQpm8JhQ1jk4A70rMut7njae2KP47A9h-MOtg`,
+                    'X-USER-ID': 'glog@gmail.com',
+                    withCredentials: false,
+                    'Access-Control-Allow-Origin': '*',
+                },
+            });
+            console.log(res.data);
+            setName(res.data);
+        };
+        getName();
+    }, []);
+
     return (
         <UpdateName>
-            <Text>이름</Text>
+            <Text>{name.nikNm}</Text>
             <UpdateInfo>
                 <Text>수정</Text>
             </UpdateInfo>

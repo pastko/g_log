@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import Images from '../layout/Images';
 
 const ChangeImage = () => {
     return (
         <ProfileImage>
-            <StyledThumbnail> 이미지 </StyledThumbnail>
+            <StyledThumbnail>
+                <Images src="/mypage/thumbnail/DefaultImg.png" width={120} />
+            </StyledThumbnail>
             <Button>
                 <text> 이미지 업로드 </text>
             </Button>
@@ -22,6 +25,7 @@ const ProfileImage = styled.div`
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    margin-right: 14px;
 `;
 
 const StyledThumbnail = styled.div`

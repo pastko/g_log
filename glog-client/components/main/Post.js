@@ -3,24 +3,21 @@ import styled from 'styled-components';
 
 //출력될 코멘트
 
-const Post = ({ item: { id, body, email, like } }) => {
+const Post = ({ post: { titl, cont, cret_dt } }) => {
     return (
         <Wrap>
             <ImageBtn>이미지</ImageBtn>
             <Description>
                 <TextWrap>
-                    <Title>ID : {id} </Title>
-                    <Text> Comment : {body} </Text>
+                    <Title>Title : {titl} </Title>
+                    <Text> Content : {cont} </Text>
                 </TextWrap>
-                <Date>날짜</Date>
+                <Date>{cret_dt}</Date>
                 <Comment>댓글</Comment>
             </Description>
             <UserName>
-                by <span>{email}</span>
+                by <span>이메일</span>
             </UserName>
-            <LikeCount>
-                <span>Like :{like}</span>
-            </LikeCount>
         </Wrap>
     );
 };
