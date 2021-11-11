@@ -1,5 +1,8 @@
+/* eslint-disable @next/next/link-passhref */
 import { Avatar, Menu, MenuItem, ListItemIcon, Divider } from '@mui/material';
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Link from 'next/link';
 
 function ProfileMenu({ anchorEl, open, handleClose }) {
     return (
@@ -15,8 +18,8 @@ function ProfileMenu({ anchorEl, open, handleClose }) {
                     filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                     mt: 1.5,
                     '& .MuiAvatar-root': {
-                        width: 32,
-                        height: 32,
+                        width: 34,
+                        height: 34,
                         ml: -0.5,
                         mr: 1,
                     },
@@ -38,15 +41,25 @@ function ProfileMenu({ anchorEl, open, handleClose }) {
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
             <MenuItem>
-                <Avatar fontSize="small" />
-                Profile
+                <Link href="/Profile">
+                    <a>
+                        <ListItemIcon sx={{verticalAlign: "top"}}>
+                            <AccountCircleIcon fontSize="medium" />
+                        </ListItemIcon>
+                        Profile
+                    </a>
+                </Link>
             </MenuItem>
             <Divider />
             <MenuItem>
-                <ListItemIcon>
-                    <NoteAltOutlinedIcon fontSize="small" />
-                </ListItemIcon>
-                내 게시글
+                <Link href="#내 게시글">
+                    <a>
+                        <ListItemIcon sx={{verticalAlign: "top"}}>
+                            <NoteAltOutlinedIcon fontSize="medium" />
+                        </ListItemIcon>
+                        내 게시글
+                    </a>
+                </Link>
             </MenuItem>
         </Menu>
     );
