@@ -60,6 +60,7 @@ const Btn = styled.div`
     line-height: 1.5;
     justify-content: flex-start;
     width: 75px;
+    margin-bottom: 10px;
     align-items: center;
     :hover {
         cursor: pointer;
