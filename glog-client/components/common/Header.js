@@ -9,7 +9,7 @@ import Images from '../layout/Images';
 import ProfileMenu from '../../components/common/ProfileMenu';
 import { Avatar, IconButton, Tooltip } from '@mui/material';
 
-const Header = ({ accessToken }) => {
+const Header = ({doLoginStatus , setDeLoginStatus}) => {
     const [isSignInOpen, setIsSignInOpen] = useState(false);
     const [isRegisterOpen, setIsRegisterOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -34,7 +34,8 @@ const Header = ({ accessToken }) => {
                     </a>
                 </Link>
                 <div className="right">
-                    {accessToken !== 'none' ? (
+                    {doLoginStatus.isLogin ? (
+
                         <>
                             <Link href="/board/BoardWrite">
                                 <AuthButton isLink defaultType>

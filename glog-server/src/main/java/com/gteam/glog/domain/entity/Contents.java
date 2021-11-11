@@ -4,18 +4,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Getter
 @Setter
-@Table(name = "bord_cont")
+@Entity
 @NoArgsConstructor
+@Table(name = "bord_cont")
 public class Contents {
 
-    @Column(name = "bord_idx")
-    private Board idx;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "`idx`")
+    private int idx;
+
+    @ManyToOne
+    @JoinColumn(name = "bord_idx")
+    private Board board;
 
     @Column(name = "titl")
     private String title;

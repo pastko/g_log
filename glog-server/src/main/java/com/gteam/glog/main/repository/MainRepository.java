@@ -1,7 +1,6 @@
 package com.gteam.glog.main.repository;
 
 import com.gteam.glog.domain.dto.post.PostContentsDTO;
-import com.gteam.glog.domain.entity.Board;
 import com.gteam.glog.domain.entity.Contents;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,23 +17,22 @@ public class MainRepository {
     private int pageSize;
 
     @Autowired
-    public MainRepository(EntityManager entityManager) {
+    public MainRepository(EntityManager entityManager1, EntityManager entityManager) {
         this.entityManager = entityManager;
-        pageSize = (int) entityManager.createQuery("Select COUNT(b) FROM bord b").getSingleResult();
     }
     /*
     * sortRule: 1. 최신순 2. 과거순
     * */
     public List<PostContentsDTO> CallBoardData(int pageNum, int sortRule) {
 
-        List<Contents> resultList = getPageResult(pageNum, sortRule);
+        List<Contents> resultList = this.getPageResult(pageNum, sortRule);
         List<PostContentsDTO> postContentsDTOList = new ArrayList<>();
 
         for(int i = 0; i < resultList.size(); i++) {
             PostContentsDTO postContentsDTO = new PostContentsDTO();
 
-            postContentsDTO.setIdx(resultList.get(i).getIdx().getIdx());
-            postContentsDTO.setNikNm(resultList.get(i).getIdx().getNikNm());
+            postContentsDTO.setIdx(resultList.get(i).getBoard().getIdx());
+            postContentsDTO.setNikNm(resultList.get(i).getBoard().getNikNm());
             postContentsDTO.setTitle(resultList.get(i).getTitle());
             postContentsDTO.setContents(resultList.get(i).getContents());
             postContentsDTO.setCreateDt(resultList.get(i).getCreateDt());
@@ -48,9 +46,15 @@ public class MainRepository {
     public List<Contents> getPageResult(int pageNum, int sortRule) {
         switch (sortRule) {
             case 1:
-                return entityManager.createQuery("select b from bord_cont b").setFirstResult(pageNum * 20).setMaxResults(pageNum * 20 + 20).getResultList();
+                return entityManager.createQuery("select b from Contents as b",Contents.class)
+                        .setFirstResult(pageNum * 20)
+                        .setMaxResults(pageNum * 20 + 20)
+                        .getResultList();
             case 2:
-                return entityManager.createQuery("select b from bord_cont b order by b.cret_dt desc").setFirstResult(pageNum * 20).setMaxResults(pageNum * 20 + 20).getResultList();
+                return entityManager.createQuery("select b from Contents as b order by b.createDt desc",Contents.class)
+                        .setFirstResult(pageNum * 20)
+                        .setMaxResults(pageNum * 20 + 20)
+                        .getResultList();
             default:
                 return null;
         }
