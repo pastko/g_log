@@ -23,6 +23,7 @@ const Home = () => {
         );
         return res.data;
     };
+
     const fetchData = async () => {
         const commentsFormServer = await fetchComments();
         setPosts([...posts, ...commentsFormServer]);

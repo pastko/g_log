@@ -37,12 +37,14 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .cors().disable()
                 .csrf().disable()
                 .formLogin().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
                 .authorizeRequests()
                 .antMatchers("/signin").permitAll()
+                .antMatchers("/board").permitAll()
                 .antMatchers("/oauth/**").permitAll()
                 .anyRequest().authenticated().and()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

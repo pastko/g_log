@@ -7,26 +7,16 @@ import SocialButton from './SocialButton';
 import Link from 'next/link';
 import ErrorMessage from '../layout/ErrorMessage';
 
-function AuthForm({ goRegister, goSignIn, onChangeHandler }) {
-    
-    const goAuth = () => {
-        if (goSignIn) {
-            goSignIn();
-        }
-
-        if(goRegister){
-            goRegister()
-        }
-    };
-    //TODO ::// ==>>
-
+function AuthForm( { isRegister , goAction, onChangeHandler }) {
+    console.log("AuthForm");
+        
     return (
         <FormStyled>
             <Input message="이메일" name="mail" onChange={onChangeHandler} />
             {/* <ErrorMessage isForm={isForm} type="mail" /> */}
             <Input message="비밀번호" name="pwd" onChange={onChangeHandler} />
             {/* {isRegister && <ErrorMessage isForm={isForm} type="pwd" />} */}
-            {goRegister && (
+            {isRegister && (
                 <>
                     <Input
                         message="비밀번호 확인"
@@ -36,14 +26,14 @@ function AuthForm({ goRegister, goSignIn, onChangeHandler }) {
                     {/* <ErrorMessage isForm={isForm} type="pwdConfirm" /> */}
                 </>
             )}
-            {goRegister && (
+            {isRegister && (
                 <Input message="닉네임" name="nikNm" onChange={onChangeHandler} />
             )}
             {/* <StyledButton fullWidth isForm={isForm} func={func}> */}
-            <StyledButton fullWidth goAuth>
-                {goRegister ? '가입하기' : '로그인'}
+            <StyledButton fullWidth goAction={goAction} >
+                {isRegister ? '가입하기' : '로그인'}
             </StyledButton>
-            {!goRegister && (
+            {!isRegister && (
                 <div className="findRegister">
                     <Link href=""> 비밀번호 찾기 </Link>
                 </div>

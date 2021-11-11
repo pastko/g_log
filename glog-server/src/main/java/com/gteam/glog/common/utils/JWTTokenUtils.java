@@ -168,6 +168,7 @@ public class JWTTokenUtils {
      * @param header -
      */
     private Boolean validationAuthorizationHeader(String header) {
+        log.info("----> header validateion  : {}",header);
         if (header == null || !header.startsWith("Bearer ")) {
             return false;
         }
