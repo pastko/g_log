@@ -9,44 +9,46 @@ const Home = () => {
     const [noMore, setnoMore] = useState(true);
     const [page, setpage] = useState(2);
 
-    // useEffect(() => {
-    //     const getComments = async () => {
-    //         const res = await axios.get(`http://localhost:8080/board`);
-    //         setPosts(res.data);
-    //     };
-    //     getComments();
-    // }, []);
+    useEffect(() => {
+        const getComments = async () => {
+            const res = await axios.get(
+                'https://localhost:8080/board?pageNum=0&sortRule=1'
+            );
+            setPosts(res.data);
+        };
+        getComments();
+    }, []);
 
-    // const fetchComments = async () => {
-    //     const res = await axios.get(
-    //         `http://localhost:8080/board` //서버에서 api 받아올 예정
-    //     );
-    //     return res.data;
-    // };
+    const fetchComments = async () => {
+        const res = await axios.get(
+            'https://localhost:8080/board?pageNum={page}&sortRule=1' //서버에서 api 받아올 예정
+        );
+        return res.data;
+    };
 
-    // const fetchData = async () => {
-    //     const commentsFormServer = await fetchComments();
-    //     setPosts([...posts, ...commentsFormServer]);
+    const fetchData = async () => {
+        const postsFormServer = await fetchComments();
+        setPosts([...posts, ...postsFormServer]);
 
-    //     if (commentsFormServer.length === 0 || commentsFormServer.length < 20) {
-    //         setnoMore(false);
-    //     }
-    //     setpage(page + 1);
-    // };
+        if (postsFormServer.length === 0 || postsFormServer.length < 20) {
+            setnoMore(false);
+        }
+        setpage(page + 1);
+    };
 
     return (
         <>
-            {/* <StyleInfiniteScroll>
+            <StyleInfiniteScroll>
                 <InfiniteScroll
                     dataLength={posts.length} //This is important field to render the next data
                     next={fetchData}
                     hasMore={noMore}
                 >
                     {posts.map((post) => {
-                        return <Post key={post.id} post={post} />;
+                        return <Post key={posts.bord_idx} post={post} />;
                     })}
                 </InfiniteScroll>
-            </StyleInfiniteScroll> */}
+            </StyleInfiniteScroll>
         </>
     );
 };
