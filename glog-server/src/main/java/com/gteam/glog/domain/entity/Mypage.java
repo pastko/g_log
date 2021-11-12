@@ -1,6 +1,5 @@
 package com.gteam.glog.domain.entity;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,9 +34,6 @@ public class Mypage {
     @Size(max=10)
     private String glogTitle;
 
-    @Column(name = "unrefitster_dt")
-    private Date unRegiterDt;
-
-    @Column(name = "uregist_date")
+    @Column(name = "unregist_date")
     private Date unRegitstDate;
 }
