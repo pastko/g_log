@@ -1,6 +1,5 @@
 package com.gteam.glog.config;
 
-import com.gteam.glog.common.utils.JWTTokenUtils;
 import com.gteam.glog.config.jwtfilter.JWTAuthenticationEntryPoint;
 import com.gteam.glog.config.jwtfilter.JWTAuthenticationFilter;
 import com.gteam.glog.config.jwtfilter.JWTExceptionHandlerFilter;
@@ -16,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -25,28 +25,32 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
     private final JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
     private final JWTExceptionHandlerFilter jwtExceptionHandlerFilter;
+    private final CorsFilter corsFilter;
 
 
-    public SecurityJavaConfig(JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint, JWTAuthenticationFilter jwtAuthenticationFilter, JWTTokenUtils jwtTokenUtils, JWTExceptionHandlerFilter jwtExceptionHandlerFilter) {
+    public SecurityJavaConfig(JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint, JWTAuthenticationFilter jwtAuthenticationFilter, JWTExceptionHandlerFilter jwtExceptionHandlerFilter, CorsFilter corsFilter) {
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
         this.jwtExceptionHandlerFilter = jwtExceptionHandlerFilter;
+        this.corsFilter = corsFilter;
     }
 
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .cors().disable()
                 .csrf().disable()
                 .formLogin().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+//                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
+
+                .and()
                 .authorizeRequests()
-                .antMatchers("/signin").permitAll()
-                .antMatchers("/board").permitAll()
-                .antMatchers("/oauth/**").permitAll()
+                .antMatchers("/signin", "/board", "/oauth/**").permitAll()
                 .anyRequest().authenticated().and()
+
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtExceptionHandlerFilter,JWTAuthenticationFilter.class);
 
