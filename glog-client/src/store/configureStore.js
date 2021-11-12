@@ -1,19 +1,31 @@
-import createSagaMiddleware, {
-  Task
-} from "redux-saga";
-import {
-  createWrapper
-} from "next-redux-wrapper";
-import {
-  Store
-} from "redux";
-import rootReducer from "./reducer";
-import rootSaga from "./saga";
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import { createBrowserHistory } from 'history';
+import { connectRouter } from 'connected-react-router';
+import User from './reducer/users';
+import Contents from './reducer/contents';
 
-const configureStore = () => {};
+export const history = createBrowserHistory();
 
-const wrapper = createWrapper(configureStore, {
-  //debug: process.env.NODE_ENV === "development",
+const rootReducer = combineReducers({
+  user: User,
+  Contents: Contents,
+
+  router: connectRouter(history)
 });
 
-export default wrapper;
+const middlewares = [thunk.withExtraArgument({ history: history })]; // history-thunk 연결8h
+
+const composeEnhancers =
+  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+        // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+      })
+    : compose;
+
+const enhancer = composeEnhancers(applyMiddleware(...middlewares));
+
+let store = () => createStore(rootReducer, enhancer);
+
+
+export default store();
