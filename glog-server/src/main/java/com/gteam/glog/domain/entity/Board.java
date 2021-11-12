@@ -18,6 +18,7 @@ public class Board {
     @Column(name = "bord_idx")
     private int idx;
 
-    @Column(name = "usr_idx")
+    @ManyToOne
+    @JoinColumn(name = "usr_idx")
     private Mypage usr_idx;
 }
