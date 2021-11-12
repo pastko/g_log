@@ -29,24 +29,16 @@ public class RegisterController {
     public ResponseEntity<?> createUserinfo(@RequestBody(required = true) RegisterRequestDTO request, HttpServletResponse response) {
         UserInfoDTO userInfoDTO = UserInfoDTO.builder().mail(request.getMail()).nikNm(request.getNikNm()).pwd(request.getPwd()).build();
 
-
         if(request.getMail() != null) {
             userInfoDTO.setMail(request.getMail());
             userInfoDTO.setPwd(request.getPwd());
             userInfoDTO.setNikNm(request.getNikNm());
         }
-        if(registerService.createUserInfo(userInfoDTO).equals("ok")) {
-            return responseDTOUtils.doGenerateResponseDTO("ok");
-        }
-
-        return responseDTOUtils.doGenerateResponseDTO(null);
+        return responseDTOUtils.doGenerateResponseDTO(registerService.createUserInfo(userInfoDTO));
     }
     @GetMapping(value = "/unregister")
     @ApiOperation(value = "회원탈퇴 API", notes = "로컬 사용자 회원탈퇴 API")
     public ResponseEntity<?> unRegistUser(@RequestHeader("AccessToken") String token, HttpServletResponse response) {
-        if(registerService.unRegistUser(token).equals("ok")) {
-            return responseDTOUtils.doGenerateResponseDTO("ok");
-        }
-        return responseDTOUtils.doGenerateResponseDTO(null);
+        return responseDTOUtils.doGenerateResponseDTO(registerService.unRegistUser(token));
     }
 }
