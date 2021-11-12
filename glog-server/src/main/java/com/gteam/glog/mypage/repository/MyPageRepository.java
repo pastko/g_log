@@ -34,6 +34,7 @@ public class MyPageRepository {
         }catch (Exception e){
             log.info("getUserInfoByUserId : false - {}",e.getCause());
             log.info("getUserInfoByUserId : {}",e.getMessage());
+            entityManager.close();
             return Optional.empty();
         }
     }
@@ -59,7 +60,7 @@ public class MyPageRepository {
             mypage.setGlogTitle(userInfo.getGlogTitle());
             mypage.setImgNm(userInfo.getImgNm());
             entityManager.flush();
-
+            entityManager.close();
             return true;
         }else{
             return false;

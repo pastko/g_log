@@ -43,7 +43,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                     String refreshToken = cookiesUtils.readServletCookie(request,"refresh").orElse(null);
                     if( refreshToken != null) {
                         // refresh token가 존재 할시 refresh token 검증 후 access token 재발급
-                        if (jwtTokenUtils.validateAccessInfoByToken(refreshToken, request.getHeader("X-USER-ID"))) {
+                        if (jwtTokenUtils.validateRefreshToken(refreshToken, request.getHeader("X-USER-ID"))) {
                             UserAuthentication authentication = new UserAuthentication(request.getHeader("X-USER-ID"), null, null); //id를 인증한다.
                             authentication.setDetails(detailService);
 

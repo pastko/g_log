@@ -51,6 +51,7 @@ public class LoginRepository {
         users.setKey(key);
         //entityManager.merge(users);
         entityManager.flush();
+        entityManager.close();
     }
 
 
@@ -71,5 +72,6 @@ public class LoginRepository {
         users.setStatus(status);
 //        entityManager.merge(users);
         entityManager.flush();
+        entityManager.close();
     }
 }

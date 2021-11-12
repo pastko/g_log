@@ -35,5 +35,9 @@ public class Mypage {
     @Size(max=10)
     private String glogTitle;
 
-    private Date UnregistDate;
+    @Column(name = "unrefitster_dt")
+    private Date unRegiterDt;
+
+    @Column(name = "uregist_date")
+    private Date unRegitstDate;
 }

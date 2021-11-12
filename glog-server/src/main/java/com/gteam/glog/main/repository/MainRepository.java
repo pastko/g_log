@@ -14,8 +14,6 @@ import java.util.List;
 public class MainRepository {
     private EntityManager entityManager;
     private int pageSize;
-
-    @Autowired
     public MainRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
@@ -57,6 +55,7 @@ public class MainRepository {
                         .setMaxResults(pageNum * 20 + 20)
                         .getResultList();
             default:
+                entityManager.close();
                 return null;
         }
     }
