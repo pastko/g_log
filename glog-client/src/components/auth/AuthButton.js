@@ -1,9 +1,13 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
+import { actionCreators as userActions } from '../../store/reducer/users';
+import { history } from '../../store/configureStore';
+import { useDispatch } from 'react-redux';
 //import ErrorMessage from '../layout/ErrorMessage';
 
-function AuthButton({ isLink, defaultType, fullWidth, goAction, ...rest }) {
-  console.log("AuthButton");
+function AuthButton({ isLink, defaultType, fullWidth, isForm, ...rest }) {
+  const dispatch = useDispatch();
+
   const { isDisabled, setIsDisabled } = useState(false);
 
   // const validate = () => {
@@ -18,24 +22,31 @@ function AuthButton({ isLink, defaultType, fullWidth, goAction, ...rest }) {
   //         setIsDisabled(true);
   //     }
   // };
-  //TODO ::// ==>>
+  const goAction = () => {
+      if(isForm.confirmPwd === "" && isForm.nikNm === ""){
+        console.log("sign In");
+        dispatch(userActions.signinAPI(isForm.mail, isForm.pwd));
+      }else{
+        console.log("sign Up");
+        dispatch(userActions.signupAPI(isForm.mail,isForm.pwd ,isForm.nikNm));
+      }
+  };
+
   if (isLink) {
     return <LinkStyled defaultType={defaultType} {...rest} />;
   }
-
   // if (validate()) {
-  if (goAction) {
-    return (
-      <ButtonStyled
+  return (
+    <>
+      <ButtonStyled 
+        type="button"
         fullWidth={fullWidth}
-        // disabled={isDisabled}
-        onClick={""}
+        disabled={isDisabled}
+        onClick={goAction}
         {...rest}
       />
-    );
-  } else {
-    return <ButtonStyled fullWidth={fullWidth} {...rest} />;
-  }
+    </>
+  );
 }
 
 const commonStyled = css`

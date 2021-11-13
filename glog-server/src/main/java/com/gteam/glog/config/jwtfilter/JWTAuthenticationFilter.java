@@ -31,7 +31,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, SecurityException{
         try {
-            if(!request.getRequestURI().contains("/signin")) {
+            if(!request.getRequestURI().contains("/signin") && !request.getRequestURI().contains("/board")) {
                 // access token 검증
                 if (jwtTokenUtils.validateAccessInfoByToken(request.getHeader("authorization"), request.getHeader("X-USER-ID"))) {
                     // 검증 성공시 인증정보를 UserAuthentication에 등록하여 SecurityContextHolder에 등록
@@ -43,7 +43,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                     String refreshToken = cookiesUtils.readServletCookie(request,"refresh").orElse(null);
                     if( refreshToken != null) {
                         // refresh token가 존재 할시 refresh token 검증 후 access token 재발급
-                        if (jwtTokenUtils.validateAccessInfoByToken(refreshToken, request.getHeader("X-USER-ID"))) {
+                        if (jwtTokenUtils.validateRefreshToken(refreshToken, request.getHeader("X-USER-ID"))) {
                             UserAuthentication authentication = new UserAuthentication(request.getHeader("X-USER-ID"), null, null); //id를 인증한다.
                             authentication.setDetails(detailService);
 

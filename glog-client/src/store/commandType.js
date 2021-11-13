@@ -1,3 +1,0 @@
-export const CHANGE_LOGIN = 'CHANGE_LOGIN';
-export const CHANGE_INFO = 'CHANGE_INFO';
-export const CHANGE_FAILURE = 'CHANGE_FAILURE';
