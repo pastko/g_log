@@ -1,4 +1,4 @@
-import { Avatar, Menu, MenuItem, ListItemIcon, Divider } from '@mui/material';
+import { Menu, MenuItem, ListItemIcon, Divider } from '@mui/material';
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from 'react-router-dom';
@@ -41,23 +41,19 @@ function ProfileMenu({ anchorEl, open, handleClose }) {
         >
             <MenuItem>
                 <Link to="/profile">
-                    <a>
-                        <ListItemIcon sx={{verticalAlign: "top"}}>
-                            <AccountCircleIcon fontSize="medium" />
-                        </ListItemIcon>
-                        Profile
-                    </a>
+                    <ListItemIcon sx={{verticalAlign: "top"}}>
+                        <AccountCircleIcon fontSize="medium" />
+                    </ListItemIcon>
+                    Profile
                 </Link>
             </MenuItem>
             <Divider />
             <MenuItem>
                 <Link to="#내 게시글">
-                    <a>
-                        <ListItemIcon sx={{verticalAlign: "top"}}>
-                            <NoteAltOutlinedIcon fontSize="medium" />
-                        </ListItemIcon>
-                        내 게시글
-                    </a>
+                    <ListItemIcon sx={{verticalAlign: "top"}}>
+                        <NoteAltOutlinedIcon fontSize="medium" />
+                    </ListItemIcon>
+                    내 게시글
                 </Link>
             </MenuItem>
         </Menu>

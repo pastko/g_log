@@ -24,19 +24,16 @@ const Header = () => {
         <>
             <StyledHeader>
                 <Link to="/">
-                    <a>
-                        <Images
-                            src="/common/logo/logo.png"
-                            width={48}
-                            height={48}
-                        />
-                    </a>
+                    <Images
+                        src="/common/logo/logo.png"
+                        width={48}
+                        height={48}
+                    />
                 </Link>
                 <div className="right">
                     {false ? (
-
                         <>
-                            <Link to="/boardWrite">
+                            <Link to="/write">
                                 <AuthButton isLink defaultType>
                                     글쓰기
                                 </AuthButton>
