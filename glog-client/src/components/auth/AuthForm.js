@@ -6,9 +6,28 @@ import AuthButton from './AuthButton';
 import SocialButton from './SocialButton';
 import ErrorMessage from '../layout/ErrorMessage';
 
-function AuthForm( { isRegister , goAction, onChangeHandler }) {
-    console.log("AuthForm");
-        
+
+
+
+function AuthForm({ isRegister, setIsOpen }) {
+    
+    const [isForm, setForm] = useState({
+        mail: "",
+        pwd: "",
+        confirmPwd: "",
+        nikNm : "",
+    });
+
+    const onChangeHandler = (e) => {
+        const { name, value } = e.target;
+        setForm({
+            ...isForm,
+            [name]: value,
+        });
+    };
+    console.log(isForm.mail);
+    console.log(isForm.pwd);
+
     return (
         <FormStyled>
             <Input message="이메일" name="mail" onChange={onChangeHandler} />
@@ -29,7 +48,7 @@ function AuthForm( { isRegister , goAction, onChangeHandler }) {
                 <Input message="닉네임" name="nikNm" onChange={onChangeHandler} />
             )}
             {/* <StyledButton fullWidth isForm={isForm} func={func}> */}
-            <StyledButton fullWidth goAction={goAction} >
+            <StyledButton  fullWidth isForm={isForm}  >
                 {isRegister ? '가입하기' : '로그인'}
             </StyledButton>
             {!isRegister && (

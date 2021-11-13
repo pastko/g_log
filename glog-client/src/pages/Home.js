@@ -12,7 +12,12 @@ const Home = () => {
     useEffect(() => {
         const getComments = async () => {
             const res = await axios.get(
-                'https://localhost:8080/board?pageNum=0&sortRule=1'
+                '/board?pageNum=0&sortRule=1',{
+                    header : {
+                        authorization:"",
+                        'X-USER-ID':""
+                    }
+                }
             );
             setPosts(res.data);
         };
@@ -21,7 +26,12 @@ const Home = () => {
 
     const fetchComments = async () => {
         const res = await axios.get(
-            'https://localhost:8080/board?pageNum={page}&sortRule=1' //서버에서 api 받아올 예정
+            '/board?pageNum={page}&sortRule=1',{
+                header : {
+                    authorization:"",
+                    'X-USER-ID':""
+                }
+            }
         );
         return res.data;
     };
@@ -44,9 +54,9 @@ const Home = () => {
                     next={fetchData}
                     hasMore={noMore}
                 >
-                    {posts.map((post) => {
+                    {/* {Post.length === 0 ? 'Emtpy' : posts.map((post) => {
                         return <Post key={posts.bord_idx} post={post} />;
-                    })}
+                    })} */}
                 </InfiniteScroll>
             </StyleInfiniteScroll>
         </>
