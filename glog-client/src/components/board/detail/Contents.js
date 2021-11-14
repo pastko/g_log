@@ -1,9 +1,21 @@
-function Contents() {
-    return (
-        <div>
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 
-        </div>
+function Contents() {
+    const dispatch = useDispatch();
+    const { posts, detailPost } = useSelector((state) => ({
+        posts: state.board.posts,
+        detailPost: state.board.detailPost
+    }));
+
+    return (
+        <StyledContents></StyledContents>
+        // <StyledContents dangerouslySetInnerHTML={{ __html: contents }}></StyledContents>
     );
 }
+
+const StyledContents = styled.div`
+
+`;
 
 export default Contents;

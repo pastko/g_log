@@ -21,7 +21,7 @@ function App() {
             <Route exact path='/' component={Home} />
             <Route path='/profile' component={Profile} />
             <Route path='/post/list' component={List} />
-            <Route path='/post/detail/:postIdx' component={Detail} />
+            <Route path='/post/detail' component={Detail} />
           </StyledWithHeader>
         )}
       />

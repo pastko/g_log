@@ -15,12 +15,12 @@ export const setDetailPost = (post) => ({
     post
 });
 
-const initialStae = {
+const initialState = {
     posts: [],
     detailPost: [],
 }
 
-const getPost = (postIdx) => {
+const setDetailPostAPI = (postIdx) => {
     return (dispatch, getState, {
         history
     }) => {
@@ -31,7 +31,7 @@ const getPost = (postIdx) => {
     }
 }
 
-const getPostById = () => {
+const setDetailPostByIdAPI = () => {
     return (dispatch, getState, {
         history
     }) => {
@@ -46,7 +46,7 @@ const getPostById = () => {
     }
 }
 
-const addPost = (post) => {
+const addPostAPI = (post) => {
     return (dispatch, getState, {
         history
     }) => {
@@ -64,7 +64,7 @@ const addPost = (post) => {
     }
 }
 
-const changePost = (postIdx, post) => {
+const changePostAPI = (postIdx, post) => {
     return (dispatch, getState, {
         history
     }) => {
@@ -75,7 +75,7 @@ const changePost = (postIdx, post) => {
     }
 }
 
-const removePost = (postIdx) => {
+const removePostAPI = (postIdx) => {
     return (dispatch, getState, {
         history
     }) => {
@@ -93,7 +93,7 @@ const removePost = (postIdx) => {
     }
 }
 
-export default function board(state = initialStae, action) {
+export default function board(state = initialState, action) {
     switch (action.type) {
         case SET_POST:
             return {
@@ -110,16 +110,14 @@ export default function board(state = initialStae, action) {
     }
 }
 
-const actionCreate = {
-    setDetailPost,
-    setPost,
-    getPost,
-    getPostById,
-    addPost,
-    changePost,
-    removePost
+const actionCreator = {
+    setDetailPostAPI,
+    setDetailPostByIdAPI,
+    addPostAPI,
+    changePostAPI,
+    removePostAPI
 }
 
 export {
-    actionCreate
+    actionCreator
 };
