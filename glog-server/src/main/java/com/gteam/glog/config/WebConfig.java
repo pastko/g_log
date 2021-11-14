@@ -1,8 +1,11 @@
 package com.gteam.glog.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.Collections;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -10,9 +13,10 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOriginPatterns("*")
-                .allowedOrigins("http://**")
-                .allowedOrigins("https://**")
+                .allowedOrigins("http://localhost:3000/")
+                .allowedOrigins("http://localhost:8080/")
+                .allowedOrigins("*")
                 .allowedHeaders("*")
-                .allowedMethods("GET", "POST");
+                .allowedMethods("*");
     }
 }

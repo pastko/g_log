@@ -26,7 +26,7 @@ public class JWTTokenUtils {
     private String SIGN_KEY;
     @Value("${auth.subject}")
     private String SUBJECT_KEY;
-    private static final long ACCESS_TOKEN_EXPIRED_TIME = 3 * 60  * 1000;       // 1분 => 3
+    private static final long ACCESS_TOKEN_EXPIRED_TIME = 1 * 60  * 1000;       // 1분
     private static final long REFRESH_TOKEN_EXPIRED_TIME = 1 * 24 * 60 * 60 * 1000; // 1개월 => 1일로 변경
     private final ObjectMapper objectMapper;
     private final LoginRepository loginRepository;
@@ -168,8 +168,8 @@ public class JWTTokenUtils {
      * @param header -
      */
     private Boolean validationAuthorizationHeader(String header) {
-        log.info("----> header validateion  : {}",header);
         if (header == null || !header.startsWith("Bearer ")) {
+            log.info("validationAuthorizationHeader : is not contain Bearer ");
             return false;
         }
         return true;
@@ -202,8 +202,13 @@ public class JWTTokenUtils {
      */
     public String reissuanceAccessToken(String refreshKey){
         if(refreshKey != null){
-            Users users = (Users) this.getAllClaimsFromToken(refreshKey);
-            return this.issuanceAccessToken(loginRepository.getUsersByUserId(users.getMail()).orElse(null));
+            Claims claims = this.getAllClaimsFromToken(refreshKey);
+            if( claims != null) {
+                return this.issuanceAccessToken(loginRepository.getUsersByUserId(claims.get("mail").toString()).orElse(null));
+            }else{
+                log.info("Cliams is null :  False");
+                return null;
+            }
         }else{
             log.info("Access Token reissuance : False - {}",refreshKey);
             return null;
@@ -237,12 +242,12 @@ public class JWTTokenUtils {
      */
     public Boolean validateAccessInfoByToken(String key, String mail){
         try {
-            log.info("--->> validateAccessInfoByToken : 1  {} - {}",key,mail);
             // Bearer 제거
             if(!this.validationAuthorizationHeader(key)){
                 log.info("토큰이 존재 하지 않습니다.");
                 return false;
             }
+
             key = this.extractToken(key);
             Claims claims = this.getAllClaimsFromToken(key);
             return (this.validateToken(key) && claims.get("mail").equals(mail));
@@ -252,7 +257,11 @@ public class JWTTokenUtils {
         }catch (ExpiredJwtException e){
             log.info("토큰이 만로 되었습니다.");
             return false;
+        } catch(Exception e) {
+            log.info("토큰이 존재하지 않습니다.");
+            return false;
         }
+
     }
 
 

@@ -34,6 +34,7 @@ public class RegisterRepository {
 
             users.setMail(userInfoDTO.getMail());
             users.setPwd(userInfoDTO.getPwd());
+            users.setStatus(UserStatusCode.LOGOUT);
 
             mypage.setUsrIdx(users);
             mypage.setNikNm(userInfoDTO.getNikNm());
@@ -43,6 +44,32 @@ public class RegisterRepository {
 
             entityManager.flush();
             entityManager.close();
+        }
+    }
+
+    public Boolean createOatuhUserInfo(UserInfoDTO userInfoDTO) {
+
+        if(duplicateCheck(userInfoDTO.getMail())) {
+            Users users = new Users();
+            Mypage mypage = new Mypage();
+
+            users.setMail(userInfoDTO.getMail());
+            users.setPwd(userInfoDTO.getPwd());
+            users.setStatus(UserStatusCode.LOGIN);
+
+            mypage.setUsrIdx(users);
+            mypage.setNikNm(userInfoDTO.getNikNm());
+            mypage.setGlogTitle(userInfoDTO.getGlogTitle());
+            mypage.setImgNm(userInfoDTO.getImgNm());
+
+            entityManager.persist(users);
+            entityManager.persist(mypage);
+
+            entityManager.flush();
+            entityManager.close();
+            return true;
+        }else{
+            return false;
         }
     }
 

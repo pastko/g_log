@@ -52,6 +52,7 @@ public class LoginService {
     public Users validateUserLogin(LoginRequestDTO authDTO){
             try {
                 Users users = findUserByUserId(authDTO.getMail());
+                log.info("validateLogin :  === {}",users);
                 if (users != null) {
                     // Bcrypt password validate
                     if (!passwordEncoder.matches(authDTO.getPwd(), users.getPwd())) {
@@ -81,6 +82,7 @@ public class LoginService {
      */
     public String doLogin(LoginRequestDTO loginRequestDTO){
         Users users = validateUserLogin(loginRequestDTO);
+        log.info("doLogin = > ::: {}",users);
         if(users != null){
             loginRepository.updateLoginStatus(users.getMail(),UserStatusCode.LOGIN);
             String accessToken = jwtTokenUtils.issuanceAccessToken(users);

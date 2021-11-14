@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.HashMap;
 
 @Log4j2
-@Component
 public class JWTExceptionHandlerFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -22,10 +21,15 @@ public class JWTExceptionHandlerFilter extends OncePerRequestFilter {
             log.info("JWTExceptionHandlerFilter : try inner");
             filterChain.doFilter(request,response);
         }catch (InvalidGraphException e){
-            log.info("JWTExceptionHandlerFilter : catch inner");
-//            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-//            response.setContentType("application/json");
-//            response.getWriter().write(e.getMessage());
+            log.info("JWTExceptionHandlerFilter : data invalid ");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setContentType("application/json");
+            response.getWriter().write(e.getMessage());
+        }catch (NullPointerException e){
+            log.info("JWTExceptionHandlerFilter : Data null ");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.setContentType("application/json");
+            response.getWriter().write(e.getMessage());
         }
     }
 }
