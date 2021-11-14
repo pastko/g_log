@@ -1,9 +1,15 @@
+import styled from "styled-components";
+
 function CommentItems() {
     return (
-        <div>
+        <StyledCommentItems>
 
-        </div>
+        </StyledCommentItems>
     );
 }
+
+const StyledCommentItems = styled.div`
+
+`;
 
 export default CommentItems;
