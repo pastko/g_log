@@ -1,5 +1,10 @@
-import { createAction, handleActions } from 'redux-actions';
-import { produce } from 'immer';
+import {
+    createAction,
+    handleActions
+} from 'redux-actions';
+import {
+    produce
+} from 'immer';
 import axios from 'axios';
 
 // Acion Type
@@ -10,9 +15,17 @@ const SET_USER = 'SET_USER';
 
 
 // init Action
-const SignOut = createAction(SIGN_OUT, (user, accessToken, xuserid) => ({ user, accessToken, xuserid }));
-const getUser = createAction(GET_USER, (user) => ({ user }));
-const setUser = createAction(SET_USER, (user) => ({ ...user }));
+const SignOut = createAction(SIGN_OUT, (user, accessToken, xuserid) => ({
+    user,
+    accessToken,
+    xuserid
+}));
+const getUser = createAction(GET_USER, (user) => ({
+    user
+}));
+const setUser = createAction(SET_USER, (user) => ({
+    ...user
+}));
 
 const initialState = {
     user: null,
@@ -23,24 +36,26 @@ const initialState = {
 
 
 
-const signupAPI = (mail,pwd,niknm) => {
-    return function (dispatch, getState, { history }) {
+const signupAPI = (mail, pwd, niknm) => {
+    return function (dispatch, getState, {
+        history
+    }) {
         axios({
-            url : 'signup',
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                mail: mail,
-                pwd: pwd,
-                nickname: niknm
+                url: 'signup',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    mail: mail,
+                    pwd: pwd,
+                    nickname: niknm
+                })
             })
-        })
             .then((res) => {
-                if(res.status === 200){
+                if (res.status === 200) {
                     window.alert('회원가입이 되었습니다!');
-                }else{
+                } else {
                     window.alert('회원가입이 실패했습니다. 관리자에게 문의하세요');
                 }
             });
@@ -48,18 +63,23 @@ const signupAPI = (mail,pwd,niknm) => {
 };
 
 const signinAPI = (id, pw) => {
-    console.log(id+" : "+pw);
-    return function (dispatch, getState, { history }) {
-        
+    console.log(id + " : " + pw);
+    return function (dispatch, getState, {
+        history
+    }) {
+
         axios({
-            url: '/signin',
-            method: 'post',
-            data: { "mail": id, "pwd": pw },
-            withCredentials: true
-        })
+                url: '/signin',
+                method: 'post',
+                data: {
+                    "mail": id,
+                    "pwd": pw
+                },
+                withCredentials: true
+            })
             .then((res) => {
                 console.log('로그인 : ', res);
-                if(res.status === 200){
+                if (res.status === 200) {
                     axios.defaults.headers.common[
                         'authorization'
                     ] = `Bearer ${res.data.data}`;
@@ -67,10 +87,12 @@ const signinAPI = (id, pw) => {
                         'X-USER-ID'
                     ] = `${id}`;
                     dispatch(
-                        setUser({ accessToken:`Bearer ${res.data.data}` })
+                        setUser({
+                            accessToken: `Bearer ${res.data.data}`
+                        })
                     );
                     dispatch(getUserInfo());
-                }else{
+                } else {
                     alert('로그인에 실패했습니다');
                 }
             })
@@ -83,11 +105,16 @@ const signinAPI = (id, pw) => {
 
 const getUserInfo = () => {
     console.log("get myinfo");
-    return function (dispatch, getState, { history }) {
+    return function (dispatch, getState, {
+        history
+    }) {
         axios.get('/myinfo').then((res) => {
             console.log('getUserInfo', res);
             dispatch(
-                setUser({ user: res.data.data , xuserid:res.data.data.mail })
+                setUser({
+                    user: res.data.data,
+                    xuserid: res.data.data.mail
+                })
             );
             history.replace('/');
         });
@@ -95,7 +122,9 @@ const getUserInfo = () => {
 };
 
 const loginCheck = () => {
-    return function (dispatch, getState, { history }) {
+    return function (dispatch, getState, {
+        history
+    }) {
         const token = localStorage.getItem('accessToken');
         if (token) {
             dispatch(
@@ -111,7 +140,9 @@ const loginCheck = () => {
     };
 };
 const logoutCheck = () => {
-    return function (dispatch, getState, { history }) {
+    return function (dispatch, getState, {
+        history
+    }) {
         localStorage.removeItem('token');
         dispatch(SignOut());
         history.replace('/');
@@ -128,15 +159,14 @@ const isLogin = () => {
 };
 
 // reducer: handleActions(immer를 통한 불변성 유지)
-export default handleActions(
-    {
+export default handleActions({
         [SET_USER]: (state, action) =>
-            
+
             produce(state, (draft) => {
-                console.log("produce "+action);
+                console.log("produce " + action);
                 draft.user = action.payload.user === undefined ? draft.user : action.payload.user;
-                draft.accessToken = ( action.payload.accessToken === undefined ? draft.accessToken : action.payload.accessToken )
-                draft.xuserid =  (action.payload.xuserid === undefined ? draft.xuserid : action.payload.xuserid);
+                draft.accessToken = (action.payload.accessToken === undefined ? draft.accessToken : action.payload.accessToken)
+                draft.xuserid = (action.payload.xuserid === undefined ? draft.xuserid : action.payload.xuserid);
                 draft.is_login = true;
             }),
         [SIGN_OUT]: (state, action) =>
@@ -159,4 +189,6 @@ const actionCreators = {
     getUserInfo
 };
 
-export { actionCreators };
+export {
+    actionCreators
+};

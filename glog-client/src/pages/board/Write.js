@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import Tags from '../../components/board/Tags';
-import Title from '../../components/board/Title';
+import Tags from '../../components/board/write/Tags';
+import Title from '../../components/board/write/Title';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { Editor } from '@toast-ui/react-editor';
 import Button from '../../components/layout/Button';
@@ -20,7 +20,7 @@ function Write() {
         const contentMarkdown = editorRef.current.getInstance().getMarkdown();
         const image = conetentHtml.split('=')[1]?.split('"')[1];
 
-        if(!contentMarkdown) return;
+        if (!contentMarkdown) return;
 
         const data = {
             title,
@@ -36,7 +36,7 @@ function Write() {
             <StyledWrapper>
                 <StyledHeader>
                     <Title title={title} setTitle={setTitle} />
-                    <Tags hashTags={hashTags} setHashTags={setHashTags}/>
+                    <Tags hashTags={hashTags} setHashTags={setHashTags} />
                 </StyledHeader>
                 <Editor
                     placeholder="당신의 이야기를 시작하세요!"

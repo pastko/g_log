@@ -102,12 +102,15 @@ const Header = () => {
 };
 
 const StyledHeader = styled.header`
-    width: 1280px;
+    max-width: 1280px;
+    @media (max-width: 1440px) {
+        width : 1280px;
+    }
     @media (max-width: 1280px) {
         width: 768px;
     }
     @media (max-width: 768px) {
-        width: 100%;
+        width: 100vw;
     }
     height: 64px;
     margin: 20px auto;
@@ -121,6 +124,19 @@ const StyledHeader = styled.header`
     }
     .right a {
         margin-left: 5px;
+    }
+    @media (max-width: 380px) {
+        width: 100vw;
+        display: block;
+        .right a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.3rem;
+            font-size: 1.1rem;
+            height: 2.8rem;
+            margin-top: 0.5rem;
+        }
     }
 `;
 

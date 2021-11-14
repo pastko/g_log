@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-function Tag({idx, removeTag, children}) {
+function Tag({ idx, removeTag, children }) {
 
-    return (
-      <StyledTag onClick={removeTag}>
-        {children}
-      </StyledTag>
-    );
+  return (
+    <StyledTag onClick={removeTag}>
+      {children}
+    </StyledTag>
+  );
 }
 
 const StyledTag = styled.div`

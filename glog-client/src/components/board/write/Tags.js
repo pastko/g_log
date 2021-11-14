@@ -1,16 +1,16 @@
 import { useCallback, useState } from "react";
 import styled from "styled-components";
-import Tag from "./Tag";
+import Tag from "../element/Tag";
 
-function Tags({hashTags, setHashTags}) {
+function Tags({ hashTags, setHashTags }) {
     const [value, setValue] = useState(null);
     const handler = useCallback((e) => {
         setValue(e.target.value);
     }, []);
 
     const onEnter = (e) => {
-        if(e.key === 'Enter') {
-            if(hashTags.indexOf(value) < 0) {
+        if (e.key === 'Enter') {
+            if (hashTags.indexOf(value) < 0) {
                 setHashTags([...hashTags, value]);
             }
             setValue('');
@@ -32,13 +32,13 @@ function Tags({hashTags, setHashTags}) {
                     </Tag>
                 );
             })}
-        
-            <StyledInput 
-                type="text" 
-                placeholder="태그를 입력하세요" 
-                onKeyPress={onEnter} 
-                onChange={handler} 
-                value={value || ''} 
+
+            <StyledInput
+                type="text"
+                placeholder="태그를 입력하세요"
+                onKeyPress={onEnter}
+                onChange={handler}
+                value={value || ''}
             />
         </StyledTags>
     );

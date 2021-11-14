@@ -31,11 +31,15 @@ const getPost = (postIdx) => {
     }
 }
 
-const getPostById = (userId) => {
+const getPostById = () => {
     return (dispatch, getState, {
         history
     }) => {
-        axios.get(`/detail/${userId}`).then((res) => {
+        axios.get(`/detail`, {
+            headers: {
+
+            }
+        }).then((res) => {
             console.log('getPostById :: ', res.data);
             dispatch(setDetailPost(res.data));
         })
@@ -46,7 +50,14 @@ const addPost = (post) => {
     return (dispatch, getState, {
         history
     }) => {
-        axios.post(`/write`, post).then((res) => {
+        axios.post(`/write`, {
+            headers: {
+
+            },
+            body: JSON.stringify({
+                post
+            })
+        }).then((res) => {
             console.log('addPost :: ', res.data);
             history.push('/');
         })
@@ -68,7 +79,14 @@ const removePost = (postIdx) => {
     return (dispatch, getState, {
         history
     }) => {
-        axios.post(`/deletepost`, postIdx).then((res) => {
+        axios.post(`/deletepost`, {
+            headers: {
+
+            },
+            body: JSON.stringify({
+                postIdx
+            })
+        }).then((res) => {
             console.log('removePost :: ', res.data);
             history.push('/')
         })

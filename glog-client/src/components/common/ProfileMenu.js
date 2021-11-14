@@ -1,6 +1,7 @@
 import { Menu, MenuItem, ListItemIcon, Divider } from '@mui/material';
 import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
 
 function ProfileMenu({ anchorEl, open, handleClose }) {
@@ -41,7 +42,7 @@ function ProfileMenu({ anchorEl, open, handleClose }) {
         >
             <MenuItem>
                 <Link to="/profile">
-                    <ListItemIcon sx={{verticalAlign: "top"}}>
+                    <ListItemIcon sx={{ verticalAlign: "top" }}>
                         <AccountCircleIcon fontSize="medium" />
                     </ListItemIcon>
                     Profile
@@ -49,11 +50,19 @@ function ProfileMenu({ anchorEl, open, handleClose }) {
             </MenuItem>
             <Divider />
             <MenuItem>
-                <Link to="#내 게시글">
-                    <ListItemIcon sx={{verticalAlign: "top"}}>
+                <Link to="/post/list">
+                    <ListItemIcon sx={{ verticalAlign: "top" }}>
                         <NoteAltOutlinedIcon fontSize="medium" />
                     </ListItemIcon>
                     내 게시글
+                </Link>
+            </MenuItem>
+            <MenuItem>
+                <Link to="/Logout">
+                    <ListItemIcon sx={{ verticalAlign: "top" }}>
+                        <LogoutIcon fontSize="medium" />
+                    </ListItemIcon>
+                    로그아웃
                 </Link>
             </MenuItem>
         </Menu>
