@@ -1,7 +1,0 @@
-@import './css/reset.css';
-
-.appContainer {
-    width: 1280px;
-    min-width: 480px;
-    margin: 0 auto;
-}
