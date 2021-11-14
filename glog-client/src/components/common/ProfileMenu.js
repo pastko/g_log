@@ -3,8 +3,19 @@ import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
+import { actionCreators as userActions } from '../../store/reducer/users';
 
 function ProfileMenu({ anchorEl, open, handleClose }) {
+    const dispatch = useDispatch();
+    const isLogin = useSelector((state) => state.user.is_login);
+    const goLogout = () => {
+
+        if(isLogin){
+            console.log("sign In");
+            dispatch(userActions.SignOut());
+        }
+    };
     return (
         <Menu
             anchorEl={anchorEl}
@@ -57,13 +68,11 @@ function ProfileMenu({ anchorEl, open, handleClose }) {
                     내 게시글
                 </Link>
             </MenuItem>
-            <MenuItem>
-                <Link to="/Logout">
-                    <ListItemIcon sx={{ verticalAlign: "top" }}>
-                        <LogoutIcon fontSize="medium" />
-                    </ListItemIcon>
-                    로그아웃
-                </Link>
+            <MenuItem onClick={goLogout}>
+                <ListItemIcon sx={{ verticalAlign: "top" }} >
+                    <LogoutIcon fontSize="medium" />
+                </ListItemIcon>
+                로그아웃
             </MenuItem>
         </Menu>
     );
