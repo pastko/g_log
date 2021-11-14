@@ -5,7 +5,6 @@ import com.gteam.glog.domain.dto.post.PostRequestDTO;
 import com.gteam.glog.post.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import javax.servlet.http.HttpServletResponse;
 
 @Service
 public class PostService {
@@ -26,6 +25,9 @@ public class PostService {
         postContentsDTO.setImgNm(postRequestDTO.getImgNm());
         postContentsDTO.setId(id);
 
+        for(String tag: postRequestDTO.getTag()) {
+            postContentsDTO.setTag(postContentsDTO.getTag() + tag);
+        }
         return postRepository.createPost(postContentsDTO);
     }
 

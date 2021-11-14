@@ -1,7 +1,6 @@
 package com.gteam.glog.post.repository;
 
 import com.gteam.glog.domain.dto.post.PostContentsDTO;
-import com.gteam.glog.domain.dto.post.PostRequestDTO;
 import com.gteam.glog.domain.entity.Board;
 import com.gteam.glog.domain.entity.Contents;
 import com.gteam.glog.domain.entity.Mypage;
@@ -42,6 +41,7 @@ public class PostRepository {
             contents.setImg_nm(postContentsDTO.getImgNm());
             contents.setCreateDt(now.toString());
             contents.setUpdateDt(now.toString());
+            contents.setTag(postContentsDTO.getTag());
 
             entityManager.persist(board);
             entityManager.persist(contents);
@@ -66,6 +66,7 @@ public class PostRepository {
             result.setImgNm(contents.getImg_nm());
             result.setIdx(contents.getIdx());
             result.setCreateDt(contents.getCreateDt());
+            result.setTag(contents.getTag());
 
             return result;
         } catch (Exception e) {
@@ -84,6 +85,7 @@ public class PostRepository {
             result.setImgNm(contents.getImg_nm());
             result.setIdx(contents.getIdx());
             result.setCreateDt(contents.getCreateDt());
+            result.setTag(contents.getTag());
 
             return result;
         } catch (Exception e) {
