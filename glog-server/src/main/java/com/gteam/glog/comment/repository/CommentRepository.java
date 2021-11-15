@@ -16,4 +16,14 @@ public class CommentRepository {
     public CommentRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
+
+    public String createComment() {
+        try {
+
+            return "ok";
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }

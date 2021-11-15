@@ -10,6 +10,7 @@ public class PostRequestDTO {
     private int idx;
     private String title;
     private String contents;
+    private String html;
     private String nikNm;
     private String imgNm;
     private String[] tag;

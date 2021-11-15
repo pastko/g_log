@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { actionCreator as boardAction } from '../../store/reducer/board';
 import Tags from '../../components/board/write/Tags';
 import Title from '../../components/board/write/Title';
 import '@toast-ui/editor/dist/toastui-editor.css';
@@ -7,27 +8,47 @@ import { Editor } from '@toast-ui/react-editor';
 import Button from '../../components/layout/Button';
 import styled from 'styled-components';
 
-function Write() {
-    // const {name} = useSelector(state => {
-    //     console.log('state :: ', state);
-    // })
+function Write(props) {
+    const dispatch = useDispatch();
+    const postIdx = props.match.params.idx;
+    const users = useSelector(state => {
+        console.log('user :: ', state.user);
+    });
+    const board = useSelector(state => console.log('board :: ', state.board));
+    const { posts, detailPost } = useSelector(state => ({
+        posts: state.board.posts,
+        detail: state.board.detailPost
+    }));
 
     const [title, setTitle] = useState('');
     const [hashTags, setHashTags] = useState([]);
     const editorRef = useRef();
+    const onCangeTitle = (e) => {
+        setTitle(e.target.value);
+    }
     const goBoardSave = () => {
-        const conetentHtml = editorRef.current.getInstance().getHtml();
+        const conetentHtml = editorRef.current.getInstance().getHTML();
         const contentMarkdown = editorRef.current.getInstance().getMarkdown();
         const image = conetentHtml.split('=')[1]?.split('"')[1];
+        console.log('image::::: ', image);
+        debugger;
+
+        if (!title || !contentMarkdown) return;
 
         if (!contentMarkdown) return;
-
-        const data = {
-            title,
+        const post = {
+            title: title,
+            html: conetentHtml,
             content: contentMarkdown.replaceAll('#', ''),
-            name: '',
-            hashTag: hashTags,
+            tag: hashTags,
             image: image
+        }
+        debugger;
+
+        if (postIdx) {
+            dispatch(boardAction.changePostAPI(postIdx, post));
+        } else {
+            dispatch(boardAction.addPostAPI(post));
         }
     };
 
@@ -35,7 +56,7 @@ function Write() {
         <>
             <StyledWrapper>
                 <StyledHeader>
-                    <Title title={title} setTitle={setTitle} />
+                    <Title title={title} _onChange={onCangeTitle} />
                     <Tags hashTags={hashTags} setHashTags={setHashTags} />
                 </StyledHeader>
                 <Editor
@@ -49,7 +70,13 @@ function Write() {
                     ref={editorRef}
                 />
                 <StyledBottom>
-                    <Button isDefault children="나가기" />
+                    <Button
+                        isDefault
+                        children="나가기"
+                        _onClick={() => {
+                            props.history.push('/');
+                        }}
+                    />
                     <div className="right">
                         <Button children="출간하기" _onClick={goBoardSave} />
                     </div>
