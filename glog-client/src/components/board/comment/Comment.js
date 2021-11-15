@@ -37,11 +37,14 @@ function Comment(props) {
             <h4>0개의 댓글</h4>
             <CommentWrite value={comment} type='write' _onChange={onChagneComment} _onClick={goSetComment} />
             <StyledCommmentList>
-                {
+                {/* {
                     comments.map((com) => {
                         return <CommentItems />;
                     })
-                }
+                } */}
+                <CommentItems />
+                <CommentItems />
+                <CommentItems />
             </StyledCommmentList>
         </SytledComment>
     );
@@ -58,7 +61,7 @@ const SytledComment = styled.div`
 `;
 
 const StyledCommmentList = styled.div`
-
+    margin-top: 2rem;
 `;
 
 export default Comment;

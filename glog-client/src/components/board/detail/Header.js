@@ -4,14 +4,14 @@ import Tag from "../element/Tag";
 function Header() {
     return (
         <StyledHeader>
-            <StyledTitle>test 입니다.test 입니다.test 입니다.test 입니다.test 입니다.</StyledTitle>
+            <StyledTitle>glog</StyledTitle>
             <StyledSubInfo>
-                <span className="author">작성자</span>
+                <span className="author">glog</span>
                 <div className='separator'>·</div>
-                <span>2021년 10월 26일</span>
+                <span>2021년 11월 16일</span>
             </StyledSubInfo>
             <StyledTagWrap>
-                <Tag children='test' />
+                <Tag children='glog' />
                 <Tag children='test' />
             </StyledTagWrap>
         </StyledHeader>

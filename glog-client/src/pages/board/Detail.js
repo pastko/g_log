@@ -41,7 +41,7 @@ const StyledSidebar = styled.div`
     width: 6vw;
     position: fixed;
     left: 50vw;
-    margin-left: -40.5rem;
+    margin-left: -37.5rem;
 
 `;
 const StyledContentsWrap = styled.div`

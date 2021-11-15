@@ -27,29 +27,30 @@ function Write(props) {
         setTitle(e.target.value);
     }
     const goBoardSave = () => {
-        const conetentHtml = editorRef.current.getInstance().getHTML();
-        const contentMarkdown = editorRef.current.getInstance().getMarkdown();
-        const image = conetentHtml.split('=')[1]?.split('"')[1];
-        console.log('image::::: ', image);
-        debugger;
+        window.location.href = "/post/list";
+        // const conetentHtml = editorRef.current.getInstance().getHTML();
+        // const contentMarkdown = editorRef.current.getInstance().getMarkdown();
+        // const image = conetentHtml.split('=')[1]?.split('"')[1];
+        // console.log('image::::: ', image);
+        // debugger;
 
-        if (!title || !contentMarkdown) return;
+        // if (!title || !contentMarkdown) return;
 
-        if (!contentMarkdown) return;
-        const post = {
-            title: title,
-            html: conetentHtml,
-            content: contentMarkdown.replaceAll('#', ''),
-            tag: hashTags,
-            image: image
-        }
-        debugger;
+        // if (!contentMarkdown) return;
+        // const post = {
+        //     title: title,
+        //     html: conetentHtml,
+        //     content: contentMarkdown.replaceAll('#', ''),
+        //     tag: hashTags,
+        //     image: image
+        // }
+        // debugger;
 
-        if (postIdx) {
-            dispatch(boardAction.changePostAPI(postIdx, post));
-        } else {
-            dispatch(boardAction.addPostAPI(post));
-        }
+        // if (postIdx) {
+        //     dispatch(boardAction.changePostAPI(postIdx, post));
+        // } else {
+        //     dispatch(boardAction.addPostAPI(post));
+        // }
     };
 
     return (
