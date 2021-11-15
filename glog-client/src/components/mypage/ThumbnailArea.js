@@ -15,9 +15,10 @@ function ThumbnailArea() {
                     width={150}
                     height={150}
                 />
-                <Button fullwidth _onClick={upload}>
+                <StyledLabel for="input-file">
                     이미지 업로드
-                </Button>
+                </StyledLabel>
+                <input type="file" id="input-file" style={{ display: "none" }} />
                 <Button isDefault fullwidth>
                     이미지 제거
                 </Button>
@@ -40,6 +41,19 @@ const StyledThumbnail = styled.div`
     button {
         margin-top: 0.8rem;
     }
+`;
+const StyledLabel = styled.label`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    background-color: #a680d2;
+    color: #fff;
+    padding: 18px 20px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    font-weight: 700;
 `;
 const StyledUserInfo = styled.div`
     width: 70%;
