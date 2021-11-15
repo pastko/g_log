@@ -1,5 +1,7 @@
 import React ,{useState} from 'react';
 import AWS from 'aws-sdk'
+import styled from 'styled-components';
+
 
 const S3_BUCKET = process.env.REACT_APP_S3_UPLOAD_BUCKET;
 const REGION = process.env.REACT_APP_S3_UPLOAD_REGION;
@@ -44,10 +46,47 @@ const UploadImageToS3WithNativeSdk = () => {
 
 
     return <div>
-        <div>Native SDK File Upload Progress is {progress}%</div>
-        <input type="file" onChange={handleFileInput}/>
-        <button onClick={() => uploadFile(selectedFile)}> Upload to S3</button>
+        <Button type="file" onClick={handleFileInput}>이미지 선택</Button>
+        <Button onClick={() => uploadFile(selectedFile)}>이미지 업로드</Button>
     </div>
 }
+
+
+const Button = styled.div`
+    background-color: green;
+    color: white;
+    width: 140px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 8px;
+    height: 35px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    :hover {
+        cursor: pointer;
+        opacity: 0.5;
+    }
+`;
+
+// const Buttons = styled.input`
+// background-color: green;
+//     color: white;
+//     width: 140px;
+//     border: none;
+//     font-size: 15px;
+//     font-weight: 600;
+//     border-radius: 8px;
+//     height: 35px;
+//     margin: 5px;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     :hover {
+//         cursor: pointer;
+//         opacity: 0.5;
+//     }`;
 
 export default UploadImageToS3WithNativeSdk;
