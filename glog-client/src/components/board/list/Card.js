@@ -4,16 +4,14 @@ import styled from 'styled-components';
 import Images from '../../layout/Images';
 import Tag from '../element/Tag';
 import testImg from '../../../img/test.jpg';
-import UserInfo from '../element/UserInfo';
+
 
 function Card() {
     const [open, setOpen] = useState(true);
     return (
         <>
-            <UserInfo />
             <StyledCard>
                 <Link to=''>
-                    {/* <Images src='' width='' height='' /> */}
                     <img src={testImg} width='768' height='auto' alt='이미지' />
                     <h2>test</h2>
                     <p className='preview'>예제</p>
@@ -37,6 +35,7 @@ function Card() {
 const StyledCard = styled.a`
     display: block;
     margin: 0 auto;
+    padding-bottom: 4rem;
     width: 768px;
     cursor: pointer;
     color: #383838;
