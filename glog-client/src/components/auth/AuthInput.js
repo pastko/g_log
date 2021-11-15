@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-function AuthInput({ message, ...rest }) {
+function AuthInput({ message, type, ...rest }) {
     return (
         <Block>
-            <input placeholder={message} {...rest} />
+            <input type={type} placeholder={message} {...rest} />
         </Block>
     );
 }

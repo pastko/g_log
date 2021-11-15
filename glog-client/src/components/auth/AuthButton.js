@@ -1,48 +1,17 @@
-import { useState } from "react";
 import styled, { css } from "styled-components";
-import { actionCreators as userActions } from '../../store/reducer/users';
-import { history } from '../../store/configureStore';
-import { useDispatch } from 'react-redux';
-//import ErrorMessage from '../layout/ErrorMessage';
 
-function AuthButton({ isLink, defaultType, fullWidth, isForm, ...rest }) {
-  const dispatch = useDispatch();
-
-  const { isDisabled, setIsDisabled } = useState(false);
-
-  // const validate = () => {
-  //     if (!isForm.mail || !isForm.pwd || !isForm.confirmPwd) {
-  //         setIsDisabled(false);
-  //     } else {
-  //         if (isForm.nikNm === '') {
-  //             let tmpStr = userInfo.email.split('@');
-  //             let id = tmpStr[0];
-  //             userInfo.nickname = id;
-  //         }
-  //         setIsDisabled(true);
-  //     }
-  // };
-  const goAction = () => {
-      if(isForm.confirmPwd === "" && isForm.nikNm === ""){
-        console.log("sign In");
-        dispatch(userActions.signinAPI(isForm.mail, isForm.pwd));
-      }else{
-        console.log("sign Up");
-        dispatch(userActions.signupAPI(isForm.mail,isForm.pwd ,isForm.nikNm));
-      }
-  };
+function AuthButton({ isLink, defaultType, fullWidth, _disabled, _onClick, ...rest }) {
 
   if (isLink) {
     return <LinkStyled defaultType={defaultType} {...rest} />;
   }
-  // if (validate()) {
   return (
     <>
-      <ButtonStyled 
+      <ButtonStyled
         type="button"
         fullWidth={fullWidth}
-        disabled={isDisabled}
-        onClick={goAction}
+        disabled={_disabled}
+        onClick={_onClick}
         {...rest}
       />
     </>
