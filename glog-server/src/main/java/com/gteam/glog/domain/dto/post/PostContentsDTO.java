@@ -11,6 +11,7 @@ public class PostContentsDTO {
     private int idx;
     private String title;
     private String contents;
+    private String html;
     private String nikNm;
     private String id;
     private String imgNm;
