@@ -1,9 +1,22 @@
 import styled from "styled-components";
 import Card from '../../components/board/list/Card';
+import UserInfo from '../../components/board/element/UserInfo';
 
 function List() {
     return (
         <StyledPostList>
+            <UserInfo />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
+            <Card />
             <Card />
         </StyledPostList>
     );

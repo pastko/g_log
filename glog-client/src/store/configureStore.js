@@ -5,9 +5,16 @@ import {
   compose
 } from 'redux';
 import thunk from 'redux-thunk';
-import { createBrowserHistory } from 'history';
-import { connectRouter } from 'connected-react-router';
-import { persistStore, persistReducer } from 'redux-persist'
+import {
+  createBrowserHistory
+} from 'history';
+import {
+  connectRouter
+} from 'connected-react-router';
+import {
+  persistStore,
+  persistReducer
+} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import User from './reducer/users';
 import Comments from './reducer/comments';
@@ -30,7 +37,7 @@ const persistConfig = {
 
 const middlewares = [thunk.withExtraArgument({
   history: history
-})]; 
+})];
 
 
 const composeEnhancers =
@@ -44,7 +51,14 @@ const enhancer = composeEnhancers(applyMiddleware(...middlewares));
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-let store = () => createStore(rootReducer, enhancer);
+let storeConfig = () => {
+  let store = createStore(persistedReducer, enhancer);
+  let persistor = persistStore(store);
+  return {
+    store,
+    persistor
+  }
+}
 
 
-export default store();
+export default storeConfig;

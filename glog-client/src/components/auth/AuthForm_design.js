@@ -4,12 +4,8 @@ import Input from './AuthInput';
 import styled from 'styled-components';
 import AuthButton from './AuthButton';
 import SocialButton from './SocialButton';
-import { actionCreators as userActions } from '../../store/reducer/users';
-import { useDispatch } from 'react-redux';
 
 function AuthForm({ isRegister }) {
-    const dispatch = useDispatch();
-
     const [isValidate, setIsValidate] = useState({
         mail: '',
         pwd: '',
@@ -75,13 +71,7 @@ function AuthForm({ isRegister }) {
         setDisabled(false);
     }
     const goMain = () => {
-        if (isForm.confirmPwd === "" && isForm.nikNm === "") {
-            console.log("sign In");
-            dispatch(userActions.signinAPI(isForm.mail, isForm.pwd));
-        } else {
-            console.log("sign Up");
-            dispatch(userActions.signupAPI(isForm.mail, isForm.pwd, isForm.nikNm));
-        }
+        window.location.href = "/";
     };
 
     return (

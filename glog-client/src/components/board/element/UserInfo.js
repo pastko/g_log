@@ -7,12 +7,11 @@ function UserInfo() {
     return (
         <Block>
             <StyledUserInfo>
-                {/* <Images src="" width={ } height={ } shape="circle" /> */}
                 <Link to="">
-                    <img src={testImg} width={128} height={128} alt="test" />
+                    <Images src='/mypage/thumbnail/DefaultImg.png' shape='circle' width={128} height={128} />
                     <div className="userInfo">
-                        <span className="name">hwlee-study</span>
-                        <span className="intro">예제 입니다.</span>
+                        <span className="name">glog</span>
+                        <span className="intro">glog사용자의 블로그 입니다.</span>
                     </div>
                 </Link>
             </StyledUserInfo>
@@ -41,7 +40,9 @@ const StyledUserInfo = styled.div`
     .userInfo {
         display: inline-block;
         text-align: left;
-        margin-left: 1rem;
+        margin-left: 2rem;
+        vertical-align: top;
+        padding-top: 1rem;
         .name {
             font-size: 1.5rem;
             line-height: 1.5;
