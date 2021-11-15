@@ -15,4 +15,5 @@ public class PostContentsDTO {
     private String id;
     private String imgNm;
     private String createDt;
+    private String tag;
 }

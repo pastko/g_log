@@ -117,7 +117,6 @@ const StyledHeader = styled.header`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 16px;
     .logo {
         font-size: 24px;
         font-weight: bold;

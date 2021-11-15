@@ -38,4 +38,7 @@ public class Contents {
     @Column(name = "upd_dt")
     private String updateDt;
 
+    @Column(name = "tag")
+    private String tag;
+
 }
