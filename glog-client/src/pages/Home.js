@@ -9,6 +9,8 @@ const Home = () => {
     const [noMore, setnoMore] = useState(true);
     const [page, setpage] = useState(2);
 
+
+    useEffect(() => {
     // useEffect(() => {
     //     const getComments = async () => {
     //         const res = await axios.get(
@@ -18,33 +20,22 @@ const Home = () => {
     //                 'X-USER-ID': ""
     //             }
     //         }
-    //         );
-    //         setPosts(res.data);
-    //     };
-    //     getComments();
-    // }, []);
+    }, []);
 
-    // const fetchComments = async () => {
+    const fetchComments = async () => {
     //     const res = await axios.get(
-    //         '/board?pageNum={page}&sortRule=1', {
-    //         header: {
-    //             authorization: "",
-    //             'X-USER-ID': ""
+    //         '/board?pageNum={page}&sortRule=1',{
+    //             header : {
+    //                 authorization:"",
+    //                 'X-USER-ID':""
+    //             }
     //         }
-    //     }
     //     );
     //     return res.data;
-    // };
+    };
 
-    // const fetchData = async () => {
-    //     const postsFormServer = await fetchComments();
-    //     setPosts([...posts, ...postsFormServer]);
 
-    //     if (postsFormServer.length === 0 || postsFormServer.length < 20) {
-    //         setnoMore(false);
-    //     }
-    //     setpage(page + 1);
-    // };
+   
 
     return (
         <>
