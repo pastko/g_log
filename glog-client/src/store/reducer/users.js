@@ -41,23 +41,25 @@ const signupAPI = (mail, pwd, niknm) => {
         history
     }) {
         axios({
-            url : '/signup',
+            url: '/signup',
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 mail: mail,
                 pwd: pwd,
-                nickname: niknm
-            })
-            .then((res) => {
+                nickname: niknm,
+            }).then((res) => {
                 if (res.status === 200) {
                     window.alert('회원가입이 되었습니다!');
                 } else {
-                    window.alert('회원가입이 실패했습니다. 관리자에게 문의하세요');
+                    window.alert(
+                        '회원가입이 실패했습니다. 관리자에게 문의하세요',
+                    );
                 }
-            });
+            })
+        });
     };
 };
 
@@ -145,14 +147,16 @@ const getUserInfo = () => {
     console.log("get myinfo");
     console.log(window.sessionStorage.getItem('key'))
     console.log(window.sessionStorage.getItem('mail'))
-    return function (dispatch, getState, { history }) {
+    return function (dispatch, getState, {
+        history
+    }) {
         axios({
             url: '/myinfo',
             method: 'get',
             withCredentials: true,
-            headers:{
-                'authorization' : `Bearer ${window.sessionStorage.getItem('key')}`,
-                'X-USER-ID' : window.sessionStorage.getItem('mail')
+            headers: {
+                'authorization': `Bearer ${window.sessionStorage.getItem('key')}`,
+                'X-USER-ID': window.sessionStorage.getItem('mail')
             }
         }).then((res) => {
             console.log('getUserInfo', res);

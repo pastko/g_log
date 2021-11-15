@@ -4,53 +4,108 @@ import Input from './AuthInput';
 import styled from 'styled-components';
 import AuthButton from './AuthButton';
 import SocialButton from './SocialButton';
-import ErrorMessage from '../layout/ErrorMessage';
 
-
-
-
-function AuthForm({ isRegister, setIsOpen }) {
-    
-    const [isForm, setForm] = useState({
-        mail: "",
-        pwd: "",
-        confirmPwd: "",
-        nikNm : "",
+function AuthForm({ isRegister }) {
+    const [isValidate, setIsValidate] = useState({
+        mail: '',
+        pwd: '',
+        confirmPwd: ''
     });
-
+    const [isForm, setIsForm] = useState({
+        mail: '',
+        pwd: '',
+        confirmPwd: '',
+        nikNm: ''
+    });
+    const [isDisabled, setDisabled] = useState(true);
     const onChangeHandler = (e) => {
         const { name, value } = e.target;
-        setForm({
+        setIsForm({
             ...isForm,
             [name]: value,
         });
+
+        validation(name, value);
     };
-    console.log(isForm.mail);
-    console.log(isForm.pwd);
+
+    const validation = (name, value) => {
+        const mailRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+        const pwdRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,12}$/;
+
+        if (name === 'mail') {
+            if (!mailRegex.test(isForm.mail)) {
+                setIsValidate({
+                    ...isValidate,
+                    mail: '이메일 형식이 아닙니다.'
+                });
+                setDisabled(true);
+                return;
+            } else {
+                isValidate.mail = '';
+            }
+        }
+        if (name === 'pwd') {
+            if (!pwdRegex.test(isForm.pwd)) {
+                setIsValidate({
+                    ...isValidate,
+                    pwd: '비밀번호는 최소8자 및 최대 12자, 영문/숫자/특수문자 조합이어야 합니다.'
+                });
+                setDisabled(true);
+                return;
+            } else {
+                isValidate.pwd = '';
+            }
+        }
+        if (name === 'confirmPwd') {
+            if (isForm.pwd !== value) {
+                setIsValidate({
+                    ...isValidate,
+                    confirmPwd: '비밀번호가 일치해야합니다.'
+                })
+                setDisabled(true);
+                return;
+            } else {
+                isValidate.confirmPwd = '';
+            }
+        }
+        setDisabled(false);
+    }
+    const goMain = () => {
+        window.location.href = "/";
+    };
 
     return (
         <FormStyled>
-            <Input message="이메일" name="mail" onChange={onChangeHandler} />
-            {/* <ErrorMessage isForm={isForm} type="mail" /> */}
-            <Input message="비밀번호" name="pwd" onChange={onChangeHandler} />
-            {/* {isRegister && <ErrorMessage isForm={isForm} type="pwd" />} */}
+            <Input message="이메일" type="text" name="mail" onChange={onChangeHandler} />
+            <StyeldError>{isValidate.mail}</StyeldError>
+
+            {isRegister ?
+                <>
+                    <Input message="비밀번호" type="password" name="pwd" onChange={onChangeHandler} />
+                    <StyeldError>{isValidate.pwd}</StyeldError>
+                </>
+                :
+                <Input message="비밀번호" type="password" name="pwd" />
+            }
             {isRegister && (
                 <>
                     <Input
+                        type="password"
                         message="비밀번호 확인"
                         name="confirmPwd"
                         onChange={onChangeHandler}
                     />
-                    {/* <ErrorMessage isForm={isForm} type="pwdConfirm" /> */}
+                    <StyeldError>{isValidate.confirmPwd}</StyeldError>
                 </>
             )}
             {isRegister && (
                 <Input message="닉네임" name="nikNm" onChange={onChangeHandler} />
             )}
-            {/* <StyledButton fullWidth isForm={isForm} func={func}> */}
-            <StyledButton  fullWidth isForm={isForm}  >
+
+            <StyledButton fullWidth _disabled={isDisabled} _onClick={goMain}>
                 {isRegister ? '가입하기' : '로그인'}
             </StyledButton>
+
             {!isRegister && (
                 <div className="findRegister">
                     <Link to=""> 비밀번호 찾기 </Link>
@@ -87,5 +142,12 @@ const StyledButton = styled(AuthButton)`
 `;
 const StyledSocialBtn = styled.div`
     margin-top: 5px;
+`;
+const StyeldError = styled.div`
+    text-align: right;
+    font-size: 0.8rem;
+    padding-bottom: 0.6rem;
+    color: #d81d1d;
+
 `;
 export default AuthForm;
