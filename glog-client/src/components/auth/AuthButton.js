@@ -1,12 +1,6 @@
-import { useState } from "react";
 import styled, { css } from "styled-components";
-import { actionCreators as userActions } from '../../store/reducer/users';
-import { history } from '../../store/configureStore';
-import { useDispatch } from 'react-redux';
-//import ErrorMessage from '../layout/ErrorMessage';
 
-function AuthButton({ isLink, defaultType, fullWidth, _onClick, _disabled, ...rest }) {
-  const dispatch = useDispatch();
+function AuthButton({ isLink, defaultType, fullWidth, _disabled, _onClick, ...rest }) {
 
   if (isLink) {
     return <LinkStyled defaultType={defaultType} {...rest} />;
