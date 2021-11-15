@@ -16,6 +16,7 @@ function CommentWrite(props) {
     );
 }
 const StyledCommentWrite = styled.div`
+    margin-bottom: 3rem;
     textarea {
         width: 100%;
         box-sizing: border-box;
@@ -26,7 +27,7 @@ const StyledCommentWrite = styled.div`
         min-height: 6.125rem;
         color: rgb(33, 37, 41);
         line-height: 1.75;
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
         padding: 1rem 1rem 1.5rem;
     }
 `;

@@ -6,25 +6,29 @@ import Tag from '../element/Tag';
 import testImg from '../../../img/test.jpg';
 
 
-function Card() {
-    const [open, setOpen] = useState(true);
+function Card({ path, open, url, preview }) {
+    // const [open, setOpen] = useState(true);
     return (
         <>
             <StyledCard>
-                <Link to=''>
-                    <img src={testImg} width='768' height='auto' alt='이미지' />
-                    <h2>test</h2>
-                    <p className='preview'>예제</p>
+                <Link to={url ? url : ''}>
+                    <Images src={path} width={768} height={452} />
+                    <h2>glog</h2>
+                    <p className="preview">
+                        {preview}
+                    </p>
                     <StyledTagWrap>
-                        <Tag children='test' />
-                        <Tag children='test' />
+                        <Tag children="glog" />
+                        <Tag children="test" />
                     </StyledTagWrap>
                     <StyledSubInfo>
-                        <span>2021년 10월 26일</span>
-                        <div className='separator'>·</div>
+                        <span>2021년 11월 16일</span>
+                        <div className="separator">·</div>
                         <span>0개의 댓글</span>
-                        <div className='separator'>·</div>
-                        <span className={open ? 'open' : 'secret'}>{open ? '공개' : '비공개'}</span>
+                        <div className="separator">·</div>
+                        <span className={open ? 'open' : 'secret'}>
+                            {open ? '공개' : '비공개'}
+                        </span>
                     </StyledSubInfo>
                 </Link>
             </StyledCard>

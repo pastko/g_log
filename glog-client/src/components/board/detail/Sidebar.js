@@ -18,7 +18,7 @@ function Sidebar() {
         <StyledSidebar>
             <StyledLink onClick={toggleLike}>
                 {isLike ? <FavoriteIcon sx={{ color: '#a680d2' }} /> : <FavoriteBorderIcon sx={{ color: '#808080' }} />}
-                <Count color={isLike ? '#a680d2' : '#808080'}>10</Count>
+                <Count color={isLike ? '#a680d2' : '#808080'}>{isLike ? 11 : 10}</Count>
             </StyledLink>
             <div className="line"></div>
             <CopyToClipboard text={currentURL}>
