@@ -4,6 +4,7 @@ import com.gteam.glog.common.utils.ResponseDTOUtils;
 import com.gteam.glog.domain.dto.post.PostContentsDTO;
 import com.gteam.glog.main.service.MainService;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.log4j.Log4j2;
 import net.bytebuddy.implementation.bind.annotation.Default;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+@Log4j2
 @RestController
 public class MainController {
 
@@ -29,9 +31,10 @@ public class MainController {
 
     @GetMapping(value = "/board")
     @ApiOperation(value = "메인 화면 API", notes = "메인 화면 게시물 조회 API")
-    public ResponseEntity<?> setMainPage(@RequestParam("pageNum")  int pageNum,
-                                         @RequestParam("sortRule") int sortRule,
+    public ResponseEntity<?> setMainPage(@RequestParam(name = "pageNum",defaultValue = "0")  int pageNum,
+                                         @RequestParam(name = "sortRule",defaultValue = "0") int sortRule,
                                          HttpServletResponse response) {
+        log.info("=?>>>>>>>>>>> board");
         List<PostContentsDTO> resultList = mainService.setMainPage(pageNum, sortRule);
 
         if(resultList != null)   {

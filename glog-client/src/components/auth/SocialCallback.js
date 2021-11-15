@@ -3,44 +3,32 @@ import qs from "qs";
 import axios from "axios";
 import Header from "../common/Header";
 import AuthForm from "./AuthForm";
+import { actionCreators as userActions } from '../../store/reducer/users';
+import { useSelector, useDispatch } from "react-redux";
 
 function SocialCallback({ authURI, nowURL }) {
-  const [isState, setState] = useState({
-    isLogin: false,
-    accessToken: "",
-  });
+  const dispatch = useDispatch();
+  const [isLogin, setIsLogin] = useState(useSelector((state) => state.user.is_login));
+  const history = useSelector((state) => state.router);
 
-  const { isLogin, accessToken } = isState;
-
+  console.log("socaicallback");
+  console.log(nowURL);
+  debugger;
   useEffect(() => {
     const getToken = async () => {
+      console.log("oauth login");
       const authorizationCode = nowURL.searchParams.get("code");
-      // const { code } = qs.parse(location.search, {
-      //     ignoreQueryPrefix: true,
-      // });
-
-      const response = axios
-        .post(`${authURI}`, {
-          authorizationCode: `${authorizationCode}`,
-        })
-        .then((res) => {
-          console.log(res);
-          setState({
-            isLogin: true,
-            accessToken: response.data.accessToken,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      dispatch(userActions.googleOAuthSignInAPI(authorizationCode));
+      
     };
     getToken();
-  }, [nowURL, authURI]);
+  },[authURI,nowURL]);
 
   return (
     <>
       {isLogin ? (
-        <Header accessToken={accessToken} />
+        // <Header />
+        history.push('/')
       ) : (
         <AuthForm isLoginFailed />
       )}

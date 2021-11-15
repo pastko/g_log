@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
@@ -27,11 +28,16 @@ public class LoginRepository {
      */
     public Optional<Users> getUsersByUserId(String mail){
         // 유저 인증 정보 조회
-        log.info("getUsersByUserId -- : {}",mail);
-        return entityManager
-                .createQuery("select usr from Users as usr where usr.mail = ?1", Users.class)
-                .setParameter(1, mail)
-                .getResultList().stream().findFirst();
+        try {
+            log.info("getUsersByUserId -- : {}",mail);
+            return Optional.of(entityManager
+                    .createQuery("select usr from Users as usr where usr.mail = ?1", Users.class)
+                    .setParameter(1, mail)
+                    .getSingleResult());
+        }catch (NoResultException e){
+            log.info("SQL No Result : {}",e.getCause());
+            return  Optional.empty();
+        }
     }
 
     /**
@@ -49,7 +55,6 @@ public class LoginRepository {
                 .setParameter(1,mail)
                 .getResultList().stream().findFirst().get();
         users.setKey(key);
-        //entityManager.merge(users);
         entityManager.flush();
         entityManager.close();
     }
@@ -70,7 +75,6 @@ public class LoginRepository {
                 .setParameter(1,mail)
                 .getResultList().stream().findFirst().get();
         users.setStatus(status);
-//        entityManager.merge(users);
         entityManager.flush();
         entityManager.close();
     }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -27,6 +28,21 @@ public class CookiesUtils {
                     .findAny();
         }else{
             return Optional.empty();
+        }
+    }
+
+    /**
+     * 쿠키 생성
+     * 1. key이 비어 있지 않을시 'refresh' 이름으로 쿠키 생성
+     *
+     * @param key
+     * @return Optional<string>
+     */
+    public Cookie setServletCookie(String key){
+        if(key != null || key.isEmpty()) {
+            return new Cookie("refresh",key);
+        }else{
+            return null;
         }
     }
 }

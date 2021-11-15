@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.persistence.NoResultException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +32,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, SecurityException{
         try {
-            if(!request.getRequestURI().contains("/signin") && !request.getRequestURI().contains("/board")) {
+            log.info("Get URL : {}",request.getRequestURI());
+            if(passURLFilter(request)) {
                 // access token 검증
                 if (jwtTokenUtils.validateAccessInfoByToken(request.getHeader("authorization"), request.getHeader("X-USER-ID"))) {
                     // 검증 성공시 인증정보를 UserAuthentication에 등록하여 SecurityContextHolder에 등록
@@ -48,7 +50,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                             authentication.setDetails(detailService);
 
                             //TODO : access token reissurance
-//                            String accessToken = jwtTokenUtils.reissuanceAccessToken(refreshToken);
+                            String accessToken = jwtTokenUtils.reissuanceAccessToken(refreshToken);
+                            response.setHeader("X-TOKEN-ACCESS",accessToken);
                         }
                     }else{
                         log.info("doFilterInternal : false - UnAuthorized Error");
@@ -59,9 +62,21 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             }
             chain.doFilter(request, response);
         } catch (ServletException e) {
-            log.info("JWTAuthenticationFilter : false - {} : {}",e.getCause(),e.getMessage());
-            log.error("Could not set user authentication in security context", e);
+            log.info("JWTAuthenticationFilter : Servlet : {}",e.getCause());
+            log.error("Could not set user authentication in security context");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "UnAuthorized Error");
+        } catch (NoResultException e){
+            log.info("JWTAuthenticationFilter : NoResult : {}",e.getCause());
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "UnAuthorized Error");
+        }catch (NullPointerException e){
+            log.info("JWTAuthenticationFilter : NullExcept : {}",e.getCause());
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "UnAuthorized Error");
         }
+    }
+
+    private Boolean passURLFilter(HttpServletRequest request){
+        return ((!request.getRequestURI().contains("signin")) &&
+                (!request.getRequestURI().contains("board")) &&
+                (!request.getRequestURI().contains("oauth")));
     }
 }
