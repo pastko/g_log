@@ -12,4 +12,4 @@ phases:
 artifacts:
     files:
         - '**/*'
-    base-directory: glog-client/out
+    base-directory: glog-client/build
