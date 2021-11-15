@@ -16,24 +16,24 @@ import java.sql.Date;
 public class Mypage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "mypg_idx")
+    @Column(name = "`mypg_idx`")
     private Long idx;
 
     @ManyToOne
-    @JoinColumn(name = "usr_idx")
+    @JoinColumn(name = "`usr_idx`")
     private Users usrIdx;
 
-    @Column(name = "nik_nm")
+    @Column(name = "`nik_nm`")
     @Size(max=13)
     private String nikNm;
 
-    @Column(name = "img_nm")
+    @Column(name = "`img_nm`")
     private String imgNm;
 
-    @Column(name = "glog_titl")
+    @Column(name = "`glog_titl`")
     @Size(max=10)
     private String glogTitle;
 
-    @Column(name = "unregist_date")
+    @Column(name = "`unregist_date`")
     private Date unRegitstDate;
 }

@@ -6,12 +6,14 @@ import com.gteam.glog.domain.dto.RegisterRequestDTO;
 import com.gteam.glog.common.utils.JWTTokenUtils;
 import com.gteam.glog.register.service.RegisterService;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
+@Log4j2
 @RestController
 public class RegisterController {
 
@@ -27,6 +29,7 @@ public class RegisterController {
     @PostMapping(value = "/signup")
     @ApiOperation(value = "회원가입 API", notes = "로컬 사용자 회원가입 API")
     public ResponseEntity<?> createUserinfo(@RequestBody(required = true) RegisterRequestDTO request, HttpServletResponse response) {
+        log.info("sinup - {}",request.getMail());
         UserInfoDTO userInfoDTO = UserInfoDTO.builder().mail(request.getMail()).nikNm(request.getNikNm()).pwd(request.getPwd()).build();
 
         if(request.getMail() != null) {
