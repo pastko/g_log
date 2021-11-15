@@ -26,7 +26,7 @@ const initialState = {
 const signupAPI = (mail,pwd,niknm) => {
     return function (dispatch, getState, { history }) {
         axios({
-            url : 'signup',
+            url : '/signup',
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -67,7 +67,7 @@ const signinAPI = (id, pw) => {
                         'X-USER-ID'
                     ] = `${id}`;
                     window.sessionStorage.setItem('key',res.data.data);
-                    window.sessionStorage.setItem('user',id);
+                    window.sessionStorage.setItem('mail',id);
                     dispatch(
                         setUser({ accessToken:`Bearer ${res.data.data}` })
                     );
@@ -116,14 +116,16 @@ const googleOAuthSignInAPI = (code) => {
 
 const getUserInfo = () => {
     console.log("get myinfo");
+    console.log(window.sessionStorage.getItem('key'))
+    console.log(window.sessionStorage.getItem('mail'))
     return function (dispatch, getState, { history }) {
         axios({
-            url: '/sinout',
+            url: '/myinfo',
             method: 'get',
             withCredentials: true,
             headers:{
-                'authorization' : sessionStorage.getItem('key'),
-                'X-USER-ID' : sessionStorage.getItem('mail')
+                'authorization' : `Bearer ${window.sessionStorage.getItem('key')}`,
+                'X-USER-ID' : window.sessionStorage.getItem('mail')
             }
             }).then((res) => {
             console.log('getUserInfo', res);

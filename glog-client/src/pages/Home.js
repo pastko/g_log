@@ -10,30 +10,30 @@ const Home = () => {
     const [page, setpage] = useState(2);
 
     useEffect(() => {
-        const getComments = async () => {
-            const res = await axios.get(
-                '/board?pageNum=0&sortRule=1',{
-                    header : {
-                        authorization:"",
-                        'X-USER-ID':""
-                    }
-                }
-            );
-            setPosts(res.data);
-        };
-        getComments();
+    //     const getComments = async () => {
+    //         const res =  axios.get(
+    //             '/board?pageNum=0&sortRule=1',{
+    //                 header : {
+    //                     authorization:"",
+    //                     'X-USER-ID':""
+    //                 }
+    //             }
+    //         );
+    //         setPosts(res.data);
+    //     };
+    //     getComments();
     }, []);
 
     const fetchComments = async () => {
-        const res = await axios.get(
-            '/board?pageNum={page}&sortRule=1',{
-                header : {
-                    authorization:"",
-                    'X-USER-ID':""
-                }
-            }
-        );
-        return res.data;
+    //     const res = await axios.get(
+    //         '/board?pageNum={page}&sortRule=1',{
+    //             header : {
+    //                 authorization:"",
+    //                 'X-USER-ID':""
+    //             }
+    //         }
+    //     );
+    //     return res.data;
     };
 
     const fetchData = async () => {
