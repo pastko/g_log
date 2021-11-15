@@ -27,7 +27,6 @@ const UserInfo = styled.div`
     margin: 20px auto;
     height: 80px;
     margin-top: 1rem;
-    height: 100%;
 `;
 
 const Title = styled.div`

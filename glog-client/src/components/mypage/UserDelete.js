@@ -25,7 +25,6 @@ const DeleteUser = styled.div`
     box-sizing: border-box;
     margin: 20px auto;
     margin-top: 1rem;
-    height: 100%;
 `;
 
 const DeleteMain = styled.div`

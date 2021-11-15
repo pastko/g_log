@@ -1,22 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
-
 //출력될 코멘트
 
-const Post = ({ post: { titl, cont, cret_dt } }) => {
+const Post = ( {post} ) => {
+    const { title, contents, nikNm, imgNm ,createDt } = post
+    console.log(post);
     return (
         <Wrap>
-            <ImageBtn>이미지</ImageBtn>
+            <Image src={`${process.env.REACT_APP_IMG_PATH}${imgNm}`} />
             <Description>
                 <TextWrap>
-                    <Title>Title : {titl} </Title>
-                    <Text> Content : {cont} </Text>
+                    <Title>{title} </Title>
+                    <Text>{contents} </Text>
                 </TextWrap>
-                <Date>{cret_dt}</Date>
-                <Comment>댓글</Comment>
             </Description>
             <UserName>
-                by <span>이메일</span>
+                by <span>{nikNm}</span>
+                <Date>{createDt}</Date>
             </UserName>
         </Wrap>
     );
@@ -30,7 +30,7 @@ const Wrap = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: auto;
-    max-width: 1024px;
+    max-width: 1240px;
     position: relative;
     box-sizing: border-box;
     width: 320px;
@@ -46,14 +46,10 @@ const Wrap = styled.div`
 `;
 
 //이미지 부분 (버튼화)
-const ImageBtn = styled.button`
-    display: block;
-    width: 100%;
-    border: none;
-    box-sizing: border-box;
-    background-color: transparent;
-    cursor: pointer;
-    padding: 0;
+const Image = styled.img`
+    width: 100% !important;
+    overflow: hidden !important;
+    height: 14rem;
 `;
 
 const Description = styled.div`
@@ -74,7 +70,7 @@ const TextWrap = styled.button`
     word-break: break-all;
 `;
 const Title = styled.h2`
-    font-size: 16px;
+    font-size: 18px;
     margin: -24px 0 8px 0;
 `;
 const Text = styled.p`
@@ -83,29 +79,16 @@ const Text = styled.p`
     margin: 0;
 `;
 const Date = styled.span`
+    float: right;
     font-size: 12px;
     color: rgb(134, 142, 150);
 `;
-const Comment = styled.span`
-    font-size: 12px;
-    color: rgb(134, 142, 150);
-`;
+
 const UserName = styled.div`
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 80%;
-    border-top: 1px solid #e6e6e6;
-    box-sizing: border-box;
-    font-size: 14px;
-    padding: 12px 16px;
-`;
-
-const LikeCount = styled.div`
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 30%;
+    width: 100%;
     border-top: 1px solid #e6e6e6;
     box-sizing: border-box;
     font-size: 14px;

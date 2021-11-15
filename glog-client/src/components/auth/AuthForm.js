@@ -31,7 +31,7 @@ function AuthForm({ isRegister, setIsOpen }) {
     return (
         <FormStyled>
             <Input message="이메일" name="mail" onChange={onChangeHandler} />
-            {/* <ErrorMessage isForm={isForm} type="mail" /> */}
+            {/* <ErrorMessage isForm={isForm} type="mail" />  */}
             <Input message="비밀번호" name="pwd" onChange={onChangeHandler} />
             {/* {isRegister && <ErrorMessage isForm={isForm} type="pwd" />} */}
             {isRegister && (
