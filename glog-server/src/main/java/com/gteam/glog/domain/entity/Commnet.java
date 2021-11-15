@@ -22,7 +22,8 @@ public class Commnet {
     @JoinColumn(name = "bord_idx")
     private Board bord_idx;
 
-    @Column(name = "comt_rply_idx")
-    private Commnet comt_rply_idx;
+    @ManyToOne
+    @JoinColumn(name = "comt_rply_idx")
+    private Comt_Contents comt_rply_idx;
 
 }

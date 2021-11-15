@@ -41,4 +41,7 @@ public class Contents {
     @Column(name = "tag")
     private String tag;
 
+    @Column(name = "contHtml")
+    private String html;
+
 }
