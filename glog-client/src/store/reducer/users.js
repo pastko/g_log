@@ -70,7 +70,7 @@ const signinAPI = (id, pw) => {
     }) {
 
         axios({
-                url: 'http://localhost:8080/signin',
+                url: '/signin',
                 method: 'post',
                 data: {
                     "mail": id,
@@ -88,7 +88,7 @@ const signinAPI = (id, pw) => {
                         'X-USER-ID'
                     ] = `${id}`;
                     window.sessionStorage.setItem('key', res.data.data);
-                    window.sessionStorage.setItem('user', id);
+                    window.sessionStorage.setItem('mail', id);
                     dispatch(
                         setUser({
                             accessToken: `Bearer ${res.data.data}`

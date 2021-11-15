@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import Button from "../layout/Button";
 import Images from "../layout/Images";
-
+import { useSelector } from "react-redux";
 function ThumbnailArea() {
+    const users = useSelector((state) => state.user.user);
     const upload = () => {
 
     }
@@ -10,7 +11,7 @@ function ThumbnailArea() {
         <StyledThumbnailArea>
             <StyledThumbnail>
                 <Images
-                    src="/mypage/thumbnail/DefaultImg.png"
+                    src= {users.imgNm === null ? "/mypage/thumbnail/DefaultImg.png" : users.imgNm}
                     shape="circle"
                     width={150}
                     height={150}
@@ -24,7 +25,7 @@ function ThumbnailArea() {
                 </Button>
             </StyledThumbnail>
             <StyledUserInfo>
-                <h2>hwlee-study</h2>
+                <h2>{users.nikNm}</h2>
                 <Button isDefault>수정</Button>
             </StyledUserInfo>
         </StyledThumbnailArea>

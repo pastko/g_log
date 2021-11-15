@@ -32,7 +32,9 @@ const Home = () => {
         console.log(res);
         return res.data.data;
     };
-
+    const fetchData = async ()=>{
+        const postsFormServer = await fetchComments();
+        setPosts([...posts, ...postsFormServer]);
 
         if (postsFormServer.length === 0 || postsFormServer.length < 10) {
             setnoMore(false);
@@ -45,7 +47,7 @@ const Home = () => {
             <StyleInfiniteScroll>
                 <InfiniteScroll
                     dataLength={posts.length} //This is important field to render the next data
-                    // next={fetchData}
+                    next={fetchData}
                     hasMore={noMore}
                 >
                     {Post.length === 0 ? 'Emtpy' : posts.map((post) => {

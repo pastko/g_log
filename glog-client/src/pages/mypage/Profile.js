@@ -1,21 +1,23 @@
 import styled from "styled-components";
 import ThumbnailArea from "../../components/mypage/ThumbnailArea";
 import UserInfo from "../../components/mypage/UserInfo";
+import { useSelector, useDispatch } from "react-redux";
 
 function Profile() {
+    const users = useSelector((state) => state.user.user);
     return (
         <StyledProfile>
             <ThumbnailArea />
             <StyledInputWrap>
                 <UserInfo
                     title='굳로그 제목'
-                    contents='hwlee-study'
+                    contents={users.glogTitle}
                     isButton='수정'
                     description='개인 페이지의 좌측 상단에 나타나는 페이지 제목입니다.'
                 />
                 <UserInfo
                     title='이메일 주소'
-                    contents='hwlee-study@github.com'
+                    contents={users.mail}
                     description='회원 인증 또는 시스템에서 발송하는 이메일을 수신하는 주소입니다.'
                 />
                 <UserInfo

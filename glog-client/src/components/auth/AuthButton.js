@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-function AuthButton({ isLink, defaultType, fullWidth, _disabled, _onClick, ...rest }) {
+function AuthButton({ isLink, defaultType, fullWidth, _onClick, ...rest }) {
 
   if (isLink) {
     return <LinkStyled defaultType={defaultType} {...rest} />;
@@ -10,7 +10,6 @@ function AuthButton({ isLink, defaultType, fullWidth, _disabled, _onClick, ...re
       <ButtonStyled
         type="button"
         fullWidth={fullWidth}
-        disabled={_disabled}
         onClick={_onClick}
         {...rest}
       />

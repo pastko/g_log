@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useSelector } from "react-redux";
 
 const ChangeInfo = () => {
+    const users = useSelector((state) => state.user.user);
     return (
         <UserInfo>
             <Title>
