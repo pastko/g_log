@@ -40,11 +40,11 @@ const initialState = {
     comments: []
 }
 
-const setCommentAPI = (postId) => {
+const setCommentAPI = (bordIdx) => {
     return (dispatch, getState, {
         history
     }) => {
-        axios.get(``).then((res) => {
+        axios.get(`/comt/${bordIdx}`).then((res) => {
             console.log('setCommentAPI :: ', res.data);
             dispatch(setComment(res.data));
         });
@@ -55,12 +55,13 @@ const addCommentAPI = (data) => {
     return (dispatch, getState, {
         history
     }) => {
-        axios.post(``, {
+        axios.post(`anifest.json`, {
                 headers: {
-                    'Authorization': '',
-                    'Content-Type': 'application/json'
+                    'authorization': sessionStorage.getItem('key'),
+                    'X-USER-ID': sessionStorage.getItem('mail')
                 },
                 body: JSON.stringify({
+                    //nikNm / contents
                     data
                 })
             })
@@ -75,11 +76,12 @@ const addCommentAPI = (data) => {
     };
 };
 
-const changeCommentAPI = (useId, commentIdx, comment) => {
+const changeCommentAPI = (useId, comtIdx, comment) => {
     return (dispatch, getState, {
         history
     }) => {
-        axios.get(`${commentIdx}`, comment)
+        //comt_idx
+        axios.get(`/comtupdate/${comtIdx}`, comment)
             .then((res) => {
                 console.log('changeCommentAPI : ', res.data);
                 dispatch(changeComment(res.data));
@@ -91,17 +93,17 @@ const changeCommentAPI = (useId, commentIdx, comment) => {
     };
 };
 
-const removeCommentAPI = (userId, commentIdx) => {
+const removeCommentAPI = (comtIdx) => {
     return (dispatch, getState, {
         history
     }) => {
         axios.post(``, {
                 headers: {
-                    'Authorization': '',
-                    'Content-Type': 'application/json'
+                    'authorization': sessionStorage.getItem('key'),
+                    'X-USER-ID': sessionStorage.getItem('mail')
                 },
                 body: JSON.stringify({
-                    commentIdx
+                    comtIdx
                 })
             })
             .then((res) => {

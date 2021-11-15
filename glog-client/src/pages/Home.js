@@ -9,19 +9,17 @@ const Home = () => {
     const [noMore, setnoMore] = useState(true);
     const [page, setpage] = useState(2);
 
+
     useEffect(() => {
+    // useEffect(() => {
     //     const getComments = async () => {
-    //         const res =  axios.get(
-    //             '/board?pageNum=0&sortRule=1',{
-    //                 header : {
-    //                     authorization:"",
-    //                     'X-USER-ID':""
-    //                 }
+    //         const res = await axios.get(
+    //             '/board?pageNum=0&sortRule=1', {
+    //             header: {
+    //                 authorization: "",
+    //                 'X-USER-ID': ""
     //             }
-    //         );
-    //         setPosts(res.data);
-    //     };
-    //     getComments();
+    //         }
     }, []);
 
     const fetchComments = async () => {
@@ -36,22 +34,15 @@ const Home = () => {
     //     return res.data;
     };
 
-    const fetchData = async () => {
-        const postsFormServer = await fetchComments();
-        setPosts([...posts, ...postsFormServer]);
 
-        if (postsFormServer.length === 0 || postsFormServer.length < 20) {
-            setnoMore(false);
-        }
-        setpage(page + 1);
-    };
+   
 
     return (
         <>
             <StyleInfiniteScroll>
                 <InfiniteScroll
                     dataLength={posts.length} //This is important field to render the next data
-                    next={fetchData}
+                    // next={fetchData}
                     hasMore={noMore}
                 >
                     {/* {Post.length === 0 ? 'Emtpy' : posts.map((post) => {

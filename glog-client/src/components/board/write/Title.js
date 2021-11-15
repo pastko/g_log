@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-function Title({ title, setTitle }) {
+function Title({ title, _onChange }) {
   return (
     <StyledTitle
       placeholder="제목을 입력하세요."
-      onChange={setTitle}
+      onChange={_onChange}
       value={title || ""}
     ></StyledTitle>
   );
@@ -21,7 +21,7 @@ const StyledTitle = styled.textarea`
   line-height: 1.5;
   font-size: 1.8rem;
   font-weight: bold;
-  color: #acb5bd;
+  color: #84888b;
 `;
 
 export default Title;
