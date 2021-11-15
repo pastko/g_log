@@ -37,29 +37,29 @@ const initialState = {
 
 
 const signupAPI = (mail, pwd, niknm) => {
+    console.log("signup")
     return function (dispatch, getState, {
         history
     }) {
         axios({
             url: '/signup',
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                mail: mail,
-                pwd: pwd,
-                nickname: niknm,
-            }).then((res) => {
+            withCredentials: true,
+            data:{
+                "mail": mail,
+                "pwd": pwd,
+                "nikNm": niknm
+            }
+        }).then((res) => {
                 if (res.status === 200) {
                     window.alert('회원가입이 되었습니다!');
-                } else {
-                    window.alert(
-                        '회원가입이 실패했습니다. 관리자에게 문의하세요',
-                    );
+                    window.location.href = "/";
                 }
-            })
-        });
+        }).catch((res)=>{
+            window.alert(
+                '중복된 아이디 입니다.',
+            );
+        })
     };
 };
 
@@ -168,6 +168,34 @@ const getUserInfo = () => {
             );
 
             history.replace('/');
+        });
+    };
+};
+
+
+const setUserInfo = (nik,img,tilte) => {
+    console.log("set myinfo");
+    return function (dispatch, getState, {
+        history
+    }) {
+        axios({
+            url: '/myinfo',
+            method: 'post',
+            withCredentials: true,
+            headers: {
+                'authorization': `Bearer ${window.sessionStorage.getItem('key')}`,
+                'X-USER-ID': window.sessionStorage.getItem('mail')
+            },
+            data : {
+                "mail":window.sessionStorage.getItem('mail'),
+                "pwd" :"",
+                "nikNm" :nik,
+                "imgNm":img,
+                "glogTitle":tilte,
+            }
+        }).then((res) => {
+            console.log('getUserInfo', res);
+            dispatch(getUserInfo());
         });
     };
 };
