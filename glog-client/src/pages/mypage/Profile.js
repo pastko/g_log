@@ -28,8 +28,8 @@ function Profile() {
     );
 }
 const StyledProfile = styled.div`
-    max-width: 768px;
     margin: 4rem auto 0;
+    max-width: 768px;
     @media (max-width: 1280px) {
         width: 768px;
     }
