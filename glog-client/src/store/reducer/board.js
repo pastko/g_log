@@ -2,6 +2,8 @@ import axios from 'axios';
 
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
 
+console.log('baseURL ::: ', axios.defaults.baseURL);
+
 const SET_POST = 'SET_POST';
 const SET_DETAIL_POST = 'SET_DETAIL_POST';
 
@@ -37,7 +39,8 @@ const setDetailPostByIdAPI = () => {
     }) => {
         axios.get(`/detail`, {
             headers: {
-
+                'authorization': sessionStorage.getItem('key'),
+                'X-USER-ID': sessionStorage.getItem('mail')
             }
         }).then((res) => {
             console.log('getPostById :: ', res.data);
@@ -52,13 +55,15 @@ const addPostAPI = (post) => {
     }) => {
         axios.post(`/write`, {
             headers: {
-
+                'authorization': sessionStorage.getItem('key'),
+                'X-USER-ID': sessionStorage.getItem('mail')
             },
             body: JSON.stringify({
                 post
             })
         }).then((res) => {
             console.log('addPost :: ', res.data);
+            //TODO: message: ok / message: fail
             history.push('/');
         })
     }
@@ -81,7 +86,8 @@ const removePostAPI = (postIdx) => {
     }) => {
         axios.post(`/deletepost`, {
             headers: {
-
+                'authorization': sessionStorage.getItem('key'),
+                'X-USER-ID': sessionStorage.getItem('mail')
             },
             body: JSON.stringify({
                 postIdx

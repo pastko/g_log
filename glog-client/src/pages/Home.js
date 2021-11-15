@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+    useEffect,
+    useState
+} from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Post from '../components/main/Post';
 import styled from 'styled-components';
@@ -9,27 +12,27 @@ const Home = () => {
     const [noMore, setnoMore] = useState(true);
     const [page, setpage] = useState(2);
 
-    useEffect(() => {
-        const getComments = async () => {
-            const res = await axios.get(
-                '/board?pageNum=0&sortRule=1',{
-                    header : {
-                        authorization:"",
-                        'X-USER-ID':""
-                    }
-                }
-            );
-            setPosts(res.data);
-        };
-        getComments();
-    }, []);
+    // useEffect(() => {
+    //     const getComments = async () => {
+    //         const res = await axios.get(
+    //             '/board?pageNum=0&sortRule=1',{
+    //                 header : {
+    //                     authorization:"",
+    //                     'X-USER-ID':""
+    //                 }
+    //             }
+    //         );
+    //         setPosts(res.data);
+    //     };
+    //     getComments();
+    // }, []);
 
     const fetchComments = async () => {
         const res = await axios.get(
-            '/board?pageNum={page}&sortRule=1',{
-                header : {
-                    authorization:"",
-                    'X-USER-ID':""
+            '/board?pageNum={page}&sortRule=1', {
+                header: {
+                    authorization: "",
+                    'X-USER-ID': ""
                 }
             }
         );
@@ -46,24 +49,32 @@ const Home = () => {
         setpage(page + 1);
     };
 
-    return (
-        <>
-            <StyleInfiniteScroll>
-                <InfiniteScroll
-                    dataLength={posts.length} //This is important field to render the next data
-                    next={fetchData}
-                    hasMore={noMore}
-                >
-                    {/* {Post.length === 0 ? 'Emtpy' : posts.map((post) => {
-                        return <Post key={posts.bord_idx} post={post} />;
-                    })} */}
-                </InfiniteScroll>
-            </StyleInfiniteScroll>
-        </>
+    return ( <
+        >
+        <
+        StyleInfiniteScroll >
+        <
+        InfiniteScroll dataLength = {
+            posts.length
+        } //This is important field to render the next data
+        next = {
+            fetchData
+        }
+        hasMore = {
+            noMore
+        } >
+        {
+            /* {Post.length === 0 ? 'Emtpy' : posts.map((post) => {
+                                    return <Post key={posts.bord_idx} post={post} />;
+                                })} */
+        } <
+        /InfiniteScroll> <
+        /StyleInfiniteScroll> <
+        />
     );
 };
 
-const StyleInfiniteScroll = styled.div`
+const StyleInfiniteScroll = styled.div `
     max-width: 1280px;
     margin: 20px auto;
     position: flex;
