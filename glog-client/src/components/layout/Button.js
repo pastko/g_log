@@ -1,9 +1,15 @@
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 
-function Button({isDefault, children, _onClick, ...rest }) {
+function Button({ isRed, isDefault, children, fullwidth, _onClick, ...rest }) {
     return (
-        <StyledButton isDefault={isDefault} {...rest} onClick={_onClick}>
-            {children}        
+        <StyledButton
+            isRed={isRed}
+            isDefault={isDefault}
+            fullwidth={fullwidth}
+            {...rest}
+            onClick={_onClick}
+        >
+            {children}
         </StyledButton>
     );
 }
@@ -19,10 +25,28 @@ const StyledButton = styled.button`
     align-items: center;
     justify-items: center;
     font-size: 16px;
+    cursor: pointer;
+    font-weight: 700;
     ${(props) =>
         props.isDefault &&
         css`
-            background-color: #9b9b9b;
+            background-color: #f8f9fa;
+            color: #a680d2;
+    `}
+    ${(props) =>
+        props.isRed &&
+        css`
+            background-color: rgb(255, 107, 107);
+            color: #fff;
+    `}
+    ${(props) =>
+        props.fullwidth &&
+        css`
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.5rem;
     `}
 `;
 

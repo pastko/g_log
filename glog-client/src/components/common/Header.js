@@ -48,7 +48,7 @@ const Header = () => {
                 <div className="right">
                     {isLogin ? (
                         <>
-                            <Link to="/write">
+                            <Link to="/post/write">
                                 <AuthButton isLink defaultType>
                                     글쓰기
                                 </AuthButton>
