@@ -11,10 +11,6 @@ function Contents() {
 
     return (
         <StyledContents>
-            <Images src='/post/1.png' width={768} height={452} />
-            <p>
-                안녕하세요. test입니다.
-            </p>
         </StyledContents>
         // <StyledContents dangerouslySetInnerHTML={{ __html: contents }}></StyledContents>
     );
