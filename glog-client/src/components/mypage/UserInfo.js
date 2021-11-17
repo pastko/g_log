@@ -12,9 +12,14 @@ function UserInfo({ title, contents, isButton, description }) {
                         {isButton}
                     </Button>
                 ) : (
-                    <Button isDefault _onClick="">
-                        {isButton}
-                    </Button>
+                    <>
+                        {isButton === 'none' ?
+                            '' :
+                            <Button isNone isDefault _onClick="">
+                                {isButton}
+                            </Button>
+                        }
+                    </>
                 )}
             </StyledInfoWrap>
             {description && (

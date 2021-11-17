@@ -48,7 +48,6 @@ const AuthStyled = styled.div`
         min-width: 240px;
         min-height: 475px;
         max-height: 800px;
-        margin-top: 4.5rem;
         padding: 20px 10px 24px;
         border-radius: 32px;
         background: #fff;
