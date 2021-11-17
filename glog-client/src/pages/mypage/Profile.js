@@ -16,6 +16,7 @@ function Profile() {
                 <UserInfo
                     title='이메일 주소'
                     contents='hwlee-study@github.com'
+                    isButton='none'
                     description='회원 인증 또는 시스템에서 발송하는 이메일을 수신하는 주소입니다.'
                 />
                 <UserInfo

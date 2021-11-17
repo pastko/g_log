@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Images from "../../layout/Images";
-import testImg from '../../../img/test.jpg';
 import { Link } from "react-router-dom";
 
 function UserInfo() {

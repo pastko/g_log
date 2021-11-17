@@ -1,9 +1,7 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Images from '../../layout/Images';
 import Tag from '../element/Tag';
-import testImg from '../../../img/test.jpg';
 
 
 function Card({ path, open, url, preview }) {
