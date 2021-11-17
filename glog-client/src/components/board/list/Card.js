@@ -5,7 +5,6 @@ import Tag from '../element/Tag';
 
 
 function Card({ path, open, url, preview }) {
-    // const [open, setOpen] = useState(true);
     return (
         <>
             <StyledCard>
