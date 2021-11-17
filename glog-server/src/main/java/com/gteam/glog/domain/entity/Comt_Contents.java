@@ -28,4 +28,8 @@ public class Comt_Contents {
 
     @Column(name = "cont")
     private String contents;
+
+    @ManyToOne
+    @JoinColumn(name = "comt_idx")
+    private Commnet comt_idx;
 }
