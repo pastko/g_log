@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -55,20 +57,17 @@ public class PostRepository {
         }
     }
 
-    public PostContentsDTO updatePost(int idx) {
-        PostContentsDTO result = new PostContentsDTO();
+    public List<PostContentsDTO> updatePost(String id, int pageNum) {
         try {
-            String query = "select c from bord_cont c where bord_idx=" + idx;
-            Contents contents = (Contents) entityManager.createQuery(query);
+            String query = "select u from usr u where mail=" + id;
+            Users users = (Users) entityManager.createQuery(query);
 
-            result.setContents(contents.getContents());
-            result.setTitle(contents.getTitle());
-            result.setImgNm(contents.getImg_nm());
-            result.setIdx(contents.getIdx());
-            result.setCreateDt(contents.getCreateDt());
-            result.setTag(contents.getTag());
+            query = "select c from bord_cont c where usr_idx=" + users.getIdx();
 
-            return result;
+            return entityManager.createQuery(query)
+                    .setFirstResult(pageNum * 20)
+                    .setMaxResults(pageNum * 20 + 20)
+                    .getResultList();
         } catch (Exception e) {
             return null;
         }

@@ -24,9 +24,10 @@ public class PostController {
     public ResponseEntity<?> createPost(@RequestBody PostRequestDTO requestDTO, @RequestHeader("X-USR-ID") String id, HttpServletResponse response) {
         return responseDTOUtils.doGenerateResponseDTO(postService.createPost(requestDTO, id));
     }
-    @GetMapping(value = "/write")
-    public ResponseEntity<?> updatePost(@RequestParam("idx") int idx, HttpServletResponse response) {
-        return responseDTOUtils.doGenerateResponseDTO(postService.updatePost(idx));
+    // 내 게시물 목록 조회
+    @GetMapping(value = "/posts")
+    public ResponseEntity<?> getPostsByUserId(@RequestHeader("X-USR-ID") String id, @RequestParam("pageNum") int pageNum, HttpServletResponse response) {
+        return responseDTOUtils.doGenerateResponseDTO(postService.updatePost(id, pageNum));
     }
     @GetMapping(value = "/details")
     public ResponseEntity<?> detailsPost(@RequestParam("idx") int idx, HttpServletResponse response) {

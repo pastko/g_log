@@ -6,6 +6,8 @@ import com.gteam.glog.post.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PostService {
 
@@ -31,8 +33,8 @@ public class PostService {
         return postRepository.createPost(postContentsDTO);
     }
 
-    public PostContentsDTO updatePost(int idx) {
-        return postRepository.updatePost(idx);
+    public List<PostContentsDTO> updatePost(String id, int pageNum) {
+        return postRepository.updatePost(id, pageNum);
     }
 
     public PostContentsDTO detailsPost(int idx) {
