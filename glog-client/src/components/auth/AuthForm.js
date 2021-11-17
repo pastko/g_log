@@ -21,14 +21,14 @@ function AuthForm({ isRegister }) {
         confirmPwd: '',
         nikNm: ''
     });
-    const [isDisabled, setDisabled] = useState(true);
     const onChangeHandler = (e) => {
         const { name, value } = e.target;
         setIsForm({
             ...isForm,
             [name]: value,
         });
-
+        console.log(isForm.mail);
+        console.log(isForm.pwd);
         validation(name, value);
     };
 
@@ -42,7 +42,7 @@ function AuthForm({ isRegister }) {
                     ...isValidate,
                     mail: '이메일 형식이 아닙니다.'
                 });
-                setDisabled(true);
+         
                 return;
             } else {
                 isValidate.mail = '';
@@ -54,7 +54,7 @@ function AuthForm({ isRegister }) {
                     ...isValidate,
                     pwd: '비밀번호는 최소8자 및 최대 12자, 영문/숫자/특수문자 조합이어야 합니다.'
                 });
-                setDisabled(true);
+             
                 return;
             } else {
                 isValidate.pwd = '';
@@ -66,13 +66,12 @@ function AuthForm({ isRegister }) {
                     ...isValidate,
                     confirmPwd: '비밀번호가 일치해야합니다.'
                 })
-                setDisabled(true);
+             
                 return;
             } else {
                 isValidate.confirmPwd = '';
             }
         }
-        setDisabled(false);
     }
     const goMain = () => {
         if (isForm.confirmPwd === "" && isForm.nikNm === "") {
@@ -95,7 +94,7 @@ function AuthForm({ isRegister }) {
                     <StyeldError>{isValidate.pwd}</StyeldError>
                 </>
                 :
-                <Input message="비밀번호" type="password" name="pwd" />
+                <Input message="비밀번호" type="password" name="pwd" onChange={onChangeHandler} />
             }
             {isRegister && (
                 <>
@@ -112,7 +111,7 @@ function AuthForm({ isRegister }) {
                 <Input message="닉네임" name="nikNm" onChange={onChangeHandler} />
             )}
 
-            <StyledButton fullWidth _disabled={isDisabled} _onClick={goMain}>
+            <StyledButton fullWidth _onClick={goMain}>
                 {isRegister ? '가입하기' : '로그인'}
             </StyledButton>
 

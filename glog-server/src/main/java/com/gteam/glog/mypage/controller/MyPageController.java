@@ -31,6 +31,7 @@ public class MyPageController {
     }
 
     /**
+     * 유저 정보 조회
      *
      * @param authorization
      * @param mail
@@ -47,13 +48,14 @@ public class MyPageController {
 
 
     /**
+     *유저 정보 수정
      *
      * @param authorization
      * @param mail
      * @return
      */
     @PostMapping("/myinfo")
-    @ApiOperation(value = "유저 정보 조회", notes = "유저 정보를 요청하는 API")
+    @ApiOperation(value = "유저 정보 수정", notes = "유저 정보를 수정하는 API")
     public ResponseEntity<?> updateMyPage(@RequestHeader(value = "authorization")@Min(value = 255) String authorization,
                                           @RequestHeader(value = "X-USER-ID") @Email String mail,
                                           @CookieValue(value = "refresh")Cookie reqCookie,

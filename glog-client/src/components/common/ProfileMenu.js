@@ -5,6 +5,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as userActions } from '../../store/reducer/users';
+import { WindowSharp } from '@mui/icons-material';
 
 function ProfileMenu({ anchorEl, open, handleClose }) {
     const dispatch = useDispatch();
@@ -14,6 +15,7 @@ function ProfileMenu({ anchorEl, open, handleClose }) {
         if(isLogin){
             console.log("sign In");
             dispatch(userActions.SignOut());
+            window.location.href = "/";
         }
     };
     return (

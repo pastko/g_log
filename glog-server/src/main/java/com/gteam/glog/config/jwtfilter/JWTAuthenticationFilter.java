@@ -76,6 +76,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private Boolean passURLFilter(HttpServletRequest request){
         return ((!request.getRequestURI().contains("signin")) &&
+                (!request.getRequestURI().contains("signup")) &&
                 (!request.getRequestURI().contains("board")) &&
                 (!request.getRequestURI().contains("oauth")));
     }
