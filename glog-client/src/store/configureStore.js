@@ -19,6 +19,7 @@ import storage from 'redux-persist/lib/storage'
 import User from './reducer/users';
 import Comments from './reducer/comments';
 import Board from './reducer/board';
+import Home from './reducer/home';
 
 export const history = createBrowserHistory();
 
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   user: User,
   board: Board,
   comments: Comments,
+  home: Home,
   router: connectRouter(history)
 });
 

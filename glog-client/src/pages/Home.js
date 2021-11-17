@@ -2,56 +2,41 @@ import React, { useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Post from '../components/main/Post';
 import styled from 'styled-components';
-import axios from 'axios';
+import { actionCreators as homeActions } from '../store/reducer/home';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Home = () => {
-    const [posts, setPosts] = useState([]);
+    const dispatch = useDispatch();
     const [noMore, setnoMore] = useState(true);
     const [page, setpage] = useState(2);
-    console.log(posts);
-    useEffect(() => {
-        const getComments = async () => {
-            const res = await axios.get(
-                '/board?pageNum=0&sortRule=1',{
-                    withCredentials: true
-                }
-            );
-            console.log(res);
 
-            setPosts(res.data.data);
-        };
-        getComments();
+    useEffect(() => {
+        dispatch(homeActions.getContents());
     }, []);
 
-    const fetchComments = async () => {
-        const res = await axios.get(
-            `/board?pageNum=${page}&sortRule=1`,{
-                withCredentials: true
-            }
-        );
-        console.log(res);
-        return res.data.data;
-    };
-    const fetchData = async ()=>{
-        const postsFormServer = await fetchComments();
-        setPosts([...posts, ...postsFormServer]);
+    let contents = useSelector((state) => state.home.contents);
 
-        if (postsFormServer.length === 0 || postsFormServer.length < 10) {
-            setnoMore(false);
-        }
-        setpage(page + 1);
-    };
+
+    // const fetchData = async ()=>{
+    //     const postsFormServer = await fetchComments();
+    //     setPosts([...posts, ...postsFormServer]);
+
+    //     if (postsFormServer.length === 0 || postsFormServer.length < 10) {
+    //         setnoMore(false);
+    //     }
+    //     setpage(page + 1);
+    // };
 
     return (
         <>
             <StyleInfiniteScroll>
                 <InfiniteScroll
-                    dataLength={posts.length} //This is important field to render the next data
-                    next={fetchData}
+                    dataLength={contents.length} //This is important field to render the next data
+                    //next={fetchData}
                     hasMore={noMore}
                 >
-                    {Post.length === 0 ? 'Emtpy' : posts.map((post) => {
-                        return <Post key={posts.idx} post={post} />;
+                    {contents.length === 0 ? 'Emtpy' : contents.map((post) => {
+                        return <Post key={post.idx} post={post} />;
                     })}
                 </InfiniteScroll>
             </StyleInfiniteScroll>
