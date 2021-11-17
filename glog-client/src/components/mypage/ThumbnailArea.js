@@ -25,7 +25,7 @@ function ThumbnailArea() {
             </StyledThumbnail>
             <StyledUserInfo>
                 <h2>hwlee-study</h2>
-                <Button isDefault>수정</Button>
+                <Button isNone isDefault>수정</Button>
             </StyledUserInfo>
         </StyledThumbnailArea>
     );
@@ -39,7 +39,7 @@ const StyledThumbnailArea = styled.div`
 const StyledThumbnail = styled.div`
     width: 150px;
     button {
-        margin-top: 0.8rem;
+        margin-top: 0.5rem;
     }
 `;
 const StyledLabel = styled.label`
