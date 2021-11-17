@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-import qs from "qs";
-import axios from "axios";
-import Header from "../common/Header";
 import AuthForm from "./AuthForm";
 import { actionCreators as userActions } from '../../store/reducer/users';
 import { useSelector, useDispatch } from "react-redux";
@@ -19,10 +16,10 @@ function SocialCallback({ authURI, nowURL }) {
       console.log("oauth login");
       const authorizationCode = nowURL.searchParams.get("code");
       dispatch(userActions.googleOAuthSignInAPI(authorizationCode));
-      
+
     };
     getToken();
-  },[authURI,nowURL]);
+  }, [authURI, nowURL]);
 
   return (
     <>
