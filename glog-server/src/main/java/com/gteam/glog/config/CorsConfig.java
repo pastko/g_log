@@ -26,7 +26,7 @@ public class CorsConfig {
         config.addAllowedOrigin("http://**");
         config.addAllowedOrigin("*");
         config.addAllowedMethod("*");
-        config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "responseType", "Authorization"));
+        config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "responseType", "Authorization","x-user-id"));
 
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);

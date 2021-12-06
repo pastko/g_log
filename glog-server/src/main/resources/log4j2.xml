@@ -23,10 +23,10 @@
             <AppenderRef ref="ConsoleLog" />
             <AppenderRef ref="FileLog" />
         </Root>
-        <Logger name="com.gteam.glog.login" level="debug">
+        <Logger name="com.gteam.glog.signin" level="debug">
             <Appender ref="FileLog" />
         </Logger>
-        <Logger name="com.gteam.glog.register" level="debug">
+        <Logger name="com.gteam.glog.signup" level="debug">
             <Appender ref="FileLog" />
         </Logger>
     </Loggers>
