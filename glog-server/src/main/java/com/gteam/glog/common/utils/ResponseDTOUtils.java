@@ -3,6 +3,7 @@ package com.gteam.glog.common.utils;
 
 
 import com.gteam.glog.domain.dto.ResponseDTO;
+import com.gteam.glog.domain.dto.SignUpResponseDTO;
 import com.gteam.glog.domain.enums.ResponseStatusCode;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class ResponseDTOUtils {
         log.info("Response DTO - {}",data);
         if(data != null) {
             return ResponseEntity
-                    .status(ResponseStatusCode.OK.get())
+                    .status(ResponseStatusCode.OK.get()).header("Content-Type","application/json")
                     .body(ResponseDTO
                             .builder()
                             .success(true)
@@ -31,7 +32,7 @@ public class ResponseDTOUtils {
                             .build());
         }else{
             return ResponseEntity
-                    .status(ResponseStatusCode.BADREQUEST.get())
+                    .status(ResponseStatusCode.BADREQUEST.get()).header("Content-Type","application/json")
                     .body(ResponseDTO
                             .builder()
                             .success(false)

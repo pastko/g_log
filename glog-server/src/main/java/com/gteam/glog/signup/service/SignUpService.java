@@ -2,6 +2,7 @@ package com.gteam.glog.signup.service;
 
 import com.gteam.glog.common.utils.JWTTokenUtils;
 import com.gteam.glog.domain.dto.SignUpRequestDTO;
+import com.gteam.glog.domain.dto.SignUpResponseDTO;
 import com.gteam.glog.domain.dto.UserInfoDTO;
 import com.gteam.glog.domain.entity.users.Users;
 import com.gteam.glog.domain.entity.users.UsersRepository;
@@ -20,17 +21,20 @@ public class SignUpService {
     private final UsersRepository usersRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
+    public Long saveUser(Users users){
+        return usersRepository.save(users).getIdx();
+    }
 
-    public Long createUserInfo(SignUpRequestDTO userInfoDTO) {
+    public SignUpResponseDTO createUserInfo(SignUpRequestDTO userInfoDTO) {
         if(usersRepository.findByMail(userInfoDTO.getMail()).isPresent()){
-            return null;
+            return SignUpResponseDTO.builder().id(null).build();
         }else{
-            return usersRepository.save(
-                    Users.initUsers()
-                            .mail(userInfoDTO.getMail())
-                            .pwd(passwordEncoder.encode(userInfoDTO.getPwd()))
-                            .nikNm(userInfoDTO.getNikNm())
-                            .build()).getIdx();
+            Users users = Users.initUsers()
+                    .mail(userInfoDTO.getMail())
+                    .pwd(passwordEncoder.encode(userInfoDTO.getPwd()))
+                    .nikNm(userInfoDTO.getNikNm())
+                    .build();
+            return SignUpResponseDTO.builder().id(saveUser(users)).build();
         }
     }
 

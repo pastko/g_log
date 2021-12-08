@@ -27,6 +27,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.mariadb.jdbc:mariadb-java-client'
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
     implementation 'junit:junit:4.13.1'
     runtimeOnly 'mysql:mysql-connector-java'
 	compileOnly 'org.projectlombok:lombok'

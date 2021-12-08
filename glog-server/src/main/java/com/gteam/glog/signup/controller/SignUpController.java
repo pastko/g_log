@@ -23,10 +23,7 @@ public class SignUpController {
     @ApiOperation(value = "회원가입 API", notes = "로컬 사용자 회원가입 API")
     public ResponseEntity<?> signUp(@RequestBody SignUpRequestDTO signUp) {
         log.info("sinup - {}",signUp.getMail());
-        Long id = registerService.createUserInfo(signUp);
-
-
-        return responseDTOUtils.doGenerateResponseDTO();
+        return ResponseEntity.ok().body(registerService.createUserInfo(signUp));
     }
 
     @GetMapping(value = "/signdrop")
