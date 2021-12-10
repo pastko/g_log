@@ -3,7 +3,6 @@ package com.gteam.glog.common.utils;
 
 
 import com.gteam.glog.domain.dto.ResponseDTO;
-import com.gteam.glog.domain.dto.SignUpResponseDTO;
 import com.gteam.glog.domain.enums.ResponseStatusCode;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;

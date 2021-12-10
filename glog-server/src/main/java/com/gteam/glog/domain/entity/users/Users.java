@@ -1,6 +1,7 @@
 package com.gteam.glog.domain.entity.users;
 
-import com.gteam.glog.domain.dto.UsersDTO;
+
+import com.gteam.glog.domain.dto.UserInfoDTO;
 import com.gteam.glog.domain.entity.TimeStamp;
 import com.gteam.glog.domain.enums.UserStatusCode;
 import lombok.*;
@@ -8,7 +9,6 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 
 @Getter
 @Entity
@@ -52,10 +52,10 @@ public class Users extends TimeStamp {
         this.status = UserStatusCode.LOGOUT;
     }
 
-    public Long update(String nikNm, String imgNm, String glogTitle){
-        this.nikNm = nikNm;
-        this.imgNm = imgNm;
-        this.glogTitle = glogTitle;
+    public Long update(UserInfoDTO userInfoDTO){
+        this.nikNm = userInfoDTO.getNikNm();
+        this.imgNm = userInfoDTO.getImgNm();
+        this.glogTitle = userInfoDTO.getGlogTitle();
         return this.idx;
     }
 

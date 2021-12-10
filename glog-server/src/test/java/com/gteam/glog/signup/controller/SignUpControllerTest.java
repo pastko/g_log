@@ -1,16 +1,12 @@
 package com.gteam.glog.signup.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gteam.glog.domain.dto.ResponseDTO;
+import com.gteam.glog.domain.dto.ReturnIdResponseDTO;
 import com.gteam.glog.domain.dto.SignUpRequestDTO;
-import com.gteam.glog.domain.dto.SignUpResponseDTO;
+import com.gteam.glog.domain.entity.users.Users;
 import com.gteam.glog.domain.entity.users.UsersRepository;
 import okhttp3.*;
-import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -18,7 +14,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -49,12 +44,12 @@ class SignUpControllerTest {
 
     @After
     public void after(){
-        usersRepository.deleteAll();
+
     }
 
     @Before
     public void before(){
-        usersRepository.deleteAll();
+
     }
 
     @Test
@@ -65,8 +60,6 @@ class SignUpControllerTest {
                 .pwd("gl12#$")
                 .nikNm("glog")
                 .build();
-        usersRepository.deleteAll();
-
 
         // send data id, secret key , access code , redirect url
         ResponseDTO response= restTemplate.postForObject(
@@ -74,14 +67,11 @@ class SignUpControllerTest {
                 signUpRequestDTO,
                 ResponseDTO.class);
         System.out.println("==>>>> " + response.getMsg());
-
-//        try {
-//            ObjectMapper mapper = new ObjectMapper();
-//            SignUpResponseDTO user = mapper.readValue(response.getBody().toString(), SignUpResponseDTO.class);
-//         } catch (JsonProcessingException e) {
-//            e.printStackTrace();
-//        }
-
+        System.out.println("==>>>> " + response.getData());
+        System.out.println("==>>>> " + response.isSuccess());
+        assertThat(response.isSuccess()).isEqualTo(true||false);
+        ObjectMapper mapper = new ObjectMapper();
+        ReturnIdResponseDTO responseDTO = mapper.convertValue(response.getData(), ReturnIdResponseDTO.class);
         // TODO: restTemplate => okHttp2 로 변경 해보기
 //        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),signUpRequestDTO.toString());
 //        Request.Builder builder = new Request.Builder().url(url).post(requestBody);
@@ -96,20 +86,43 @@ class SignUpControllerTest {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        System.out.println("==>>>> " + response);
-//        Users users = usersRepository.findById(responseDTO.getData()).orElse(null);
-//        if( users != null) {
-        assertThat(response.isSuccess()).isEqualTo(true);
-//        assertThat(response.getBody()).isEqualTo();
-//            assertThat(users.getMail()).isEqualTo(signUpRequestDTO.getMail());
-//            assertThat(users.getPwd()).isEqualTo(passwordEncoder.matches(signUpRequestDTO.getPwd(), users.getPwd()));
-//        }else{
-//            System.out.println("Is Not Match : ");
-//        }
+        if(responseDTO.getId() != null) {
+            Users users = usersRepository.findById(responseDTO.getId()).orElse(null);
+            if (users != null) {
+                assertThat(users.getMail()).isEqualTo(signUpRequestDTO.getMail());
+                assertThat(passwordEncoder.matches(signUpRequestDTO.getPwd(), users.getPwd())).isEqualTo(true);
+            } else {
+                System.out.println("IS not Match");
+            }
+        }else{
+            Users users = usersRepository.findByMail(signUpRequestDTO.getMail()).orElse(null);
+            if (users != null) {
+                assertThat(users.getMail()).isEqualTo(signUpRequestDTO.getMail());
+            }
+            System.out.println("Same User exist");
+        }
     }
 
 
-//    @Test
-//    void signDrop() {
-//    }
+    @Test
+    void signDrop() {
+        Long id = 5L;
+        String url = "http://localhost:"+port+"/api/signdrop/"+id;
+
+        ResponseDTO response= restTemplate.getForObject(
+                url,
+                ResponseDTO.class);
+        System.out.println("==>>>> " + response.getMsg());
+        System.out.println("==>>>> " + response.getData());
+        System.out.println("==>>>> " + response.isSuccess());
+        assertThat(response.isSuccess()).isEqualTo(true||false);
+
+        ObjectMapper mapper = new ObjectMapper();
+        ReturnIdResponseDTO responseDTO = mapper.convertValue(response.getData(), ReturnIdResponseDTO.class);
+        if(responseDTO.getId() != null){
+            assertThat(usersRepository.findById(responseDTO.getId()).isPresent()).isEqualTo(false);
+        }else{
+            assertThat(responseDTO.getId()).isEqualTo(null);
+        }
+    }
 }

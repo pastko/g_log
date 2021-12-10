@@ -23,12 +23,13 @@ public class SignUpController {
     @ApiOperation(value = "회원가입 API", notes = "로컬 사용자 회원가입 API")
     public ResponseEntity<?> signUp(@RequestBody SignUpRequestDTO signUp) {
         log.info("sinup - {}",signUp.getMail());
-        return ResponseEntity.ok().body(registerService.createUserInfo(signUp));
+        return responseDTOUtils.doGenerateResponseDTO(registerService.createUser(signUp));
     }
 
-    @GetMapping(value = "/signdrop")
+    @GetMapping(value = "/signdrop/{id}")
     @ApiOperation(value = "회원탈퇴 API", notes = "로컬 사용자 회원탈퇴 API")
-    public ResponseEntity<?> signDrop(@RequestHeader("AccessToken") String token) {
-        return responseDTOUtils.doGenerateResponseDTO(registerService.unRegistUser(token));
+    public ResponseEntity<?> signDrop(@PathVariable(name = "id") Long id) {
+        log.info("sindrop - {}",id);
+        return responseDTOUtils.doGenerateResponseDTO(registerService.unRegistUser(id));
     }
 }

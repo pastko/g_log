@@ -11,11 +11,11 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class SignUpResponseDTO {
+public class ReturnIdResponseDTO {
     private Long id;
 
     @Builder
-    public SignUpResponseDTO(Long id){
+    public ReturnIdResponseDTO(Long id){
         this.id = id;
     }
 }
