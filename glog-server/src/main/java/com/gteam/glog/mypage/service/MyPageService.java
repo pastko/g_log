@@ -3,9 +3,7 @@ package com.gteam.glog.mypage.service;
 import com.gteam.glog.common.utils.JWTTokenUtils;
 import com.gteam.glog.domain.dto.ReturnIdResponseDTO;
 import com.gteam.glog.domain.dto.UserInfoDTO;
-import com.gteam.glog.domain.entity.users.Users;
 import com.gteam.glog.domain.entity.users.UsersRepository;
-import com.gteam.glog.mypage.repository.MyPageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -15,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class MyPageService {
-    private final MyPageRepository myPageRepository;
     private final JWTTokenUtils jwtTokenUtils;
     private final UsersRepository usersRepository;
 

@@ -72,5 +72,35 @@ class MyPageControllerTest {
 
     @Test
     void updateMyPage() {
+        Long id = usersRepository.findAll().get(0).getIdx();
+        String url = "http://localhost:"+port+"/api/myinfo";
+        UserInfoDTO userInfoDTO = UserInfoDTO.builder().mail("test@gmail.com")
+                .imgNm("img.png").glogTitle("glogConvert").nikNm("changenik").build();
+
+        // send data id, secret key , access code , redirect url
+        ResponseDTO response= restTemplate.postForObject(
+                url,
+                userInfoDTO,
+                ResponseDTO.class);
+        System.out.println("==>>>> " + response.getMsg());
+        System.out.println("==>>>> " + response.getData());
+        System.out.println("==>>>> " + response.isSuccess());
+        assertThat(response.isSuccess()).isEqualTo(true||false);
+        ObjectMapper mapper = new ObjectMapper();
+        ReturnIdResponseDTO res = mapper.convertValue(response.getData(), ReturnIdResponseDTO.class);
+
+        if(res != null){
+            assertThat(usersRepository.findById(res.getId()).isPresent()).isEqualTo(true);
+            usersRepository.findById(res.getId()).stream().map(entity->{
+                assertThat(entity.getMail()).isEqualTo(userInfoDTO.getMail());
+                assertThat(entity.getNikNm()).isEqualTo(userInfoDTO.getNikNm());
+                assertThat(entity.getGlogTitle()).isEqualTo(userInfoDTO.getGlogTitle());
+                assertThat(entity.getImgNm()).isEqualTo(userInfoDTO.getImgNm());
+                return entity;
+            }).findAny().orElse(null);
+
+        }else{
+            assertThat(userInfoDTO).isEqualTo(null);
+        }
     }
 }
